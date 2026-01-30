@@ -1,0 +1,20 @@
+{
+    "Group": "HaRo0",
+    "Name": "GraveProtocol",
+    "Version": "0.0.2",
+    "Description": "",
+    "Authors": [
+        {
+            "Name": "HaRo0"
+        }
+    ],
+    "Website": "",
+    "ServerVersion": "*",
+    "Dependencies": {
+    },
+    "OptionalDependencies": {
+    },
+    "DisabledByDefault": false,
+    "Main": "net.haro0.hytale.graveprotocol.GraveProtocol",
+    "IncludesAssetPack": true
+}
