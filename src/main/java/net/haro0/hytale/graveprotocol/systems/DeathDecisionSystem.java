@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.NonNull;
-import net.haro0.hytale.graveprotocol.components.DeathDecisionComponent;
+import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
 import net.haro0.hytale.graveprotocol.ui.DeathDecisionUi;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
@@ -40,8 +40,8 @@ public class DeathDecisionSystem extends DeathSystems.OnDeathSystem {
     @Override
     public void onComponentAdded(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl DeathComponent component, @NonNullDecl Store<EntityStore> store, @NonNullDecl CommandBuffer<EntityStore> commandBuffer) {
 
-        if (store.getComponent(ref, DeathDecisionComponent.getComponentType()) != null) {
-            commandBuffer.removeComponent(ref, DeathDecisionComponent.getComponentType());
+        if (store.getComponent(ref, GraveProtocolComponent.getComponentType()) != null) {
+            commandBuffer.removeComponent(ref, GraveProtocolComponent.getComponentType());
             return;
         }
 
@@ -57,8 +57,8 @@ public class DeathDecisionSystem extends DeathSystems.OnDeathSystem {
         pageManager.openCustomPage(
             ref, store, new DeathDecisionUi(playerRefComponent)
         );
-        var decisionComponent = new DeathDecisionComponent((DeathComponent) component.clone());
-        commandBuffer.putComponent(ref, DeathDecisionComponent.getComponentType(), decisionComponent);
+        var decisionComponent = new GraveProtocolComponent((DeathComponent) component.clone());
+        commandBuffer.putComponent(ref, GraveProtocolComponent.getComponentType(), decisionComponent);
         component.setShowDeathMenu(false);
         component.setItemsLossMode(DeathConfig.ItemsLossMode.NONE);
         commandBuffer.removeComponent(ref, DeathComponent.getComponentType());

@@ -3,7 +3,7 @@ package net.haro0.hytale.graveprotocol;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import lombok.SneakyThrows;
-import net.haro0.hytale.graveprotocol.components.DeathDecisionComponent;
+import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
 import net.haro0.hytale.graveprotocol.events.PlayerEvents;
 import net.haro0.hytale.graveprotocol.systems.DeathDecisionSystem;
 
@@ -20,6 +20,6 @@ public class GraveProtocol extends JavaPlugin {
 
         PlayerEvents.registerEvents(getEventRegistry());
         getEntityStoreRegistry().registerSystem(new DeathDecisionSystem());
-        DeathDecisionComponent.setComponentType(getEntityStoreRegistry().registerComponent(DeathDecisionComponent.class, "GraveProtocol:DeathDecisionComponent", DeathDecisionComponent.CODEC));
+        GraveProtocolComponent.setComponentType(getEntityStoreRegistry().registerComponent(GraveProtocolComponent.class, "GraveProtocol:DeathDecisionComponent", GraveProtocolComponent.CODEC));
     }
 }

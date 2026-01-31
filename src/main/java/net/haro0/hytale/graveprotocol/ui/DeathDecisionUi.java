@@ -12,6 +12,7 @@ import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
@@ -20,7 +21,7 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import net.haro0.hytale.graveprotocol.components.DeathDecisionComponent;
+import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
@@ -51,12 +52,11 @@ public class DeathDecisionUi extends InteractiveCustomUIPage<DeathDecisionUi.Bin
 
         var player = store.getComponent(ref, Player.getComponentType());
         assert player != null;
-        var decisionComponent = store.getComponent(ref, DeathDecisionComponent.getComponentType());
+        var decisionComponent = store.getComponent(ref, GraveProtocolComponent.getComponentType());
         assert decisionComponent != null;
         switch (data.action) {
             case "Normal" -> {
                 store.putComponent(ref, DeathComponent.getComponentType(), decisionComponent.getOriginal());
-                this.close();
             }
             case "Custom" -> {
                 var transformComponent = store.getComponent(ref, TransformComponent.getComponentType());
@@ -64,10 +64,12 @@ public class DeathDecisionUi extends InteractiveCustomUIPage<DeathDecisionUi.Bin
                 var world = player.getWorld();
                 assert world != null;
                 world.execute(() -> {
-                    CompletableFuture<World> worldFuture = InstancesPlugin.get().spawnInstance("Challenge_Combat_1", world, new Transform(transformComponent.getPosition().clone(), Vector3f.FORWARD));
+                    decisionComponent.setItems(player.getInventory().getCombinedEverything().removeAllItemStacks().toArray(ItemStack[]::new));
+                    player.markNeedsSave();
+                    CompletableFuture<World> worldFuture = InstancesPlugin.get().spawnInstance("Grave_Protocol_1", world, new Transform(transformComponent.getPosition().clone(), Vector3f.FORWARD));
                     InstancesPlugin.teleportPlayerToLoadingInstance(playerRef.getReference(), playerRef.getReference().getStore(), worldFuture, null);
                 });
-                this.close();
+                close();
             }
         }
 
