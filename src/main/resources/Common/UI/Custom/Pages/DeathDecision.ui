@@ -1,0 +1,20 @@
+$C = "../Common.ui";
+Group {
+  LayoutMode: Top;
+  Background: #2a2a2a;
+  Anchor: (Width: 800, Height: 500);
+  Padding: (Full: 0);
+  Label #Label10602573 {
+    Padding: (Full: 0);
+    Text: "You died";
+    Style: (TextColor: #ffffff, HorizontalAlignment: Center);
+  }
+  $C.@TextButton #Custom {
+    Padding: (Full: 0);
+    Text: "Custom Respawn";
+  }
+  $C.@TextButton #Normal {
+    Padding: (Full: 0);
+    Text: "Normal Respawn";
+  }
+}
