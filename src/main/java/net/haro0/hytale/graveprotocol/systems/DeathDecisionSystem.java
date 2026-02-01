@@ -57,10 +57,11 @@ public class DeathDecisionSystem extends DeathSystems.OnDeathSystem {
         pageManager.openCustomPage(
             ref, store, new DeathDecisionUi(playerRefComponent)
         );
-        var decisionComponent = new GraveProtocolComponent((DeathComponent) component.clone());
-        commandBuffer.putComponent(ref, GraveProtocolComponent.getComponentType(), decisionComponent);
+        var gpComponent = commandBuffer.ensureAndGetComponent(ref, GraveProtocolComponent.getComponentType());
+        gpComponent.setOriginal((DeathComponent) component.clone());
         component.setShowDeathMenu(false);
         component.setItemsLossMode(DeathConfig.ItemsLossMode.NONE);
+        component.setItemsDurabilityLossPercentage(0);
         commandBuffer.removeComponent(ref, DeathComponent.getComponentType());
     }
 

@@ -1,5 +1,6 @@
 package net.haro0.hytale.graveprotocol.components;
 
+import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
@@ -14,11 +15,13 @@ import lombok.SneakyThrows;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 @Getter
+@Setter
 public class GraveProtocolComponent implements Component<EntityStore> {
 
     public static final BuilderCodec<GraveProtocolComponent> CODEC = BuilderCodec.builder(GraveProtocolComponent.class, GraveProtocolComponent::new)
         .append(new KeyedCodec<>("Original", DeathComponent.CODEC), (c, v) -> c.original = v, c -> c.original).add()
         .append(new KeyedCodec<>("Inventory", new ArrayCodec<>(ItemStack.CODEC, ItemStack[]::new)), (c, v) -> c.items = v, c -> c.items).add()
+        .append(new KeyedCodec<>("PrestigeIndex", Codec.INTEGER), (c, v) -> c.prestigeIndex = v, c -> c.prestigeIndex).add()
         .build();
 
     @Getter
@@ -27,15 +30,11 @@ public class GraveProtocolComponent implements Component<EntityStore> {
 
     private DeathComponent original;
 
-    @Setter
     private ItemStack[] items;
 
+    private int prestigeIndex = 0;
+
     public GraveProtocolComponent() { }
-
-    public GraveProtocolComponent(DeathComponent original) {
-
-        this.original = original;
-    }
 
     @NullableDecl
     @Override

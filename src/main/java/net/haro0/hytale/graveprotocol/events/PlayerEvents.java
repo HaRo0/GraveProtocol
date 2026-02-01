@@ -18,17 +18,22 @@ public class PlayerEvents {
     private static void onPlayerJoin(PlayerReadyEvent event) {
 
         var player = event.getPlayer();
-        if (event.getPlayer().getWorld().getWorldConfig().isDeleteOnRemove()) return;
-        var protocolComponent = event.getPlayerRef().getStore().getComponent(event.getPlayerRef(), GraveProtocolComponent.getComponentType());
-
-        if (protocolComponent == null) return;
+        if (player.getWorld().getWorldConfig().isDeleteOnRemove()) return;
+        var ref = event.getPlayerRef();
+        var store = ref.getStore();
+        var protocolComponent = store.ensureAndGetComponent(ref, GraveProtocolComponent.getComponentType());
 
         var items = protocolComponent.getItems();
 
+        if (items == null) return;
+
         player.getInventory().clear();
         player.getInventory().getCombinedEverything().addItemStacks(Arrays.stream(items).toList());
+        protocolComponent.setItems(null);
+        if (protocolComponent.getOriginal() == null) return;
+
         var original = protocolComponent.getOriginal();
         original.setShowDeathMenu(true);
-        event.getPlayerRef().getStore().putComponent(event.getPlayerRef(), DeathComponent.getComponentType(), original);
+        store.putComponent(ref, DeathComponent.getComponentType(), original);
     }
 }
