@@ -5,8 +5,10 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import lombok.SneakyThrows;
 import net.haro0.hytale.graveprotocol.assets.GPAssets;
 import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
+import net.haro0.hytale.graveprotocol.components.LevelDataComponent;
 import net.haro0.hytale.graveprotocol.events.PlayerEvents;
 import net.haro0.hytale.graveprotocol.systems.DeathDecisionSystem;
+import net.haro0.hytale.graveprotocol.systems.LevelSystem;
 
 public class GraveProtocol extends JavaPlugin {
 
@@ -19,10 +21,15 @@ public class GraveProtocol extends JavaPlugin {
     @SneakyThrows
     protected void setup() {
 
-        PlayerEvents.registerEvents(getEventRegistry());
-        getEntityStoreRegistry().registerSystem(new DeathDecisionSystem());
-        GraveProtocolComponent.setComponentType(getEntityStoreRegistry().registerComponent(GraveProtocolComponent.class, "GraveProtocol:DeathDecisionComponent", GraveProtocolComponent.CODEC));
-        GPAssets.registerAll(getEventRegistry());
+        var eventRegistry = getEventRegistry();
+        var entityRegistry = getEntityStoreRegistry();
+        PlayerEvents.registerEvents(eventRegistry);
+        GPAssets.registerAll(eventRegistry);
+        GraveProtocolComponent.register(entityRegistry);
+        LevelDataComponent.register(entityRegistry);
+        entityRegistry.registerSystem(new DeathDecisionSystem());
+        entityRegistry.registerSystem(new LevelSystem());
+
     }
 
 }

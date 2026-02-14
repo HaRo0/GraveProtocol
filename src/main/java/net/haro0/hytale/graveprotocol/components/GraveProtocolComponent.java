@@ -5,6 +5,7 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.component.Component;
+import com.hypixel.hytale.component.ComponentRegistryProxy;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
@@ -25,7 +26,6 @@ public class GraveProtocolComponent implements Component<EntityStore> {
         .build();
 
     @Getter
-    @Setter
     private static ComponentType<EntityStore, GraveProtocolComponent> componentType;
 
     private DeathComponent original;
@@ -35,6 +35,11 @@ public class GraveProtocolComponent implements Component<EntityStore> {
     private int prestigeIndex = 0;
 
     public GraveProtocolComponent() { }
+
+    public static void register(ComponentRegistryProxy<EntityStore> registry) {
+
+        componentType = registry.registerComponent(GraveProtocolComponent.class, "GraveProtocolComponent", CODEC);
+    }
 
     @NullableDecl
     @Override

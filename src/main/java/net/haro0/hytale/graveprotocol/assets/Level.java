@@ -36,6 +36,7 @@ public class Level implements JsonAssetWithMap<String, AssetMap<String, Level>> 
         .append(new KeyedCodec<>("AttackMultiplier", Codec.FLOAT), (w, a) -> w.attackMultiplier = a, w -> w.attackMultiplier)
         .addValidator(Validators.min(0.1f))
         .add()
+
         .build();
 
     private static AssetStore<String, Level, AssetMap<String, Level>> ASSET_STORE;
