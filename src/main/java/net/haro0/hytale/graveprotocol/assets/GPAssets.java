@@ -7,23 +7,41 @@ import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class GPAssets {
 
-    public static void registerAll(EventRegistry registry) {
+    private final EventRegistry registry;
 
-        registerWave(registry);
-        registerPrestige(registry);
+    public void registerAll() {
+
+        registerLevel();
+        registerWave();
+        registerPrestige();
     }
 
-    private static void registerWave(EventRegistry registry) {
+    private void registerLevel() {
 
         AssetRegistry.register(HytaleAssetStore.builder(
                     Level.class, new DefaultAssetMap<>()
                 )
-                .setPath("GraveProtocol/Waves")
+                .setPath("GraveProtocol/Levels")
                 .setCodec(Level.CODEC)
                 .setKeyFunction(Level::getId)
+                .build()
+        );
+
+    }
+
+    private void registerWave() {
+
+        AssetRegistry.register(HytaleAssetStore.builder(
+                    Wave.class, new DefaultAssetMap<>()
+                )
+                .setPath("GraveProtocol/Waves")
+                .setCodec(Wave.CODEC)
+                .setKeyFunction(Wave::getId)
                 .build()
         );
 
@@ -32,7 +50,7 @@ public class GPAssets {
         });
     }
 
-    private static void registerPrestige(EventRegistry registry) {
+    private void registerPrestige() {
 
         AssetRegistry.register(HytaleAssetStore.builder(
                     Prestige.class, new DefaultAssetMap<>()

@@ -18,7 +18,8 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
-import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
+import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
+import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -30,15 +31,16 @@ public final class DeathUtils {
 
         var player = store.getComponent(ref, Player.getComponentType());
         if (player == null) return;
-        var component = store.ensureAndGetComponent(ref, GraveProtocolComponent.getComponentType());
+        var deathComponent = store.ensureAndGetComponent(ref, GPDeathComponent.getComponentType());
 
         var transformComponent = store.getComponent(ref, TransformComponent.getComponentType());
         assert transformComponent != null;
         var world = player.getWorld();
         assert world != null;
-        var prestige = PrestigeUtils.getPrestige(component);
+        var dataComponent = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
+        var prestige = PrestigeUtils.getPrestige(dataComponent);
         world.execute(() -> {
-            component.setItems(player.getInventory().getCombinedEverything().removeAllItemStacks().toArray(ItemStack[]::new));
+            deathComponent.setItems(player.getInventory().getCombinedEverything().removeAllItemStacks().toArray(ItemStack[]::new));
             player.markNeedsSave();
             CompletableFuture<World> worldFuture = InstancesPlugin.get().spawnInstance(prestige.getInstance(), world, new Transform(transformComponent.getPosition().clone(), Vector3f.FORWARD));
             InstancesPlugin.teleportPlayerToLoadingInstance(ref, store, worldFuture, null);

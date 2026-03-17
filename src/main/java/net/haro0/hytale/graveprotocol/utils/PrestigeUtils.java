@@ -1,7 +1,8 @@
 package net.haro0.hytale.graveprotocol.utils;
 
 import net.haro0.hytale.graveprotocol.assets.Prestige;
-import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
+import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
+import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
 
 import java.util.Comparator;
 
@@ -16,7 +17,7 @@ public class PrestigeUtils {
         return Prestige.getAssetMap().getAssetMap().values().stream().sorted(Comparator.comparingLong(Prestige::getOrder)).toArray(Prestige[]::new);
     }
 
-    public static Prestige getPrestige(GraveProtocolComponent component) {
+    public static Prestige getPrestige(GPPlayerDataComponent component) {
 
         var prestiges = getAllPrestiges();
         if (component.getPrestigeIndex() >= prestiges.length) {

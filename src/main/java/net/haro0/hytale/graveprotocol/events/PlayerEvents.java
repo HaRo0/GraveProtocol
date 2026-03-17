@@ -4,7 +4,7 @@ import com.hypixel.hytale.event.EventPriority;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
-import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
+import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
 
 import java.util.Arrays;
 
@@ -21,19 +21,23 @@ public class PlayerEvents {
         if (player.getWorld().getWorldConfig().isDeleteOnRemove()) return;
         var ref = event.getPlayerRef();
         var store = ref.getStore();
-        var protocolComponent = store.ensureAndGetComponent(ref, GraveProtocolComponent.getComponentType());
+        player.getWorld().execute(() -> {
+            var protocolComponent = store.getComponent(ref, GPDeathComponent.getComponentType());
 
-        var items = protocolComponent.getItems();
+            if(protocolComponent == null) return;
 
-        if (items == null) return;
+            var items = protocolComponent.getItems();
 
-        player.getInventory().clear();
-        player.getInventory().getCombinedEverything().addItemStacks(Arrays.stream(items).toList());
-        protocolComponent.setItems(null);
-        if (protocolComponent.getOriginal() == null) return;
+            if (items == null) return;
 
-        var original = protocolComponent.getOriginal();
-        original.setShowDeathMenu(true);
-        store.putComponent(ref, DeathComponent.getComponentType(), original);
+            player.getInventory().clear();
+            player.getInventory().getCombinedEverything().addItemStacks(Arrays.stream(items).toList());
+            protocolComponent.setItems(null);
+            if (protocolComponent.getOriginal() == null) return;
+
+            var original = protocolComponent.getOriginal();
+            original.setShowDeathMenu(true);
+            store.putComponent(ref, DeathComponent.getComponentType(), original);
+        });
     }
 }

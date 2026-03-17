@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import net.haro0.hytale.graveprotocol.components.GraveProtocolComponent;
+import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
 import net.haro0.hytale.graveprotocol.utils.DeathUtils;
 
 import javax.annotation.Nonnull;
@@ -46,7 +46,7 @@ public class DeathDecisionUi extends InteractiveCustomUIPage<DeathDecisionUi.Bin
 
         var player = store.getComponent(ref, Player.getComponentType());
         assert player != null;
-        var decisionComponent = store.getComponent(ref, GraveProtocolComponent.getComponentType());
+        var decisionComponent = store.getComponent(ref, GPDeathComponent.getComponentType());
         assert decisionComponent != null;
         switch (data.action) {
             case "Normal" -> {

@@ -1,6 +1,5 @@
 package net.haro0.hytale.graveprotocol.components;
 
-import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
@@ -17,35 +16,32 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 @Getter
 @Setter
-public class GraveProtocolComponent implements Component<EntityStore> {
+public class GPDeathComponent implements Component<EntityStore> {
 
-    public static final BuilderCodec<GraveProtocolComponent> CODEC = BuilderCodec.builder(GraveProtocolComponent.class, GraveProtocolComponent::new)
+    public static final BuilderCodec<GPDeathComponent> CODEC = BuilderCodec.builder(GPDeathComponent.class, GPDeathComponent::new)
         .append(new KeyedCodec<>("Original", DeathComponent.CODEC), (c, v) -> c.original = v, c -> c.original).add()
         .append(new KeyedCodec<>("Inventory", new ArrayCodec<>(ItemStack.CODEC, ItemStack[]::new)), (c, v) -> c.items = v, c -> c.items).add()
-        .append(new KeyedCodec<>("PrestigeIndex", Codec.INTEGER), (c, v) -> c.prestigeIndex = v, c -> c.prestigeIndex).add()
         .build();
 
     @Getter
-    private static ComponentType<EntityStore, GraveProtocolComponent> componentType;
+    private static ComponentType<EntityStore, GPDeathComponent> componentType;
 
     private DeathComponent original;
 
     private ItemStack[] items;
 
-    private int prestigeIndex = 0;
-
-    public GraveProtocolComponent() { }
+    public GPDeathComponent() { }
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {
 
-        componentType = registry.registerComponent(GraveProtocolComponent.class, "GraveProtocolComponent", CODEC);
+        componentType = registry.registerComponent(GPDeathComponent.class, "GPDeathComponent", CODEC);
     }
 
     @NullableDecl
     @Override
     @SneakyThrows
-    public GraveProtocolComponent clone() {
+    public GPDeathComponent clone() {
 
-        return (GraveProtocolComponent) super.clone();
+        return (GPDeathComponent) super.clone();
     }
 }
