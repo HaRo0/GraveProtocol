@@ -1,30 +1,21 @@
 package net.haro0.hytale.graveprotocol.interactions;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.logger.HytaleLogger;
-import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.World;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import net.haro0.hytale.graveprotocol.ui.GraveMenuUi;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-public class LynnInteraction extends SimpleBlockInteraction {
+public class LynnInteraction extends SimpleInstantInteraction {
 
     public static final BuilderCodec<LynnInteraction> CODEC = BuilderCodec.builder(
-        LynnInteraction.class, LynnInteraction::new, SimpleBlockInteraction.CODEC
-    ).documentation("Opens a simple 1-slot inventory for the player (block-aware)").build();
-
-    private static final HytaleLogger LOG = HytaleLogger.forEnclosingClass();
+        LynnInteraction.class, LynnInteraction::new, SimpleInstantInteraction.CODEC
+    ).documentation("Opens the Grave menu for the interacting player.").build();
 
     public LynnInteraction() {
 
@@ -32,13 +23,9 @@ public class LynnInteraction extends SimpleBlockInteraction {
     }
 
     @Override
-    protected void interactWithBlock(
-        @Nonnull World world,
-        @Nonnull CommandBuffer<EntityStore> commandBuffer,
+    protected void firstRun(
         @Nonnull InteractionType type,
         @Nonnull InteractionContext context,
-        @Nullable ItemStack itemInHand,
-        @Nonnull Vector3i pos,
         @Nonnull CooldownHandler cooldownHandler
     ) {
 
@@ -58,18 +45,13 @@ public class LynnInteraction extends SimpleBlockInteraction {
         if (player == null || playerRef == null) {
             return;
         }
-        world.execute(() -> player.getPageManager().openCustomPage(ref, store, new GraveMenuUi(playerRef)));
-    }
 
-    @Override
-    protected void simulateInteractWithBlock(
-        @Nonnull InteractionType type,
-        @Nonnull InteractionContext context,
-        @Nullable ItemStack itemInHand,
-        @Nonnull World world,
-        @Nonnull Vector3i targetBlock
-    ) {
-        // no-op simulation
+        var world = player.getWorld();
+        if (world == null) {
+            return;
+        }
+
+        world.execute(() -> player.getPageManager().openCustomPage(ref, store, new GraveMenuUi(playerRef)));
     }
 }
 

@@ -45,9 +45,7 @@
         }
       }
     },
-    "Interactions": {
-      "Use": "Open_Lynn_Menu"
-    }
+    "Interactions": {}
   },
   "PlayerAnimationsId": "Block",
   "Tags": {

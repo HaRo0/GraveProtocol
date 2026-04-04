@@ -116,7 +116,7 @@ public final class LevelStartService {
             return;
         }
 
-        int startIndex = Math.max(0, Math.min(wave.getSpawnPositionIndex(), spawnPositions.length - 1));
+        int startIndex = Math.clamp(wave.getSpawnPositionIndex(), 0, spawnPositions.length - 1);
         for (int i = 0; i < wave.getCount(); i++) {
             Vector3d spawnPos = spawnPositions[(startIndex + i) % spawnPositions.length].clone();
             var spawnedNpc = npcPlugin.spawnNPC(store, wave.getEntity(), null, spawnPos, Vector3f.ZERO);
