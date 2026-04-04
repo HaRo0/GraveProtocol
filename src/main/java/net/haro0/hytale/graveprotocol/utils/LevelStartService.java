@@ -3,13 +3,17 @@ package net.haro0.hytale.graveprotocol.utils;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.Frozen;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.component.Invulnerable;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import net.haro0.hytale.graveprotocol.assets.Wave;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -18,7 +22,13 @@ import java.util.concurrent.TimeUnit;
 
 public final class LevelStartService {
 
+    private static final Vector3d PATH_TARGET_BLOCK_CENTER = new Vector3d(0.5, 80.0, 0.5);
+    private static final String PATH_TARGET_SLOT = "LockedTarget";
+    private static final String PATH_TARGET_STATE = "Alerted";
+    private static final String[] TARGET_ANCHOR_ROLE_CANDIDATES = {"Sheep", "Test_Sheep", "Cow", "Pig"};
+
     private static final Set<UUID> ACTIVE_LEVELS = ConcurrentHashMap.newKeySet();
+    private static final Map<String, com.hypixel.hytale.component.Ref<EntityStore>> WORLD_PATH_TARGETS = new ConcurrentHashMap<>();
 
     private LevelStartService() {
     }
@@ -109,7 +119,16 @@ public final class LevelStartService {
         int startIndex = Math.max(0, Math.min(wave.getSpawnPositionIndex(), spawnPositions.length - 1));
         for (int i = 0; i < wave.getCount(); i++) {
             Vector3d spawnPos = spawnPositions[(startIndex + i) % spawnPositions.length].clone();
-            npcPlugin.spawnNPC(store, wave.getEntity(), null, spawnPos, Vector3f.ZERO);
+            var spawnedNpc = npcPlugin.spawnNPC(store, wave.getEntity(), null, spawnPos, Vector3f.ZERO);
+            if (spawnedNpc != null) {
+                var npcRef = spawnedNpc.first();
+                store.ensureComponent(npcRef, Invulnerable.getComponentType());
+
+                var pathTarget = ensurePathTarget(world, store);
+                if (pathTarget != null) {
+                    assignPathTarget(npcRef, pathTarget, store);
+                }
+            }
         }
 
         if (lastWave) {
@@ -125,6 +144,57 @@ public final class LevelStartService {
         }
 
         CompletableFuture.delayedExecutor(delaySeconds, TimeUnit.SECONDS, world).execute(runnable);
+    }
+
+    private static com.hypixel.hytale.component.Ref<EntityStore> ensurePathTarget(World world, com.hypixel.hytale.component.Store<EntityStore> store) {
+
+        var cached = WORLD_PATH_TARGETS.get(world.getName());
+        if (cached != null && cached.isValid()) {
+            return cached;
+        }
+
+        String roleName = pickAnchorRole();
+        if (roleName == null) {
+            return null;
+        }
+
+        var spawn = NPCPlugin.get().spawnNPC(store, roleName, null, PATH_TARGET_BLOCK_CENTER.clone(), Vector3f.ZERO);
+        if (spawn == null) {
+            return null;
+        }
+
+        var anchorRef = spawn.first();
+        store.ensureComponent(anchorRef, Invulnerable.getComponentType());
+        store.ensureComponent(anchorRef, Frozen.getComponentType());
+        WORLD_PATH_TARGETS.put(world.getName(), anchorRef);
+        return anchorRef;
+    }
+
+    private static String pickAnchorRole() {
+
+        var npcPlugin = NPCPlugin.get();
+        for (String candidate : TARGET_ANCHOR_ROLE_CANDIDATES) {
+            if (npcPlugin.getIndex(candidate) >= 0) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    private static void assignPathTarget(
+        com.hypixel.hytale.component.Ref<EntityStore> npcRef,
+        com.hypixel.hytale.component.Ref<EntityStore> targetRef,
+        com.hypixel.hytale.component.Store<EntityStore> store
+    ) {
+
+        var npc = store.getComponent(npcRef, NPCEntity.getComponentType());
+        if (npc == null || npc.getRole() == null) {
+            return;
+        }
+
+        var role = npc.getRole();
+        role.getMarkedEntitySupport().setMarkedEntity(PATH_TARGET_SLOT, targetRef);
+        role.getStateSupport().setState(npcRef, PATH_TARGET_STATE, null, store);
     }
 }
 
