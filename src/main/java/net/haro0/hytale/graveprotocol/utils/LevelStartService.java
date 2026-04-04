@@ -1,39 +1,35 @@
 package net.haro0.hytale.graveprotocol.utils;
 
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.entity.Frozen;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.Invulnerable;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import net.haro0.hytale.graveprotocol.assets.Wave;
+import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.components.LynnComponent;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 public final class LevelStartService {
 
-    private static final Vector3d PATH_TARGET_BLOCK_CENTER = new Vector3d(0.5, 80.0, 0.5);
     private static final String PATH_TARGET_SLOT = "LockedTarget";
     private static final String PATH_TARGET_STATE = "Alerted";
-    private static final String[] TARGET_ANCHOR_ROLE_CANDIDATES = {"Sheep", "Test_Sheep", "Cow", "Pig"};
-
-    private static final Set<UUID> ACTIVE_LEVELS = ConcurrentHashMap.newKeySet();
-    private static final Map<String, com.hypixel.hytale.component.Ref<EntityStore>> WORLD_PATH_TARGETS = new ConcurrentHashMap<>();
 
     private LevelStartService() {
     }
 
-    public static void startLevel(com.hypixel.hytale.component.Ref<EntityStore> ref, com.hypixel.hytale.component.Store<EntityStore> store) {
+    public static void startLevel(Ref<EntityStore> ref, Store<EntityStore> store) {
 
         var player = store.getComponent(ref, Player.getComponentType());
         if (player == null) {
@@ -45,30 +41,19 @@ public final class LevelStartService {
             return;
         }
 
-        UUID uuid = playerId.getUuid();
-        if (!ACTIVE_LEVELS.add(uuid)) {
-            var playerRef = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
-            if (playerRef != null) {
-                playerRef.sendMessage(Message.raw("A level is already running."));
-            }
-            return;
-        }
-
         var level = LevelUtils.getPlayerLevel(ref, store);
         if (level == null) {
-            ACTIVE_LEVELS.remove(uuid);
             return;
         }
 
-        var data = store.ensureAndGetComponent(ref, net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent.getComponentType());
+        var data = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
         var prestige = PrestigeUtils.getPrestige(data);
         var spawnPositions = prestige.getPositions();
         if (spawnPositions == null || spawnPositions.length == 0) {
-            ACTIVE_LEVELS.remove(uuid);
             return;
         }
 
-        var playerRef = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+        var playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (playerRef != null) {
             playerRef.sendMessage(Message.raw("Starting level " + level.getId() + "..."));
         }
@@ -77,42 +62,37 @@ public final class LevelStartService {
         long totalDelaySeconds = 0;
         Wave[] waves = level.getWaves();
 
+        var pathTarget = findTarget(store);
+
         for (int i = 0; i < waves.length; i++) {
             Wave wave = waves[i];
             long scheduledDelay = totalDelaySeconds;
-            boolean lastWave = i == waves.length - 1;
-            runLater(world, scheduledDelay, () -> spawnWave(ref, store, world, wave, spawnPositions, lastWave, uuid));
+            runLater(world, scheduledDelay, () -> spawnWave(ref, store, world, wave, spawnPositions, pathTarget));
             totalDelaySeconds += Math.max(0, wave.getWaveDelay());
         }
     }
 
     private static void spawnWave(
-        com.hypixel.hytale.component.Ref<EntityStore> ref,
-        com.hypixel.hytale.component.Store<EntityStore> store,
+        Ref<EntityStore> ref,
+        Store<EntityStore> store,
         World world,
         Wave wave,
         Vector3d[] spawnPositions,
-        boolean lastWave,
-        UUID playerId
+        Ref<EntityStore> pathTarget
     ) {
 
         if (!ref.isValid()) {
-            ACTIVE_LEVELS.remove(playerId);
             return;
         }
 
         var player = store.getComponent(ref, Player.getComponentType());
         if (player == null || player.getWorld() != world) {
-            ACTIVE_LEVELS.remove(playerId);
             return;
         }
 
         var npcPlugin = NPCPlugin.get();
         int roleIndex = npcPlugin.getIndex(wave.getEntity());
         if (roleIndex < 0) {
-            if (lastWave) {
-                ACTIVE_LEVELS.remove(playerId);
-            }
             return;
         }
 
@@ -124,16 +104,30 @@ public final class LevelStartService {
                 var npcRef = spawnedNpc.first();
                 store.ensureComponent(npcRef, Invulnerable.getComponentType());
 
-                var pathTarget = ensurePathTarget(world, store);
                 if (pathTarget != null) {
                     assignPathTarget(npcRef, pathTarget, store);
                 }
             }
         }
+    }
 
-        if (lastWave) {
-            ACTIVE_LEVELS.remove(playerId);
+    private static Ref<EntityStore> findTarget(Store<EntityStore> store) {
+
+        var target = new AtomicReference<Ref<EntityStore>>();
+        store.forEachChunk(LynnComponent.getComponentType(), (chunk, ignored) -> {
+            if (chunk.size() == 0) {
+                return false;
+            }
+
+            target.set(chunk.getReferenceTo(0));
+            return true;
+        });
+
+        var found = target.get();
+        if (found == null || !found.isValid()) {
+            return null;
         }
+        return found;
     }
 
     private static void runLater(World world, long delaySeconds, Runnable runnable) {
@@ -144,41 +138,6 @@ public final class LevelStartService {
         }
 
         CompletableFuture.delayedExecutor(delaySeconds, TimeUnit.SECONDS, world).execute(runnable);
-    }
-
-    private static com.hypixel.hytale.component.Ref<EntityStore> ensurePathTarget(World world, com.hypixel.hytale.component.Store<EntityStore> store) {
-
-        var cached = WORLD_PATH_TARGETS.get(world.getName());
-        if (cached != null && cached.isValid()) {
-            return cached;
-        }
-
-        String roleName = pickAnchorRole();
-        if (roleName == null) {
-            return null;
-        }
-
-        var spawn = NPCPlugin.get().spawnNPC(store, roleName, null, PATH_TARGET_BLOCK_CENTER.clone(), Vector3f.ZERO);
-        if (spawn == null) {
-            return null;
-        }
-
-        var anchorRef = spawn.first();
-        store.ensureComponent(anchorRef, Invulnerable.getComponentType());
-        store.ensureComponent(anchorRef, Frozen.getComponentType());
-        WORLD_PATH_TARGETS.put(world.getName(), anchorRef);
-        return anchorRef;
-    }
-
-    private static String pickAnchorRole() {
-
-        var npcPlugin = NPCPlugin.get();
-        for (String candidate : TARGET_ANCHOR_ROLE_CANDIDATES) {
-            if (npcPlugin.getIndex(candidate) >= 0) {
-                return candidate;
-            }
-        }
-        return null;
     }
 
     private static void assignPathTarget(

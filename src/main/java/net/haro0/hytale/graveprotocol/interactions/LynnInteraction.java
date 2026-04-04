@@ -33,7 +33,6 @@ public class LynnInteraction extends SimpleInstantInteraction {
             return;
         }
 
-
         var ref = context.getEntity();
         if (!ref.isValid()) {
             return;

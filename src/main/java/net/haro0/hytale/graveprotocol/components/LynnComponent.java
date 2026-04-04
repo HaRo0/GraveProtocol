@@ -12,9 +12,9 @@ import lombok.SneakyThrows;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 @Getter
-public class LevelDataComponent implements Component<EntityStore> {
+public class LynnComponent implements Component<EntityStore> {
 
-    public static final BuilderCodec<LevelDataComponent> CODEC = BuilderCodec.builder(LevelDataComponent.class, LevelDataComponent::new)
+    public static final BuilderCodec<LynnComponent> CODEC = BuilderCodec.builder(LynnComponent.class, LynnComponent::new)
         .append(new KeyedCodec<>("LevelIndex", Codec.INTEGER), (c, v) -> c.levelIndex = v, c -> c.levelIndex).add()
         .append(new KeyedCodec<>("PrestigeIndex", Codec.INTEGER), (c, v) -> c.prestigeIndex = v, c -> c.prestigeIndex).add()
         .append(new KeyedCodec<>("WaitedTime", Codec.FLOAT), (c, v) -> c.waitedTime = v, c -> c.waitedTime).add()
@@ -22,7 +22,7 @@ public class LevelDataComponent implements Component<EntityStore> {
         .build();
 
     @Getter
-    private static ComponentType<EntityStore, LevelDataComponent> componentType;
+    private static ComponentType<EntityStore, LynnComponent> componentType;
 
     private int levelIndex;
 
@@ -34,14 +34,14 @@ public class LevelDataComponent implements Component<EntityStore> {
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {
 
-        componentType = registry.registerComponent(LevelDataComponent.class, "LevelDataComponent", CODEC);
+        componentType = registry.registerComponent(LynnComponent.class, "LevelDataComponent", CODEC);
     }
 
     @NullableDecl
     @Override
     @SneakyThrows
-    public LevelDataComponent clone() {
+    public LynnComponent clone() {
 
-        return (LevelDataComponent) super.clone();
+        return (LynnComponent) super.clone();
     }
 }

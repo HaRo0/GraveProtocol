@@ -6,24 +6,29 @@ import com.hypixel.hytale.component.Holder;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
+import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.Frozen;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
-import com.hypixel.hytale.server.core.modules.entity.component.DisplayNameComponent;
-import com.hypixel.hytale.server.core.modules.entity.component.HeadRotation;
-import com.hypixel.hytale.server.core.modules.entity.component.Invulnerable;
-import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.modules.entity.component.*;
+import com.hypixel.hytale.server.core.modules.interaction.Interactions;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
 import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.components.LynnComponent;
 
 import java.util.concurrent.CompletableFuture;
 
 public final class DeathUtils {
+    private static final String ROLE_NAME = "Fox";
+    private static final String MENU_INTERACTION_ID = "Open_Lynn_Menu";
+    private static final String MENU_INTERACTION_HINT = "server.interactionHints.generic";
 
     private DeathUtils() { }
 
@@ -50,25 +55,30 @@ public final class DeathUtils {
                 w.execute(() -> {
                     var entityStore = w.getEntityStore().getStore();
 
-                    var name = "Fox";
-
-                    var index = NPCPlugin.get().getBuilderManager().getIndex(name);
-
-                    //var shop = NPCPlugin.get().spawnNPC(w.getEntityStore().getStore(), "Fox", null, transformComponent.getPosition(), Vector3f.ZERO);
-
-                    Holder<EntityStore> holder = EntityStore.REGISTRY.newHolder();
-                    holder.addComponent(TransformComponent.getComponentType(), new TransformComponent(transformComponent.getPosition(), Vector3f.ZERO));
-                    holder.addComponent(HeadRotation.getComponentType(), new HeadRotation(Vector3f.ZERO));
-                    DisplayNameComponent displayNameComponent = new DisplayNameComponent(Message.raw(name));
-                    holder.addComponent(DisplayNameComponent.getComponentType(), displayNameComponent);
-                    holder.ensureComponent(UUIDComponent.getComponentType());
-
-                    Ref<EntityStore> npcRef = entityStore.addEntity(holder, AddReason.SPAWN);
-
-                    entityStore.ensureComponent(npcRef, Invulnerable.getComponentType());
+                        ensureMenuNpc(entityStore, prestige.getShopPosition());
                 });
                 return w;
             });
         });
     }
+
+    private static void ensureMenuNpc(Store<EntityStore> store, Vector3d spawnNear) {
+
+        var spawnPos = spawnNear.clone();
+        var spawn = NPCPlugin.get().spawnNPC(store, ROLE_NAME, null, spawnPos, Vector3f.ZERO);
+        if (spawn == null) {
+            return;
+        }
+
+        var npcRef = spawn.first();
+        var interactions = store.ensureAndGetComponent(npcRef, Interactions.getComponentType());
+        interactions.setInteractionId(InteractionType.Use, MENU_INTERACTION_ID);
+        interactions.setInteractionHint(MENU_INTERACTION_HINT);
+        store.putComponent(npcRef, Interactions.getComponentType(), interactions);
+        store.ensureComponent(npcRef, Interactable.getComponentType());
+        store.ensureComponent(npcRef, Invulnerable.getComponentType());
+        store.ensureComponent(npcRef, Frozen.getComponentType());
+        store.ensureComponent(npcRef, LynnComponent.getComponentType());
+    }
+
 }
