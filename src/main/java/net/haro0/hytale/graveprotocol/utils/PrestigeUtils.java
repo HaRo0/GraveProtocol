@@ -23,6 +23,11 @@ public class PrestigeUtils {
         if (component.getPrestigeIndex() >= prestiges.length) {
             component.setPrestigeIndex(prestiges.length - 1);
         }
+
+        if(component.getPrestigeIndex() < 0) {
+            component.setPrestigeIndex(0);
+        }
+
         return prestiges[component.getPrestigeIndex()];
     }
 }

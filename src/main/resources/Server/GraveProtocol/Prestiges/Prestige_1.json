@@ -1,0 +1,16 @@
+{
+  "Instance": "Grave_Protocol_1",
+  "OrderPosition": 0,
+  "SpawnPositions": [
+    { "X": 0.5,  "Y": 80.0, "Z": 8.5  },
+    { "X": 8.5,  "Y": 80.0, "Z": 0.5  },
+    { "X": 0.5,  "Y": 80.0, "Z": -7.5 },
+    { "X": -7.5, "Y": 80.0, "Z": 0.5  }
+  ],
+  "ShopPosition": { "X": 0.5, "Y": 80.0, "Z": 16.5 },
+  "HealthMultiplier": 1.0,
+  "AttackMultiplier": 1.0,
+  "EnemyHealthMultiplier": 1.0,
+  "EnemyAttackMultiplier": 1.0
+}
+

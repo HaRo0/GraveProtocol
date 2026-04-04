@@ -86,19 +86,16 @@ tasks.register('updatePluginManifest') {
 // Guarded creation/update to avoid duplicate run-configuration errors
 def runConfs = idea.project.settings.runConfigurations
 
-// Previously we attempted to create an IDEA run configuration here. That
-// can fail during Gradle configuration if the IDE workspace already has a
-// run configuration with the same name. We avoid touching IDEA run
-// configurations during the Gradle configuration phase to keep the build
-// stable. Instead we compute the program parameters string that IDE configs
-// or external scripts can reuse.
+afterEvaluate {
+    tasks.named('runServer') {
+        if (includes_pack.toBoolean()) {
+            args += "--mods=${file('src/main/resources').absolutePath}"
+        }
+        if (load_user_mods.toBoolean()) {
+            args += "--mods=$hytaleHome/UserData/Mods"
+        }
 
-def programParamsBase = "--allow-op --assets=${file("$hytaleHome/install/$patchline/package/game/latest/Assets.zip").absolutePath}"
-if (includes_pack.toBoolean()) {
-    programParamsBase += " --mods=${sourceSets.main.java.srcDirs.first().parentFile.absolutePath}"
-}
-if (load_user_mods.toBoolean()) {
-    programParamsBase += " --mods=$hytaleHome/UserData/Mods"
+    }
 }
 
 // If you want an IDEA run configuration created automatically, use a separate

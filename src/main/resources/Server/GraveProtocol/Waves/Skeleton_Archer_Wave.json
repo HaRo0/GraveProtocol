@@ -1,0 +1,11 @@
+{
+  "Entity": "Skeleton_Archer",
+  "Count": 4,
+  "HealthMultiplier": 0.8,
+  "AttackMultiplier": 1.0,
+  "WaveDelay": 2,
+  "DelayAfterKill": false,
+  "SpawnPositionStart": 0,
+  "SpawnPositionEnd": 3
+}
+

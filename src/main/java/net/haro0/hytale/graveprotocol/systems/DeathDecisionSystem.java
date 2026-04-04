@@ -9,7 +9,6 @@ import com.hypixel.hytale.component.dependency.SystemDependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.asset.type.gameplay.DeathConfig;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.entity.entities.player.pages.PageManager;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -53,16 +52,23 @@ public class DeathDecisionSystem extends DeathSystems.OnDeathSystem {
 
         assert playerRefComponent != null;
 
-        PageManager pageManager = playerComponent.getPageManager();
-        pageManager.openCustomPage(
-            ref, store, new DeathDecisionUi(playerRefComponent)
-        );
         var gpComponent = commandBuffer.ensureAndGetComponent(ref, GPDeathComponent.getComponentType());
         gpComponent.setOriginal((DeathComponent) component.clone());
         component.setShowDeathMenu(false);
         component.setItemsLossMode(DeathConfig.ItemsLossMode.NONE);
         component.setItemsDurabilityLossPercentage(0);
         commandBuffer.removeComponent(ref, DeathComponent.getComponentType());
+
+        var world = playerComponent.getWorld();
+        assert world != null;
+
+        // Open after respawn cleanup runs; otherwise ClearRespawnUI immediately dismisses this custom page.
+        world.execute(() -> {
+            if (!ref.isValid() || store.getComponent(ref, Player.getComponentType()) == null) {
+                return;
+            }
+            playerComponent.getPageManager().openCustomPage(ref, store, new DeathDecisionUi(playerRefComponent));
+        });
     }
 
     @NullableDecl

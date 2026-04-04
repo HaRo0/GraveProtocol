@@ -31,7 +31,8 @@ public class PlayerEvents {
             if (items == null) return;
 
             player.getInventory().clear();
-            player.getInventory().getCombinedEverything().addItemStacks(Arrays.stream(items).toList());
+
+            player.getInventory().getCombinedHotbarUtilityConsumableStorage().addItemStacks(Arrays.stream(items).toList());
             protocolComponent.setItems(null);
             if (protocolComponent.getOriginal() == null) return;
 

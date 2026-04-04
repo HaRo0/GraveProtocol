@@ -1,0 +1,24 @@
+$C = "../Common.ui";
+Group {
+  LayoutMode: Top;
+  Background: #2a2a2a;
+  Anchor: (Width: 800, Height: 500);
+  Padding: (Full: 0);
+  Label #Title {
+    Padding: (Full: 0);
+    Text: "Grave Protocol";
+    Style: (TextColor: #ffffff, HorizontalAlignment: Center);
+  }
+  $C.@TextButton #Shop {
+    Padding: (Full: 0);
+    Text: "Shop";
+  }
+  $C.@TextButton #Prestige {
+    Padding: (Full: 0);
+    Text: "Prestige";
+  }
+  $C.@TextButton #StartLevel {
+    Padding: (Full: 0);
+    Text: "Start Level";
+  }
+}

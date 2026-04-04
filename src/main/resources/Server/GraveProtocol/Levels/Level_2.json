@@ -1,0 +1,40 @@
+{
+  "Waves": [
+    {
+      "Entity": "Skeleton_Fighter",
+      "Count": 5,
+      "HealthMultiplier": 1.0,
+      "AttackMultiplier": 1.0,
+      "WaveDelay": 0,
+      "DelayAfterKill": false,
+      "SpawnPositionStart": 0,
+      "SpawnPositionEnd": 3
+    },
+    {
+      "Entity": "Skeleton_Archer",
+      "Count": 4,
+      "HealthMultiplier": 0.8,
+      "AttackMultiplier": 1.0,
+      "WaveDelay": 3,
+      "DelayAfterKill": false,
+      "SpawnPositionStart": 0,
+      "SpawnPositionEnd": 3
+    },
+    {
+      "Entity": "Skeleton_Fighter",
+      "Count": 6,
+      "HealthMultiplier": 1.0,
+      "AttackMultiplier": 1.0,
+      "WaveDelay": 5,
+      "DelayAfterKill": true,
+      "SpawnPositionStart": 0,
+      "SpawnPositionEnd": 3
+    }
+  ],
+  "Order": 1,
+  "MinPrestige": 0,
+  "MaxPrestige": 0,
+  "HealthMultiplier": 1.0,
+  "AttackMultiplier": 1.0
+}
+

@@ -40,7 +40,7 @@ public final class DeathUtils {
         var dataComponent = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
         var prestige = PrestigeUtils.getPrestige(dataComponent);
         world.execute(() -> {
-            deathComponent.setItems(player.getInventory().getCombinedEverything().removeAllItemStacks().toArray(ItemStack[]::new));
+            deathComponent.setItems(player.getInventory().dropAllItemStacks().toArray(ItemStack[]::new));
             player.markNeedsSave();
             CompletableFuture<World> worldFuture = InstancesPlugin.get().spawnInstance(prestige.getInstance(), world, new Transform(transformComponent.getPosition().clone(), Vector3f.FORWARD));
             InstancesPlugin.teleportPlayerToLoadingInstance(ref, store, worldFuture, null);
