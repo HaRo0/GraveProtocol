@@ -8,11 +8,13 @@ import net.haro0.hytale.graveprotocol.assets.GPAssets;
 import net.haro0.hytale.graveprotocol.commands.GPCommand;
 import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
 import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.components.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.components.LynnComponent;
 import net.haro0.hytale.graveprotocol.events.PlayerEvents;
 import net.haro0.hytale.graveprotocol.interactions.LynnInteraction;
 import net.haro0.hytale.graveprotocol.systems.DeathDecisionSystem;
 import net.haro0.hytale.graveprotocol.systems.LevelSystem;
+import net.haro0.hytale.graveprotocol.systems.LynnDamageSystem;
 
 public class GraveProtocol extends JavaPlugin {
 
@@ -32,6 +34,7 @@ public class GraveProtocol extends JavaPlugin {
         new GPAssets(eventRegistry).registerAll();
         GPDeathComponent.register(entityRegistry);
         LynnComponent.register(entityRegistry);
+        LynnAttackerComponent.register(entityRegistry);
         GPPlayerDataComponent.register(entityRegistry);
 
         Interaction.CODEC.register("OpenLynnMenu", LynnInteraction.class, LynnInteraction.CODEC);
@@ -39,6 +42,7 @@ public class GraveProtocol extends JavaPlugin {
 
         entityRegistry.registerSystem(new DeathDecisionSystem());
         entityRegistry.registerSystem(new LevelSystem());
+        entityRegistry.registerSystem(new LynnDamageSystem());
         cmdRegistry.registerCommand(new GPCommand());
 
     }

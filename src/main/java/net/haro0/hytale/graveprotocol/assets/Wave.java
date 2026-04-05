@@ -24,11 +24,11 @@ public class Wave implements JsonAssetWithMap<String, AssetMap<String, Wave>> {
         .append(new KeyedCodec<>("Count", Codec.INTEGER), (w, c) -> w.count = c, w -> w.count)
         .addValidator(Validators.min(1))
         .add()
-        .append(new KeyedCodec<>("HealthMultiplier", Codec.FLOAT), (w, h) -> w.healthMultiplier = h, w -> w.healthMultiplier)
-        .addValidator(Validators.min(0.1f))
+        .append(new KeyedCodec<>("Health", Codec.INTEGER), (w, h) -> w.health = h, w -> w.health)
+        .addValidator(Validators.min(1))
         .add()
-        .append(new KeyedCodec<>("AttackMultiplier", Codec.FLOAT), (w, a) -> w.attackMultiplier = a, w -> w.attackMultiplier)
-        .addValidator(Validators.min(0.1f))
+        .append(new KeyedCodec<>("Attack", Codec.INTEGER), (w, a) -> w.attack = a, w -> w.attack)
+        .addValidator(Validators.min(1))
         .add()
         .append(new KeyedCodec<>("WaveDelay", Codec.INTEGER), (w, d) -> w.waveDelay = d, w -> w.waveDelay)
         .addValidator(Validators.min(0))
@@ -53,9 +53,9 @@ public class Wave implements JsonAssetWithMap<String, AssetMap<String, Wave>> {
 
     private int count = 1;
 
-    private float healthMultiplier = 1.0f;
+    private int health = 100;
 
-    private float attackMultiplier = 1.0f;
+    private int attack = 5;
 
     private int waveDelay = 0;
 

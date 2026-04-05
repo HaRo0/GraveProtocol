@@ -15,6 +15,7 @@ import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import net.haro0.hytale.graveprotocol.assets.Wave;
 import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.components.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.components.LynnComponent;
 
 import java.util.concurrent.CompletableFuture;
@@ -103,6 +104,7 @@ public final class LevelStartService {
             if (spawnedNpc != null) {
                 var npcRef = spawnedNpc.first();
                 store.ensureComponent(npcRef, Invulnerable.getComponentType());
+                store.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(i,wave.getHealth(), wave.getAttack()));
 
                 if (pathTarget != null) {
                     assignPathTarget(npcRef, pathTarget, store);

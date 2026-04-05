@@ -76,7 +76,6 @@ public final class DeathUtils {
         interactions.setInteractionHint(MENU_INTERACTION_HINT);
         store.putComponent(npcRef, Interactions.getComponentType(), interactions);
         store.ensureComponent(npcRef, Interactable.getComponentType());
-        store.ensureComponent(npcRef, Invulnerable.getComponentType());
         store.ensureComponent(npcRef, Frozen.getComponentType());
         store.ensureComponent(npcRef, LynnComponent.getComponentType());
     }
