@@ -1,4 +1,4 @@
-package net.haro0.hytale.graveprotocol.components;
+package net.haro0.hytale.graveprotocol.codecs.components.npcs;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -10,7 +10,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.SneakyThrows;
+import net.haro0.hytale.graveprotocol.codecs.data.Attacker;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 @Getter
@@ -20,8 +21,7 @@ public class LynnAttackerComponent implements Component<EntityStore> {
 
     public static final BuilderCodec<LynnAttackerComponent> CODEC = BuilderCodec.builder(LynnAttackerComponent.class, LynnAttackerComponent::new)
         .append(new KeyedCodec<>("WaveIndex", Codec.INTEGER), (c, v) -> c.waveIndex = v, c -> c.waveIndex).add()
-        .append(new KeyedCodec<>("Health", Codec.INTEGER), (c, v) -> c.health = v, c -> c.health).add()
-        .append(new KeyedCodec<>("AttackDamage", Codec.INTEGER), (c, v) -> c.attackDamage = v, c -> c.attackDamage).add()
+        .append(new KeyedCodec<>("AttackerData",Attacker.CODEC), (c,a) -> c.attackerData = a, c -> c.attackerData).add()
         .build();
 
     @Getter
@@ -29,9 +29,7 @@ public class LynnAttackerComponent implements Component<EntityStore> {
 
     private int waveIndex;
 
-    private int health;
-
-    private int attackDamage;
+    private Attacker attackerData;
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {
 
@@ -39,11 +37,8 @@ public class LynnAttackerComponent implements Component<EntityStore> {
     }
     @NullableDecl
     @Override
+    @SneakyThrows
     public LynnAttackerComponent clone() {
-        try {
-            return (LynnAttackerComponent) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+        return (LynnAttackerComponent) super.clone();
     }
 }

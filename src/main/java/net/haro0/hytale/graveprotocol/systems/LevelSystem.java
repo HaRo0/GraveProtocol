@@ -6,11 +6,9 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import net.haro0.hytale.graveprotocol.components.LynnComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
-
-import java.util.Arrays;
 
 public class LevelSystem extends EntityTickingSystem<EntityStore> {
 

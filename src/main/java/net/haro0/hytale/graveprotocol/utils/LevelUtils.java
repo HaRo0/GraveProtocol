@@ -2,12 +2,11 @@ package net.haro0.hytale.graveprotocol.utils;
 
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import net.haro0.hytale.graveprotocol.assets.Level;
-import net.haro0.hytale.graveprotocol.assets.Prestige;
-import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.codecs.assets.Level;
+import net.haro0.hytale.graveprotocol.codecs.assets.Prestige;
+import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
 
 import java.util.Comparator;
 

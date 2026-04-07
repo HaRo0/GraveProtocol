@@ -1,4 +1,4 @@
-package net.haro0.hytale.graveprotocol.assets;
+package net.haro0.hytale.graveprotocol.codecs.assets;
 
 import com.hypixel.hytale.assetstore.AssetExtraInfo;
 import com.hypixel.hytale.assetstore.AssetMap;
@@ -13,6 +13,7 @@ import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
 import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.math.vector.Vector3d;
 import lombok.Getter;
+import net.haro0.hytale.graveprotocol.codecs.data.MultiplierCollection;
 
 @Getter
 public class Prestige implements JsonAssetWithMap<String, AssetMap<String, Prestige>> {
@@ -30,17 +31,7 @@ public class Prestige implements JsonAssetWithMap<String, AssetMap<String, Prest
         .add()
         .append(new KeyedCodec<>("ShopPosition", Vector3d.CODEC), (w, v) -> w.shopPosition = v, w -> w.shopPosition)
         .add()
-        .append(new KeyedCodec<>("HealthMultiplier", Codec.FLOAT), (w, h) -> w.healthMultiplier = h, w -> w.healthMultiplier)
-        .addValidator(Validators.min(0.1f))
-        .add()
-        .append(new KeyedCodec<>("AttackMultiplier", Codec.FLOAT), (w, a) -> w.attackMultiplier = a, w -> w.attackMultiplier)
-        .addValidator(Validators.min(0.1f))
-        .add()
-        .append(new KeyedCodec<>("EnemyHealthMultiplier", Codec.FLOAT), (w, h) -> w.enemyHealthMultiplier = h, w -> w.enemyHealthMultiplier)
-        .addValidator(Validators.min(0.1f))
-        .add()
-        .append(new KeyedCodec<>("EnemyAttackMultiplier", Codec.FLOAT), (w, a) -> w.enemyAttackMultiplier = a, w -> w.enemyAttackMultiplier)
-        .addValidator(Validators.min(0.1f))
+        .append(new KeyedCodec<>("Multipliers", MultiplierCollection.CODEC), (w,v) -> w.multipliers = v, w -> w.multipliers)
         .add()
         .build();
 
@@ -58,13 +49,7 @@ public class Prestige implements JsonAssetWithMap<String, AssetMap<String, Prest
 
     private Vector3d shopPosition;
 
-    private float healthMultiplier = 1.0f;
-
-    private float attackMultiplier = 1.0f;
-
-    private float enemyHealthMultiplier = 1.0f;
-
-    private float enemyAttackMultiplier = 1.0f;
+    private MultiplierCollection multipliers;
 
     public static AssetStore<String, Prestige, AssetMap<String, Prestige>> getAssetStore() {
 

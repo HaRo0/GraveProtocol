@@ -14,7 +14,7 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.NonNull;
-import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.GPDeathComponent;
 import net.haro0.hytale.graveprotocol.ui.DeathDecisionUi;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;

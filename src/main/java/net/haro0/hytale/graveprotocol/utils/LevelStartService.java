@@ -13,10 +13,10 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
-import net.haro0.hytale.graveprotocol.assets.Wave;
-import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
-import net.haro0.hytale.graveprotocol.components.LynnAttackerComponent;
-import net.haro0.hytale.graveprotocol.components.LynnComponent;
+import net.haro0.hytale.graveprotocol.codecs.assets.Wave;
+import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -97,14 +97,12 @@ public final class LevelStartService {
             return;
         }
 
-        int startIndex = Math.clamp(wave.getSpawnPositionIndex(), 0, spawnPositions.length - 1);
         for (int i = 0; i < wave.getCount(); i++) {
-            Vector3d spawnPos = spawnPositions[(startIndex + i) % spawnPositions.length].clone();
+            Vector3d spawnPos = spawnPositions[i % spawnPositions.length].clone();
             var spawnedNpc = npcPlugin.spawnNPC(store, wave.getEntity(), null, spawnPos, Vector3f.ZERO);
             if (spawnedNpc != null) {
                 var npcRef = spawnedNpc.first();
-                store.ensureComponent(npcRef, Invulnerable.getComponentType());
-                store.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(i,wave.getHealth(), wave.getAttack()));
+                store.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(i,wave.getAttackData()));
 
                 if (pathTarget != null) {
                     assignPathTarget(npcRef, pathTarget, store);
@@ -143,9 +141,9 @@ public final class LevelStartService {
     }
 
     private static void assignPathTarget(
-        com.hypixel.hytale.component.Ref<EntityStore> npcRef,
-        com.hypixel.hytale.component.Ref<EntityStore> targetRef,
-        com.hypixel.hytale.component.Store<EntityStore> store
+        Ref<EntityStore> npcRef,
+        Ref<EntityStore> targetRef,
+        Store<EntityStore> store
     ) {
 
         var npc = store.getComponent(npcRef, NPCEntity.getComponentType());

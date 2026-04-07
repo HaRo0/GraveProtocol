@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.GPDeathComponent;
 import net.haro0.hytale.graveprotocol.utils.DeathUtils;
 
 import javax.annotation.Nonnull;

@@ -1,17 +1,13 @@
 package net.haro0.hytale.graveprotocol.utils;
 
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
-import com.hypixel.hytale.component.AddReason;
-import com.hypixel.hytale.component.Holder;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.protocol.InteractionType;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.Frozen;
-import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.*;
@@ -19,9 +15,9 @@ import com.hypixel.hytale.server.core.modules.interaction.Interactions;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
-import net.haro0.hytale.graveprotocol.components.GPDeathComponent;
-import net.haro0.hytale.graveprotocol.components.GPPlayerDataComponent;
-import net.haro0.hytale.graveprotocol.components.LynnComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.GPDeathComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 
 import java.util.concurrent.CompletableFuture;
 
