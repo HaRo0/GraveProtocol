@@ -16,10 +16,10 @@ public class MultiplierCollection {
         .append(new KeyedCodec<>("ShopHealthMultiplier", Codec.FLOAT), (w, h) -> w.shopHealthMultiplier = h, w -> w.shopHealthMultiplier)
         .addValidator(Validators.min(0.1f))
         .add()
-        .append(new KeyedCodec<>("TowerHealthMultiplier", Codec.FLOAT), (w, h) -> w.healthMultiplier = h, w -> w.healthMultiplier)
+        .append(new KeyedCodec<>("TowerHealthMultiplier", Codec.FLOAT), (w, h) -> w.towerHealthMultiplier = h, w -> w.towerHealthMultiplier)
         .addValidator(Validators.min(0.1f))
         .add()
-        .append(new KeyedCodec<>("TowerAttackMultiplier", Codec.FLOAT), (w, a) -> w.attackMultiplier = a, w -> w.attackMultiplier)
+        .append(new KeyedCodec<>("TowerAttackMultiplier", Codec.FLOAT), (w, a) -> w.towerAttackMultiplier = a, w -> w.towerAttackMultiplier)
         .addValidator(Validators.min(0.1f))
         .add()
         .append(new KeyedCodec<>("EnemyHealthMultiplier", Codec.FLOAT), (w, h) -> w.enemyHealthMultiplier = h, w -> w.enemyHealthMultiplier)
@@ -32,9 +32,9 @@ public class MultiplierCollection {
 
 
     private float shopHealthMultiplier = 1.0f;
-    private float healthMultiplier = 1.0f;
+    private float towerHealthMultiplier = 1.0f;
 
-    private float attackMultiplier = 1.0f;
+    private float towerAttackMultiplier = 1.0f;
 
     private float enemyHealthMultiplier = 1.0f;
 

@@ -1,0 +1,14 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Scout",
+      "Count": 10
+    },
+    {
+      "Enemy": "Enemy_Pyro",
+      "Count": 4
+    }
+  ]
+}
+
+

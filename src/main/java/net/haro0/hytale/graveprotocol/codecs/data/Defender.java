@@ -4,12 +4,14 @@ import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.map.EnumMapCodec;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.Map;
 
+@Getter
 public class Defender {
 
     public static final BuilderCodec<Defender> CODEC = BuilderCodec.builder(Defender.class, Defender::new)

@@ -1,5 +1,6 @@
 package net.haro0.hytale.graveprotocol.utils;
 
+import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
@@ -8,6 +9,11 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.Invulnerable;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
+import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
+import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -37,11 +43,6 @@ public final class LevelStartService {
             return;
         }
 
-        var playerId = store.getComponent(ref, UUIDComponent.getComponentType());
-        if (playerId == null) {
-            return;
-        }
-
         var level = LevelUtils.getPlayerLevel(ref, store);
         if (level == null) {
             return;
@@ -60,22 +61,50 @@ public final class LevelStartService {
         }
 
         World world = player.getWorld();
-        long totalDelaySeconds = 0;
         Wave[] waves = level.getWaves();
 
         var pathTarget = findTarget(store);
 
-        for (int i = 0; i < waves.length; i++) {
-            Wave wave = waves[i];
-            long scheduledDelay = totalDelaySeconds;
-            runLater(world, scheduledDelay, () -> spawnWave(ref, store, world, wave, spawnPositions, pathTarget));
-            totalDelaySeconds += Math.max(0, wave.getWaveDelay());
-        }
+        var lynnComponent = store.getComponent(pathTarget, LynnComponent.getComponentType());
+
+        if(lynnComponent == null) return;
+
+        lynnComponent.setWaveIndex(0);
+
+        lynnComponent.setDefender(level.getShopStats());
+        lynnComponent.setMultipliers(prestige.getMultipliers(),level.getMultipliers());
+
+
+        var statMap = store.getComponent(pathTarget, EntityStatMap.getComponentType());
+        var prevHealth = statMap.get(DefaultEntityStatTypes.getHealth()).getMax();
+        var additionalHealth = lynnComponent.getDefender().getHealth() * lynnComponent.getMultipliers().getShopHealthMultiplier() - prevHealth;
+        statMap.putModifier(DefaultEntityStatTypes.getHealth(), "GraveProtocol", new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE,additionalHealth));
+        statMap.maximizeStatValue(DefaultEntityStatTypes.getHealth());
+        if(waves.length < 1) return;
+        spawnWave(ref, store, world, waves[0], spawnPositions, pathTarget);
+    }
+
+    public static boolean startNextWave(
+        Ref<EntityStore> playerRef,
+        ComponentAccessor<EntityStore> store,
+        World world,
+        Ref<EntityStore> lynnRef){
+        var dataComponent = store.getComponent(playerRef,GPPlayerDataComponent.getComponentType());
+        var lynnComponent = store.getComponent(lynnRef, LynnComponent.getComponentType());
+        var prestige = PrestigeUtils.getPrestige(dataComponent);
+        var level = LevelUtils.getPlayerLevel(playerRef,store);
+        var waves = level.getWaves();
+        var wIndex = lynnComponent.getWaveIndex()+1;
+        if(waves.length <= wIndex) return false;
+        lynnComponent.setWaveIndex(wIndex);
+
+        spawnWave(playerRef,store,world,waves[wIndex],prestige.getPositions(),lynnRef);
+        return true;
     }
 
     private static void spawnWave(
         Ref<EntityStore> ref,
-        Store<EntityStore> store,
+        ComponentAccessor<EntityStore> store,
         World world,
         Wave wave,
         Vector3d[] spawnPositions,
@@ -91,24 +120,40 @@ public final class LevelStartService {
             return;
         }
 
+        var uuidComponent = store.getComponent(pathTarget,UUIDComponent.getComponentType());
+        if(uuidComponent == null) return;
+        var uuid = uuidComponent.getUuid();
+
         var npcPlugin = NPCPlugin.get();
-        int roleIndex = npcPlugin.getIndex(wave.getEntity());
-        if (roleIndex < 0) {
-            return;
-        }
+        world.execute(() -> {
+            var i = 0;
+            var wStore = world.getEntityStore().getStore();
+            for (var enemyData : wave.getEnemies()) {
+                var enemy = enemyData.getEnemy();
+                if(enemy == null) continue;
+                int roleIndex = npcPlugin.getIndex(enemy.getEntity());
+                if (roleIndex < 0) continue;
+                for(var j = 0; j< enemyData.getCount(); j++){
 
-        for (int i = 0; i < wave.getCount(); i++) {
-            Vector3d spawnPos = spawnPositions[i % spawnPositions.length].clone();
-            var spawnedNpc = npcPlugin.spawnNPC(store, wave.getEntity(), null, spawnPos, Vector3f.ZERO);
-            if (spawnedNpc != null) {
-                var npcRef = spawnedNpc.first();
-                store.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(i,wave.getAttackData()));
+                    Vector3d spawnPos = spawnPositions[i++ % spawnPositions.length];
+                    var spawnedNpc = npcPlugin.spawnNPC(wStore, enemy.getEntity(), null, spawnPos, Vector3f.ZERO);
+                    if (spawnedNpc == null) {
+                        i--;
+                        continue;
+                    }
+                    var npcRef = spawnedNpc.first();
+                    wStore.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(enemy.getAttackData(),uuid));
 
-                if (pathTarget != null) {
-                    assignPathTarget(npcRef, pathTarget, store);
+                    if (pathTarget != null) {
+                        assignPathTarget(npcRef, pathTarget, wStore);
+                    }
                 }
             }
-        }
+            var lynnComponent = wStore.getComponent(pathTarget, LynnComponent.getComponentType());
+            lynnComponent.setAttackersLeft(i);
+        });
+
+
     }
 
     private static Ref<EntityStore> findTarget(Store<EntityStore> store) {
@@ -130,20 +175,10 @@ public final class LevelStartService {
         return found;
     }
 
-    private static void runLater(World world, long delaySeconds, Runnable runnable) {
-
-        if (delaySeconds <= 0) {
-            world.execute(runnable);
-            return;
-        }
-
-        CompletableFuture.delayedExecutor(delaySeconds, TimeUnit.SECONDS, world).execute(runnable);
-    }
-
     private static void assignPathTarget(
         Ref<EntityStore> npcRef,
         Ref<EntityStore> targetRef,
-        Store<EntityStore> store
+        ComponentAccessor<EntityStore> store
     ) {
 
         var npc = store.getComponent(npcRef, NPCEntity.getComponentType());

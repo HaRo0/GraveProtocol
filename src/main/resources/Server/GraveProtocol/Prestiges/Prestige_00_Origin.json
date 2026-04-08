@@ -1,0 +1,39 @@
+{
+  "Instance": "Grave_Protocol_1",
+  "OrderPosition": 0,
+  "SpawnPositions": [
+    {
+      "X": 5,
+      "Y": 81,
+      "Z": 0
+    },
+    {
+      "X": -5,
+      "Y": 81,
+      "Z": 0
+    },
+    {
+      "X": 0,
+      "Y": 81,
+      "Z": 5
+    },
+    {
+      "X": 0,
+      "Y": 81,
+      "Z": -5
+    }
+  ],
+  "ShopPosition": {
+    "X": 0,
+    "Y": 81,
+    "Z": 0
+  },
+  "Multipliers": {
+    "ShopHealthMultiplier": 1.0,
+    "TowerHealthMultiplier": 1.0,
+    "TowerAttackMultiplier": 1.0,
+    "EnemyHealthMultiplier": 1.0,
+    "EnemyAttackMultiplier": 1.0
+  }
+}
+

@@ -8,5 +8,6 @@ public class GPCommand extends AbstractCommandCollection {
 
         super("gp", "description");
         this.addSubCommand(new StartLevel());
+        this.addSubCommand(new ScenarioTp());
     }
 }

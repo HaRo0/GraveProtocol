@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.*;
 import com.hypixel.hytale.server.core.modules.interaction.Interactions;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
@@ -19,6 +20,7 @@ import net.haro0.hytale.graveprotocol.codecs.components.GPDeathComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public final class DeathUtils {
@@ -43,6 +45,7 @@ public final class DeathUtils {
         world.execute(() -> {
             deathComponent.setItems(player.getInventory().dropAllItemStacks().toArray(ItemStack[]::new));
             player.markNeedsSave();
+            var uuid = store.getComponent(ref,PlayerRef.getComponentType()).getUuid();
             CompletableFuture<World> worldFuture = InstancesPlugin.get().spawnInstance(prestige.getInstance(), world, new Transform(transformComponent.getPosition().clone(), Vector3f.FORWARD));
             InstancesPlugin.teleportPlayerToLoadingInstance(ref, store, worldFuture, null);
 
@@ -51,16 +54,15 @@ public final class DeathUtils {
                 w.execute(() -> {
                     var entityStore = w.getEntityStore().getStore();
 
-                        ensureMenuNpc(entityStore, prestige.getShopPosition());
+                        ensureMenuNpc(entityStore,uuid, prestige.getShopPosition());
                 });
                 return w;
             });
         });
     }
 
-    private static void ensureMenuNpc(Store<EntityStore> store, Vector3d spawnNear) {
+    private static void ensureMenuNpc(Store<EntityStore> store, UUID playerId, Vector3d spawnPos) {
 
-        var spawnPos = spawnNear.clone();
         var spawn = NPCPlugin.get().spawnNPC(store, ROLE_NAME, null, spawnPos, Vector3f.ZERO);
         if (spawn == null) {
             return;
@@ -73,7 +75,7 @@ public final class DeathUtils {
         store.putComponent(npcRef, Interactions.getComponentType(), interactions);
         store.ensureComponent(npcRef, Interactable.getComponentType());
         store.ensureComponent(npcRef, Frozen.getComponentType());
-        store.ensureComponent(npcRef, LynnComponent.getComponentType());
+        store.putComponent(npcRef, LynnComponent.getComponentType(), new LynnComponent(playerId));
     }
 
 }

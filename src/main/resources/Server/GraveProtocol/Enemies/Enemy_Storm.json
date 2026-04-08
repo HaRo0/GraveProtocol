@@ -1,0 +1,18 @@
+{
+  "Entity": "Kweebec_Razorleaf",
+  "AttackData": {
+    "Health": 135.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 1.0,
+      "Lightning": 0.8,
+      "Ghost": 1.15
+    },
+    "DefenseMultiplier": 0.95,
+    "DefenseFixed": 1.0,
+    "AttackTypes": [
+      "Lightning"
+    ],
+    "AttackDamage": 13.0
+  }
+}
+

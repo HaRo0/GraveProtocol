@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Scout",
+      "Count": 8
+    }
+  ]
+}
+
+

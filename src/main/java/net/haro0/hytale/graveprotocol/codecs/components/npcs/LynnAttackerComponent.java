@@ -14,22 +14,24 @@ import lombok.SneakyThrows;
 import net.haro0.hytale.graveprotocol.codecs.data.Attacker;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
+import java.util.UUID;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LynnAttackerComponent implements Component<EntityStore> {
 
     public static final BuilderCodec<LynnAttackerComponent> CODEC = BuilderCodec.builder(LynnAttackerComponent.class, LynnAttackerComponent::new)
-        .append(new KeyedCodec<>("WaveIndex", Codec.INTEGER), (c, v) -> c.waveIndex = v, c -> c.waveIndex).add()
         .append(new KeyedCodec<>("AttackerData",Attacker.CODEC), (c,a) -> c.attackerData = a, c -> c.attackerData).add()
+        .append(new KeyedCodec<>("LynnId", Codec.UUID_STRING), (c, v) -> c.lynnId = v, c -> c.lynnId).add()
         .build();
 
     @Getter
     private static ComponentType<EntityStore, LynnAttackerComponent> componentType;
 
-    private int waveIndex;
-
     private Attacker attackerData;
+
+    private UUID lynnId;
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {
 

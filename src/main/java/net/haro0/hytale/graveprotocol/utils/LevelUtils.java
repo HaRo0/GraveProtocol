@@ -17,7 +17,7 @@ public class LevelUtils {
     public static Level[] getPrestigeLevels(Prestige prestige) {
 
         return Level.getAssetMap().getAssetMap().values().stream()
-            .filter(l -> l.getMinPrestige() >= prestige.getOrder() && (l.getMaxPrestige() == -1 || l.getMaxPrestige() <= prestige.getOrder()))
+            .filter(l -> l.getMinPrestige() <= prestige.getOrder() && (l.getMaxPrestige() == -1 || l.getMaxPrestige() >= prestige.getOrder()))
             .sorted(Comparator.comparingInt(Level::getOrder)).toArray(Level[]::new);
     }
 
@@ -32,7 +32,7 @@ public class LevelUtils {
         var data = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
         var prestige = PrestigeUtils.getPrestige(data);
         var levels = getPrestigeLevels(prestige);
-        if(levels.length < data.getLevelIndex()){
+        if(levels.length <= data.getLevelIndex()){
             data.setLevelIndex(0);
             data.setPrestigeIndex(data.getPrestigeIndex()+1);
             prestige = PrestigeUtils.getPrestige(data);

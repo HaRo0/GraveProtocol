@@ -56,7 +56,6 @@ public class Wave implements JsonAssetWithMap<String, AssetMap<String, Wave>> {
 
         public static final BuilderCodec<WaveEnemy> CODEC = BuilderCodec.builder(WaveEnemy.class,WaveEnemy::new)
             .append(new KeyedCodec<>("Enemy", new ContainedAssetCodec<>(Enemy.class,Enemy.CODEC)), (w, e) -> w.enemy = e, w -> w.enemy)
-            .addValidator(Validators.nonEmptyString())
             .add()
             .append(new KeyedCodec<>("Count", Codec.INTEGER), (w, c) -> w.count = c, w -> w.count)
             .addValidator(Validators.min(1))
@@ -66,7 +65,7 @@ public class Wave implements JsonAssetWithMap<String, AssetMap<String, Wave>> {
         private String enemy;
 
         @Getter
-        private int count;
+        private int count = 1;
 
         public Enemy getEnemy(){
             return Enemy.getAssetMap().getAsset(enemy);

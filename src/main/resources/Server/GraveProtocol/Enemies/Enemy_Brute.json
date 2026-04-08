@@ -1,0 +1,18 @@
+{
+  "Entity": "Bear_Grozzly",
+  "AttackData": {
+    "Health": 180.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 0.9,
+      "Fire": 1.0,
+      "Lightning": 1.1
+    },
+    "DefenseMultiplier": 0.9,
+    "DefenseFixed": 3.0,
+    "AttackTypes": [
+      "Normal"
+    ],
+    "AttackDamage": 14.0
+  }
+}
+

@@ -1,0 +1,33 @@
+{
+  "Waves": [
+    "Wave_04_Elite",
+    "Wave_05_Boss"
+  ],
+  "Order": 4,
+  "MinPrestige": 0,
+  "MaxPrestige": -1,
+  "ShopStats": {
+    "Health": 380.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 0.95,
+      "Fire": 0.9,
+      "Water": 1.15,
+      "Grass": 1.0,
+      "Darkness": 0.85,
+      "Holy": 1.2,
+      "Lightning": 1.0,
+      "Ghost": 1.1
+    },
+    "DefenseMultiplier": 0.9,
+    "DefenseFixed": 4.0
+  },
+  "Multipliers": {
+    "ShopHealthMultiplier": 1.5,
+    "TowerHealthMultiplier": 1.25,
+    "TowerAttackMultiplier": 1.2,
+    "EnemyHealthMultiplier": 1.5,
+    "EnemyAttackMultiplier": 1.25
+  }
+}
+
+

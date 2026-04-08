@@ -15,6 +15,7 @@ import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
+import net.haro0.hytale.graveprotocol.codecs.data.Defender;
 import net.haro0.hytale.graveprotocol.codecs.data.MultiplierCollection;
 
 import java.util.Arrays;
@@ -34,6 +35,8 @@ public class Level implements JsonAssetWithMap<String, AssetMap<String, Level>> 
         .append(new KeyedCodec<>("MaxPrestige", Codec.INTEGER), (w, m) -> w.maxPrestige = m, w -> w.maxPrestige)
         .addValidator(Validators.min(-1))
         .add()
+        .append(new KeyedCodec<>("ShopStats", Defender.CODEC), (w, s) -> w.shopStats = s, w -> w.shopStats)
+        .add()
         .append(new KeyedCodec<>("Multipliers", MultiplierCollection.CODEC), (w, v) -> w.multipliers = v, w -> w.multipliers)
         .add()
         .build();
@@ -52,6 +55,8 @@ public class Level implements JsonAssetWithMap<String, AssetMap<String, Level>> 
     private int minPrestige;
 
     private int maxPrestige;
+
+    private Defender shopStats;
 
     private MultiplierCollection multipliers;
 
