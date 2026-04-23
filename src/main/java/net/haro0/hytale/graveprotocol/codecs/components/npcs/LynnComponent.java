@@ -25,6 +25,8 @@ public class LynnComponent implements Component<EntityStore> {
         .append(new KeyedCodec<>("WaveIndex", Codec.INTEGER), (c, v) -> c.waveIndex = v, c -> c.waveIndex).add()
         .append(new KeyedCodec<>("DefenderComponent", Defender.CODEC), (c, v) -> c.defender = v, c-> c.defender).add()
         .append(new KeyedCodec<>("Multipliers", MultiplierCollection.CODEC), (w,v) -> w.multipliers = v, w -> w.multipliers).add()
+        .append(new KeyedCodec<>("AttackersLeft", Codec.INTEGER), (c, v) -> c.attackersLeft = v, c -> c.attackersLeft).add()
+        .append(new KeyedCodec<>("IsActive", Codec.BOOLEAN), (c, v) -> c.isActive = v, c -> c.isActive).add()
         .build();
 
     @Getter
@@ -36,6 +38,8 @@ public class LynnComponent implements Component<EntityStore> {
     private int waveIndex;
 
     private int attackersLeft;
+
+    private boolean isActive;
 
     private Defender defender;
 

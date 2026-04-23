@@ -43,36 +43,45 @@ public final class LevelStartService {
             return;
         }
 
-        var level = LevelUtils.getPlayerLevel(ref, store);
-        if (level == null) {
-            return;
-        }
+
 
         var data = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
         var prestige = PrestigeUtils.getPrestige(data);
         var spawnPositions = prestige.getPositions();
         if (spawnPositions == null || spawnPositions.length == 0) {
             return;
-        }
+        }<
 
-        var playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-        if (playerRef != null) {
-            playerRef.sendMessage(Message.raw("Starting level " + level.getId() + "..."));
-        }
+
 
         World world = player.getWorld();
-        Wave[] waves = level.getWaves();
 
         var pathTarget = findTarget(store);
 
         var lynnComponent = store.getComponent(pathTarget, LynnComponent.getComponentType());
 
         if(lynnComponent == null) return;
+        var playerRef = store.getComponent(ref, PlayerRef.getComponentType());
+        if(playerRef == null) return;
+        if(lynnComponent.isActive()){
+            playerRef.sendMessage(Message.raw("Level is already running!"));
+
+            return;
+        }
+        var level = LevelUtils.getPlayerLevel(ref, store);
+        if (level == null) {
+            return;
+        }
+        Wave[] waves = level.getWaves();
+
+        playerRef.sendMessage(Message.raw("Starting level " + level.getId() + "..."));
+
 
         lynnComponent.setWaveIndex(0);
 
         lynnComponent.setDefender(level.getShopStats());
         lynnComponent.setMultipliers(prestige.getMultipliers(),level.getMultipliers());
+        lynnComponent.setActive(true);
 
 
         var statMap = store.getComponent(pathTarget, EntityStatMap.getComponentType());

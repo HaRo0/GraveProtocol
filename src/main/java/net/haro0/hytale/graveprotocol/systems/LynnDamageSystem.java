@@ -63,14 +63,6 @@ public class LynnDamageSystem extends DamageEventSystem {
 
 
         damage.setAmount(baseDamage);
-
-        System.out.println("-------------------------------------------------------");
-
-        System.out.println("Lynn damage system:");
-        System.out.println("Target: " + target);
-        System.out.println("Attacker: " + source);
-        System.out.println("Damage: " + damage.getAmount());
-        System.out.println("-------------------------------------------------------");
     }
 
     @NullableDecl
