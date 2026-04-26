@@ -34,6 +34,7 @@ public final class LevelStartService {
 
     private static final String PATH_TARGET_SLOT = "LockedTarget";
     private static final String PATH_TARGET_STATE = "Alerted";
+    private static float ATTACKER_BASE_HEALTH = -1;
 
     private LevelStartService() {
     }
@@ -89,7 +90,7 @@ public final class LevelStartService {
         statMap.maximizeStatValue(DefaultEntityStatTypes.getHealth());
         System.out.println("Set defender health to " + statMap.get(DefaultEntityStatTypes.getHealth()).get() + "/" + statMap.get(DefaultEntityStatTypes.getHealth()).getMax());
         if(waves.length < 1) return;
-        spawnWave(ref, store, world, waves[0], spawnPositions, pathTarget);
+        spawnWave(ref, store, world, waves[0], spawnPositions, pathTarget,lynnComponent);
     }
 
     public static boolean startNextWave(
@@ -106,7 +107,7 @@ public final class LevelStartService {
         if(waves.length <= wIndex) return false;
         lynnComponent.setWaveIndex(wIndex);
 
-        spawnWave(playerRef,store,world,waves[wIndex],prestige.getPositions(),lynnRef);
+        spawnWave(playerRef,store,world,waves[wIndex],prestige.getPositions(),lynnRef,lynnComponent);
         return true;
     }
 
@@ -116,7 +117,8 @@ public final class LevelStartService {
         World world,
         Wave wave,
         Vector3d[] spawnPositions,
-        Ref<EntityStore> pathTarget
+        Ref<EntityStore> pathTarget,
+        LynnComponent lynnComponent
     ) {
 
         if (!ref.isValid()) {
@@ -155,13 +157,19 @@ public final class LevelStartService {
                     }
                     var npcRef = spawnedNpc.first();
                     wStore.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(enemy.getAttackData(),uuid));
+                    var stats = wStore.getComponent(npcRef, EntityStatMap.getComponentType());
+                    if(ATTACKER_BASE_HEALTH < 0){
+                        ATTACKER_BASE_HEALTH = stats.get(DefaultEntityStatTypes.getHealth()).getMax();
+                    }
 
+                    var additionalHealth = enemy.getAttackData().getHealth() * lynnComponent.getMultipliers().getEnemyHealthMultiplier() - ATTACKER_BASE_HEALTH;
+                    stats.putModifier(DefaultEntityStatTypes.getHealth(), "GraveProtocol", new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE,additionalHealth));
+                    stats.maximizeStatValue(DefaultEntityStatTypes.getHealth());
                     if (pathTarget != null) {
                         assignPathTarget(npcRef, pathTarget, wStore);
                     }
                 }
             }
-            var lynnComponent = wStore.getComponent(pathTarget, LynnComponent.getComponentType());
             lynnComponent.setAttackersLeft(i);
         });
 
