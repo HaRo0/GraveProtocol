@@ -5,6 +5,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.model.config.Model;
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
@@ -135,9 +136,11 @@ public final class LevelStartService {
         var uuid = uuidComponent.getUuid();
 
         var npcPlugin = NPCPlugin.get();
-
-        var entityId = npcPlugin.getIndex("Shadow_Knight");
-
+        var list = npcPlugin.getRoleTemplateNames(false);
+        System.out.println("Last items: " + list.get(list.size() - 2) +", " + list.getLast());
+        var entityId = npcPlugin.getIndex("Lynn_Attacker");
+        list = npcPlugin.getRoleTemplateNames(false);
+        System.out.println("Last items: " + list.get(list.size() - 2) +", " + list.getLast() +", id: "+entityId);
         world.execute(() -> {
             var i = 0;
             var wStore = world.getEntityStore().getStore();
@@ -149,12 +152,8 @@ public final class LevelStartService {
                 for(var j = 0; j< enemyData.getCount(); j++){
 
                     Vector3d spawnPos = spawnPositions[i++ % spawnPositions.length];
-
+                    
                     var spawnedNpc = npcPlugin.spawnEntity(wStore, entityId, spawnPos, Vector3f.ZERO, Model.createScaledModel(model,1),null);
-                    if (spawnedNpc == null) {
-                        i--;
-                        continue;
-                    }
                     var npcRef = spawnedNpc.first();
                     wStore.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(enemy.getAttackData(),uuid));
                     var stats = wStore.getComponent(npcRef, EntityStatMap.getComponentType());
@@ -165,9 +164,6 @@ public final class LevelStartService {
                     var additionalHealth = enemy.getAttackData().getHealth() * lynnComponent.getMultipliers().getEnemyHealthMultiplier() - ATTACKER_BASE_HEALTH;
                     stats.putModifier(DefaultEntityStatTypes.getHealth(), "GraveProtocol", new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE,additionalHealth));
                     stats.maximizeStatValue(DefaultEntityStatTypes.getHealth());
-                    if (pathTarget != null) {
-                        assignPathTarget(npcRef, pathTarget, wStore);
-                    }
                 }
             }
             lynnComponent.setAttackersLeft(i);
@@ -193,22 +189,6 @@ public final class LevelStartService {
             return null;
         }
         return found;
-    }
-
-    private static void assignPathTarget(
-        Ref<EntityStore> npcRef,
-        Ref<EntityStore> targetRef,
-        ComponentAccessor<EntityStore> store
-    ) {
-
-        var npc = store.getComponent(npcRef, NPCEntity.getComponentType());
-        if (npc == null || npc.getRole() == null) {
-            return;
-        }
-
-        var role = npc.getRole();
-        role.getMarkedEntitySupport().setMarkedEntity(PATH_TARGET_SLOT, targetRef);
-        role.getStateSupport().setState(npcRef, PATH_TARGET_STATE, null, store);
     }
 }
 
