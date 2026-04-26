@@ -13,6 +13,7 @@ import net.haro0.hytale.graveprotocol.codecs.data.MultiplierCollection;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Setter
@@ -25,7 +26,7 @@ public class LynnComponent implements Component<EntityStore> {
         .append(new KeyedCodec<>("WaveIndex", Codec.INTEGER), (c, v) -> c.waveIndex = v, c -> c.waveIndex).add()
         .append(new KeyedCodec<>("DefenderComponent", Defender.CODEC), (c, v) -> c.defender = v, c-> c.defender).add()
         .append(new KeyedCodec<>("Multipliers", MultiplierCollection.CODEC), (w,v) -> w.multipliers = v, w -> w.multipliers).add()
-        .append(new KeyedCodec<>("AttackersLeft", Codec.INTEGER), (c, v) -> c.attackersLeft = v, c -> c.attackersLeft).add()
+        .append(new KeyedCodec<>("AttackersLeft", Codec.INTEGER), (c, v) -> c.attackersLeft = new AtomicInteger(v), c -> c.attackersLeft.get()).add()
         .append(new KeyedCodec<>("IsActive", Codec.BOOLEAN), (c, v) -> c.isActive = v, c -> c.isActive).add()
         .build();
 
@@ -37,7 +38,8 @@ public class LynnComponent implements Component<EntityStore> {
 
     private int waveIndex;
 
-    private int attackersLeft;
+    @Setter(AccessLevel.NONE)
+    private AtomicInteger attackersLeft = new AtomicInteger();
 
     private boolean isActive;
 
@@ -45,6 +47,10 @@ public class LynnComponent implements Component<EntityStore> {
 
     @Setter(AccessLevel.NONE)
     private MultiplierCollection multipliers;
+
+    public void setAttackersLeft(int amount){
+        attackersLeft = new AtomicInteger(amount);
+    }
 
     public void setMultipliers(MultiplierCollection prestigeMultipliers, MultiplierCollection levelMultipliers){
         multipliers = new MultiplierCollection(
@@ -57,8 +63,7 @@ public class LynnComponent implements Component<EntityStore> {
     }
 
     public boolean markAttackerKilled(){
-        attackersLeft -= 1;
-        return attackersLeft <=0;
+        return attackersLeft.decrementAndGet() <=0;
     }
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {

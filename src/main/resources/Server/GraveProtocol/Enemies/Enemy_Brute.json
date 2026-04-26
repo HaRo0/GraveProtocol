@@ -1,5 +1,5 @@
 {
-  "Entity": "Bear_Grozzly",
+  "Entity": "Bear_Grizzly",
   "AttackData": {
     "Health": 180.0,
     "DefenseTypeMultipliers": {
@@ -15,4 +15,3 @@
     "AttackDamage": 14.0
   }
 }
-

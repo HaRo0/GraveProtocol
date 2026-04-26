@@ -6,6 +6,8 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.model.config.Model;
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.Invulnerable;
@@ -43,17 +45,13 @@ public final class LevelStartService {
             return;
         }
 
-
-
         var data = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
         var prestige = PrestigeUtils.getPrestige(data);
         var spawnPositions = prestige.getPositions();
         if (spawnPositions == null || spawnPositions.length == 0) {
             return;
-        }<
-
-
-
+        }
+        
         World world = player.getWorld();
 
         var pathTarget = findTarget(store);
@@ -89,6 +87,7 @@ public final class LevelStartService {
         var additionalHealth = lynnComponent.getDefender().getHealth() * lynnComponent.getMultipliers().getShopHealthMultiplier() - prevHealth;
         statMap.putModifier(DefaultEntityStatTypes.getHealth(), "GraveProtocol", new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE,additionalHealth));
         statMap.maximizeStatValue(DefaultEntityStatTypes.getHealth());
+        System.out.println("Set defender health to " + statMap.get(DefaultEntityStatTypes.getHealth()).get() + "/" + statMap.get(DefaultEntityStatTypes.getHealth()).getMax());
         if(waves.length < 1) return;
         spawnWave(ref, store, world, waves[0], spawnPositions, pathTarget);
     }
@@ -134,18 +133,22 @@ public final class LevelStartService {
         var uuid = uuidComponent.getUuid();
 
         var npcPlugin = NPCPlugin.get();
+
+        var entityId = npcPlugin.getIndex("Shadow_Knight");
+
         world.execute(() -> {
             var i = 0;
             var wStore = world.getEntityStore().getStore();
             for (var enemyData : wave.getEnemies()) {
                 var enemy = enemyData.getEnemy();
                 if(enemy == null) continue;
-                int roleIndex = npcPlugin.getIndex(enemy.getEntity());
-                if (roleIndex < 0) continue;
+                var model = ModelAsset.getAssetMap().getAsset(enemy.getEntity());
+                if (model == null) continue;
                 for(var j = 0; j< enemyData.getCount(); j++){
 
                     Vector3d spawnPos = spawnPositions[i++ % spawnPositions.length];
-                    var spawnedNpc = npcPlugin.spawnNPC(wStore, enemy.getEntity(), null, spawnPos, Vector3f.ZERO);
+
+                    var spawnedNpc = npcPlugin.spawnEntity(wStore, entityId, spawnPos, Vector3f.ZERO, Model.createScaledModel(model,1),null);
                     if (spawnedNpc == null) {
                         i--;
                         continue;

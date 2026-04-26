@@ -6,6 +6,7 @@ import com.hypixel.hytale.builtin.asseteditor.event.AssetEditorRequestDataSetEve
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.asset.HytaleAssetStore;
+import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import lombok.RequiredArgsConstructor;
 
@@ -59,7 +60,7 @@ public class GPAssets {
                 .build()
         );
         registry.register(AssetEditorRequestDataSetEvent.class, "GraveProtocolWaveEntities", e -> {
-            e.setResults(NPCPlugin.get().getRoleTemplateNames(true).toArray(new String[0]));
+            e.setResults(ModelAsset.getAssetMap().getAssetMap().keySet().toArray(new String[0]));
         });
     }
 

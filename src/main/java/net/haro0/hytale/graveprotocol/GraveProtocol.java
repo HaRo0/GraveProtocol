@@ -15,6 +15,7 @@ import net.haro0.hytale.graveprotocol.interactions.LynnInteraction;
 import net.haro0.hytale.graveprotocol.systems.LynnAttackerDeathSystem;
 import net.haro0.hytale.graveprotocol.systems.LevelSystem;
 import net.haro0.hytale.graveprotocol.systems.LynnDamageSystem;
+import net.haro0.hytale.graveprotocol.systems.LynnDeathSystem;
 
 public class GraveProtocol extends JavaPlugin {
 
@@ -41,6 +42,7 @@ public class GraveProtocol extends JavaPlugin {
 
 
         entityRegistry.registerSystem(new LynnAttackerDeathSystem());
+        entityRegistry.registerSystem(new LynnDeathSystem());
         entityRegistry.registerSystem(new LevelSystem());
         entityRegistry.registerSystem(new LynnDamageSystem());
         cmdRegistry.registerCommand(new GPCommand());

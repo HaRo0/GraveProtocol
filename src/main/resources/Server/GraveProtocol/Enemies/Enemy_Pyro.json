@@ -1,5 +1,5 @@
 {
-  "Entity": "Void_Spawn",
+  "Entity": "Spawn_Void",
   "AttackData": {
     "Health": 120.0,
     "DefenseTypeMultipliers": {
@@ -16,4 +16,3 @@
     "AttackDamage": 12.0
   }
 }
-

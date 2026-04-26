@@ -53,6 +53,7 @@ public class LynnAttackerDeathSystem extends DeathSystems.OnDeathSystem {
         }
         var dataComponent = store.getComponent(pRef, GPPlayerDataComponent.getComponentType());
         dataComponent.setLevelIndex(dataComponent.getLevelIndex()+1);
+        lynnComponent.setActive(false);
     }
 
     @NullableDecl

@@ -9,6 +9,8 @@ import com.hypixel.hytale.component.dependency.SystemDependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.systems.NPCDamageSystems;
 import lombok.NonNull;
@@ -23,7 +25,7 @@ public class LynnDamageSystem extends DamageEventSystem {
 
     private static final Query<EntityStore> ATTACK_FILTER = LynnAttackerComponent.getComponentType();
     private static final Set<Dependency<EntityStore>> DEPENDENCIES = Set.of(
-        new SystemDependency<>(Order.AFTER, NPCDamageSystems.FilterDamageSystem.class)
+        new SystemDependency<>(Order.BEFORE, NPCDamageSystems.FilterDamageSystem.class)
     );
 
     @Override
@@ -36,6 +38,7 @@ public class LynnDamageSystem extends DamageEventSystem {
     public void handle(int index, @NonNullDecl ArchetypeChunk<EntityStore> chunk, @NonNullDecl Store<EntityStore> store, @NonNullDecl CommandBuffer<EntityStore> commandBuffer, @NonNullDecl Damage damage) {
         var target = chunk.getReferenceTo(index);
         if (!(damage.getSource() instanceof Damage.EntitySource entitySource)) {
+            damage.setAmount(0);
             damage.setCancelled(true);
             return;
         }
@@ -43,6 +46,8 @@ public class LynnDamageSystem extends DamageEventSystem {
         var source = entitySource.getRef();
         var sourceTarget = store.getArchetype(source);
         if(!ATTACK_FILTER.test(sourceTarget)) {
+            damage.setAmount(0);
+
             damage.setCancelled(true);
             return;
         }
@@ -54,6 +59,7 @@ public class LynnDamageSystem extends DamageEventSystem {
         var multiplierComponent = targetComponent.getMultipliers();
 
         if(attackerComponent == null || defenseComponent == null || multiplierComponent == null){
+            damage.setAmount(0);
             damage.setCancelled(true);
             return;
         }
@@ -63,6 +69,10 @@ public class LynnDamageSystem extends DamageEventSystem {
 
 
         damage.setAmount(baseDamage);
+
+        var statMap = store.getComponent(target, EntityStatMap.getComponentType());
+        System.out.println("Damage: " + damage.getAmount() + " Target HP: " + statMap.get(DefaultEntityStatTypes.getHealth()).get() + "/" + statMap.get(DefaultEntityStatTypes.getHealth()).getMax());
+
     }
 
     @NullableDecl
