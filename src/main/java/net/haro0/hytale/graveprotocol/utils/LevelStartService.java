@@ -5,36 +5,31 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
-import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.model.config.Model;
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.modules.entity.component.Invulnerable;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
-import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
-import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import net.haro0.hytale.graveprotocol.codecs.assets.Wave;
 import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class LevelStartService {
 
     private static final String PATH_TARGET_SLOT = "LockedTarget";
     private static final String PATH_TARGET_STATE = "Alerted";
+    private static final String DEFAULT_ATTACKER_ROLE_NAME = "Lynn_Attacker";
     private static float ATTACKER_BASE_HEALTH = -1;
 
     private LevelStartService() {
@@ -56,7 +51,7 @@ public final class LevelStartService {
         
         World world = player.getWorld();
 
-        var pathTarget = findTarget(store);
+        var pathTarget = findLynn(store);
 
         var lynnComponent = store.getComponent(pathTarget, LynnComponent.getComponentType());
 
@@ -85,6 +80,7 @@ public final class LevelStartService {
 
 
         var statMap = store.getComponent(pathTarget, EntityStatMap.getComponentType());
+        statMap.removeModifier(DefaultEntityStatTypes.getHealth(), "GraveProtocol");
         var prevHealth = statMap.get(DefaultEntityStatTypes.getHealth()).getMax();
         var additionalHealth = lynnComponent.getDefender().getHealth() * lynnComponent.getMultipliers().getShopHealthMultiplier() - prevHealth;
         statMap.putModifier(DefaultEntityStatTypes.getHealth(), "GraveProtocol", new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE,additionalHealth));
@@ -136,11 +132,7 @@ public final class LevelStartService {
         var uuid = uuidComponent.getUuid();
 
         var npcPlugin = NPCPlugin.get();
-        var list = npcPlugin.getRoleTemplateNames(false);
-        System.out.println("Last items: " + list.get(list.size() - 2) +", " + list.getLast());
-        var entityId = npcPlugin.getIndex("Lynn_Attacker");
-        list = npcPlugin.getRoleTemplateNames(false);
-        System.out.println("Last items: " + list.get(list.size() - 2) +", " + list.getLast() +", id: "+entityId);
+        var entityId = npcPlugin.getIndex(DEFAULT_ATTACKER_ROLE_NAME);
         world.execute(() -> {
             var i = 0;
             var wStore = world.getEntityStore().getStore();
@@ -172,7 +164,7 @@ public final class LevelStartService {
 
     }
 
-    private static Ref<EntityStore> findTarget(Store<EntityStore> store) {
+    public static Ref<EntityStore> findLynn(Store<EntityStore> store) {
 
         var target = new AtomicReference<Ref<EntityStore>>();
         store.forEachChunk(LynnComponent.getComponentType(), (chunk, ignored) -> {

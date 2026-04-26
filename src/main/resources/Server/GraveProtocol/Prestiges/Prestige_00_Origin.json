@@ -8,19 +8,19 @@
       "Z": 0
     },
     {
-      "X": -70,
+      "X": -90,
       "Y": 81,
       "Z": 0
     },
     {
       "X": 0,
-      "Y": 60,
-      "Z": 150
+      "Y": 81,
+      "Z": 90
     },
     {
       "X": 0,
       "Y": 81,
-      "Z": -80
+      "Z": -90
     }
   ],
   "ShopPosition": {
@@ -34,6 +34,8 @@
     "TowerAttackMultiplier": 1.0,
     "EnemyHealthMultiplier": 1.0,
     "EnemyAttackMultiplier": 1.0
-  }
+  },
+  "PathBlocks": [
+    "Rock_Chalk"
+  ]
 }
-

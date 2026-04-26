@@ -7,6 +7,9 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayer
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.npc.NPCPlugin;
+import com.hypixel.hytale.server.npc.movement.controllers.BuilderMotionControllerMapUtil;
+import com.hypixel.hytale.server.npc.movement.controllers.MotionController;
 import net.haro0.hytale.graveprotocol.utils.DeathUtils;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
@@ -18,6 +21,7 @@ public class ScenarioTp extends AbstractPlayerCommand {
 
     @Override
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
+
         DeathUtils.moveToPrestigeInstance(ref,store);
     }
 }

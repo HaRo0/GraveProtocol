@@ -3,6 +3,7 @@ package net.haro0.hytale.graveprotocol;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.npc.movement.controllers.MotionController;
 import lombok.SneakyThrows;
 import net.haro0.hytale.graveprotocol.codecs.assets.GPAssets;
 import net.haro0.hytale.graveprotocol.commands.GPCommand;
@@ -12,10 +13,12 @@ import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerCompone
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 import net.haro0.hytale.graveprotocol.events.PlayerEvents;
 import net.haro0.hytale.graveprotocol.interactions.LynnInteraction;
+import net.haro0.hytale.graveprotocol.npc.GPWalkMotionControllerBuilder;
 import net.haro0.hytale.graveprotocol.systems.LynnAttackerDeathSystem;
 import net.haro0.hytale.graveprotocol.systems.LevelSystem;
 import net.haro0.hytale.graveprotocol.systems.LynnDamageSystem;
 import net.haro0.hytale.graveprotocol.systems.LynnDeathSystem;
+import com.hypixel.hytale.server.npc.NPCPlugin;
 
 public class GraveProtocol extends JavaPlugin {
 
@@ -33,6 +36,17 @@ public class GraveProtocol extends JavaPlugin {
         var cmdRegistry = getCommandRegistry();
         PlayerEvents.registerEvents(eventRegistry);
         new GPAssets(eventRegistry).registerAll();
+
+        try {
+            var npcPlugin = NPCPlugin.get();
+            npcPlugin.getBuilderManager().<MotionController>getFactory(MotionController.class).add("GPWalk", GPWalkMotionControllerBuilder::new);
+
+
+
+        } catch (IllegalArgumentException ignored) {
+            // Already registered (e.g. hot reload), safe to ignore.
+        }
+
         GPDeathComponent.register(entityRegistry);
         LynnComponent.register(entityRegistry);
         LynnAttackerComponent.register(entityRegistry);

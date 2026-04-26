@@ -34,6 +34,9 @@
     "TowerAttackMultiplier": 1.25,
     "EnemyHealthMultiplier": 1.6,
     "EnemyAttackMultiplier": 1.3
-  }
+  },
+    "PathBlocks": [
+        "Rock_Chalk"
+    ]
 }
 

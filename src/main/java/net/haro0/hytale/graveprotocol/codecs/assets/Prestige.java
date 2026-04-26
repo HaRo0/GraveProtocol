@@ -5,6 +5,7 @@ import com.hypixel.hytale.assetstore.AssetMap;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
+import com.hypixel.hytale.assetstore.codec.ContainedAssetCodec;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -12,6 +13,7 @@ import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
 import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import lombok.Getter;
 import net.haro0.hytale.graveprotocol.codecs.data.MultiplierCollection;
 
@@ -33,6 +35,9 @@ public class Prestige implements JsonAssetWithMap<String, AssetMap<String, Prest
         .add()
         .append(new KeyedCodec<>("Multipliers", MultiplierCollection.CODEC), (w,v) -> w.multipliers = v, w -> w.multipliers)
         .add()
+        .append(new KeyedCodec<>("PathBlocks", new ArrayCodec<String>(new ContainedAssetCodec<>(BlockType.class,BlockType.CODEC), String[]::new)),(w,v) -> w.pathBlocks = v, w -> w.pathBlocks)
+        //.addValidator(Validators.nonEmptyArray())
+        .add()
         .build();
 
     private static AssetStore<String, Prestige, AssetMap<String, Prestige>> ASSET_STORE;
@@ -50,6 +55,8 @@ public class Prestige implements JsonAssetWithMap<String, AssetMap<String, Prest
     private Vector3d shopPosition;
 
     private MultiplierCollection multipliers;
+
+    private String[] pathBlocks = new String[0];
 
     public static AssetStore<String, Prestige, AssetMap<String, Prestige>> getAssetStore() {
 
