@@ -29,6 +29,10 @@ public class TowerAttackSystem extends EntityTickingSystem<ChunkStore> {
     @Override
     public void tick(float dt, int index, @NonNullDecl ArchetypeChunk<ChunkStore> archetypeChunk, @NonNullDecl Store<ChunkStore> store, @NonNullDecl CommandBuffer<ChunkStore> commandBuffer) {
         var tower = archetypeChunk.getComponent(index,TowerComponent.getComponentType());
+        if (!tower.hasTower()) {
+            return;
+        }
+
         tower.waitTick();
         if(tower.getTicksToWait() > tower.getTicksWaited()){
             return;

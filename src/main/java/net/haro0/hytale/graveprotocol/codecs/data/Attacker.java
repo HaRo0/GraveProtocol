@@ -7,6 +7,7 @@ import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.codecs.set.SetCodec;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.HashSet;
@@ -42,6 +43,7 @@ public class Attacker extends Defender {
 
     @NullableDecl
     @Override
+    @SneakyThrows
     public Attacker clone() {
         return (Attacker) super.clone();
     }

@@ -10,22 +10,22 @@ import net.haro0.hytale.graveprotocol.codecs.data.Attacker;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 @Getter
-public class TowerUpgrade {
+public class TowerUpgrade implements Cloneable{
     public static final BuilderCodec<TowerUpgrade> CODEC = BuilderCodec.builder(TowerUpgrade.class, TowerUpgrade::new)
-        .append(new KeyedCodec<>("Price", Codec.INTEGER), (c, v) -> c.price = v, c -> c.price)
+        .appendInherited(new KeyedCodec<>("Price", Codec.INTEGER), (c, v) -> c.price = v, c -> c.price, (a,b) -> a.price = b.price)
         .addValidator(Validators.min(0))
         .add()
-        .append(new KeyedCodec<>("Description", Codec.STRING), (c, v) -> c.description = v, c -> c.description)
+        .appendInherited(new KeyedCodec<>("Description", Codec.STRING), (c, v) -> c.description = v, c -> c.description, (a,b) -> a.description = b.description)
         .add()
-        .append(new KeyedCodec<>("AttackData", Attacker.CODEC), (w, a) -> w.attackData = a, w-> w.attackData)
+        .appendInherited(new KeyedCodec<>("AttackData", Attacker.CODEC), (w, a) -> w.attackData = a, w -> w.attackData, (a, b) -> a.attackData = b.attackData.clone())
         .add()
-        .append(new KeyedCodec<>("AttackSpeed", Codec.FLOAT), (c, v) -> c.attackSpeed = v, c -> c.attackSpeed)
+        .appendInherited(new KeyedCodec<>("AttackSpeed", Codec.FLOAT), (c, v) -> c.attackSpeed = v, c -> c.attackSpeed, (a, b) -> a.attackSpeed = b.attackSpeed)
         .addValidator(Validators.min(0f))
         .add()
-        .append(new KeyedCodec<>("AttackRange", Codec.FLOAT), (c, v) -> c.attackRange = v, c -> c.attackRange)
+        .appendInherited(new KeyedCodec<>("AttackRange", Codec.FLOAT), (c, v) -> c.attackRange = v, c -> c.attackRange, (a, b) -> a.attackRange = b.attackRange)
         .addValidator(Validators.min(0f))
         .add()
-        .append(new KeyedCodec<>("ProjectileSpeed", Codec.FLOAT), (c, v) -> c.projectileSpeed = v, c -> c.projectileSpeed)
+        .appendInherited(new KeyedCodec<>("ProjectileSpeed", Codec.FLOAT), (c, v) -> c.projectileSpeed = v, c -> c.projectileSpeed, (a, b) -> a.projectileSpeed = b.projectileSpeed)
         .addValidator(Validators.min(0f))
         .add()
         .build();

@@ -1,5 +1,7 @@
 package net.haro0.hytale.graveprotocol.codecs.data.tower.attacking;
 
+import com.hypixel.hytale.codec.Codec;
+import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
@@ -12,7 +14,11 @@ import java.util.List;
 
 public class AOETowerAttack extends AbstractTowerAttack {
     public static final BuilderCodec<AOETowerAttack> CODEC = BuilderCodec.builder(AOETowerAttack.class, AOETowerAttack::new, AbstractTowerAttack.BASE_CODEC)
+        .append(new KeyedCodec<>("TestM", Codec.BOOLEAN), (t, v) -> t.testM = v, t -> t.testM)
+        .add()
         .build();
+
+    private boolean testM;
 
     @Override
     public boolean shouldAttack(Collection<Ref<EntityStore>> targets, ComponentAccessor<EntityStore> accessor, World world) {

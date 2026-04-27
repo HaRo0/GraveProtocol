@@ -1,13 +1,60 @@
 {
+  "TowerModel": "Test",
   "AttackData": {
-    "AttackDamage": 10,
+    "AttackDamage": 20,
     "AttackTypes": [
       "Normal"
     ]
   },
-  "AttackSpeed": 0.8,
+  "AttackSpeed": 5,
   "AttackRange": 10,
+  "ProjectileSpeed": 1,
   "AttackType": {
     "Type": "AOEAttack"
+  },
+  "Upgrades": {
+    "Damage": [
+      {
+        "Price": 100,
+        "Description": "Increase damage",
+        "AttackData": {
+          "AttackDamage": 5,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0,
+        "AttackRange": 0,
+        "ProjectileSpeed": 0
+      },
+      {
+        "Price": 200,
+        "Description": "Increase damage again",
+        "AttackData": {
+          "AttackDamage": 800,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0,
+        "AttackRange": 0,
+        "ProjectileSpeed": 0
+      }
+    ],
+    "Range": [
+      {
+        "Price": 100,
+        "Description": "Increase range",
+        "AttackData": {
+          "AttackDamage": 0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0,
+        "AttackRange": 3,
+        "ProjectileSpeed": 0
+      }
+    ]
   }
 }

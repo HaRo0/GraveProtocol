@@ -1,0 +1,48 @@
+$C = "../Common.ui";
+Group {
+  LayoutMode: Top;
+  Background: #2a2a2a;
+  Anchor: (Width: 800, Height: 500);
+  Padding: (Full: 0);
+
+  Label #Title {
+    Padding: (Full: 0);
+    Text: "Build Tower";
+    Style: (TextColor: #ffffff, HorizontalAlignment: Center);
+  }
+
+  $C.@TextButton #Tower1 {
+    Padding: (Full: 0);
+    Text: "Tower 1";
+  }
+
+  $C.@TextButton #Tower2 {
+    Padding: (Full: 0);
+    Text: "Tower 2";
+  }
+
+  $C.@TextButton #Tower3 {
+    Padding: (Full: 0);
+    Text: "Tower 3";
+  }
+
+  $C.@TextButton #Tower4 {
+    Padding: (Full: 0);
+    Text: "Tower 4";
+  }
+
+  $C.@TextButton #Tower5 {
+    Padding: (Full: 0);
+    Text: "Tower 5";
+  }
+
+  $C.@TextButton #Tower6 {
+    Padding: (Full: 0);
+    Text: "Tower 6";
+  }
+
+  $C.@TextButton #Cancel {
+    Padding: (Full: 0);
+    Text: "Cancel";
+  }
+}

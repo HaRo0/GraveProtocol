@@ -33,17 +33,7 @@
     },
     "BlockEntity": {
       "Components": {
-        "GPTowerComponent": {
-          "AttackSpeed": 5,
-          "AttackRange": 10,
-          "ProjectileSpeed": 1,
-          "AttackData": {
-            "AttackDamage": 20
-          },
-          "AttackType": {
-            "Type": "AOEAttack"
-          }
-        }
+
       }
     }
   },

@@ -5,11 +5,13 @@ import com.hypixel.hytale.assetstore.AssetMap;
 import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
+import com.hypixel.hytale.assetstore.codec.ContainedAssetCodec;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.codec.codecs.map.MapCodec;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import lombok.Getter;
 import net.haro0.hytale.graveprotocol.codecs.data.tower.attacking.AbstractTowerAttack;
 import net.haro0.hytale.graveprotocol.codecs.data.tower.TowerUpgrade;
@@ -22,14 +24,17 @@ import java.util.Map;
 public class Tower extends TowerUpgrade implements JsonAssetWithMap<String, AssetMap<String, Tower>> {
 
     public static final AssetBuilderCodec<String,Tower> CODEC = AssetBuilderCodec.builder(Tower.class, Tower::new,TowerUpgrade.CODEC, Codec.STRING, (w, i) -> w.id = i, w -> w.id, (w, d) -> w.data = d, w -> w.data)
-        .append(new KeyedCodec<>("AttackType", AbstractTowerAttack.CODEC), (w, a) -> w.attackType = a, w -> w.attackType)
+        .appendInherited(new KeyedCodec<>("TowerModel", new ContainedAssetCodec<>(BlockType.class, BlockType.CODEC, ContainedAssetCodec.Mode.INHERIT_ID)), (t, id) -> t.towerModel = id, t -> t.towerModel, (a, b) -> a.towerModel = b.towerModel)
         .add()
-        .append(new KeyedCodec<>("Upgrades", new MapCodec<>(new ArrayCodec<>(TowerUpgrade.CODEC, TowerUpgrade[]::new),HashMap::new)), (t,u) -> t.upgrades =u, t -> t.upgrades)
+        .appendInherited(new KeyedCodec<>("AttackType", AbstractTowerAttack.CODEC), (w, a) -> w.attackType = a, w -> w.attackType, (a, b) -> a.attackType = b.attackType)
+        .add()
+        .appendInherited(new KeyedCodec<>("Upgrades", new MapCodec<>(new ArrayCodec<>(TowerUpgrade.CODEC, TowerUpgrade[]::new), HashMap::new)), (t, u) -> t.upgrades = u, t -> t.upgrades, (a, b) -> a.upgrades = new HashMap<>(b.upgrades))
         .add()
         .build();
 
     private static AssetStore<String, Tower, AssetMap<String, Tower>> ASSET_STORE;
     private String id;
+    protected String towerModel;
     protected AssetExtraInfo.Data data;
     protected AbstractTowerAttack attackType;
     protected Map<String, TowerUpgrade[]> upgrades = new HashMap<>();

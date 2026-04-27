@@ -9,21 +9,21 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
 @Setter
-public class Defender {
+public class Defender implements Cloneable {
 
     public static final BuilderCodec<Defender> CODEC = BuilderCodec.builder(Defender.class, Defender::new)
-        .append(new KeyedCodec<>("Health", Codec.FLOAT), (c, v) -> c.health = v, c -> c.health)
+        .appendInherited(new KeyedCodec<>("Health", Codec.FLOAT), (c, v) -> c.health = v, c -> c.health,(a,b)-> a.health = b.health)
         .add()
-        .append(new KeyedCodec<>("DefenseTypeMultipliers", new EnumMapCodec<>(DamageType.class, Codec.FLOAT,true)), (c, m) -> c.defenseTypeMultipliers = m, c -> c.defenseTypeMultipliers)
+        .appendInherited(new KeyedCodec<>("DefenseTypeMultipliers", new EnumMapCodec<>(DamageType.class, Codec.FLOAT,true)), (c, m) -> c.defenseTypeMultipliers = m, c -> c.defenseTypeMultipliers, (a,b) -> a.defenseTypeMultipliers = new HashMap<>(b.defenseTypeMultipliers))
         .add()
-
-        .append(new KeyedCodec<>("DefenseMultiplier",Codec.FLOAT),(c,d) -> c.defenseMultiplier = d, c -> c.defenseMultiplier)
+        .appendInherited(new KeyedCodec<>("DefenseMultiplier",Codec.FLOAT),(c,d) -> c.defenseMultiplier = d, c -> c.defenseMultiplier,(a,b) -> a.defenseMultiplier = b.defenseMultiplier)
         .add()
-        .append(new KeyedCodec<>("DefenseFixed", Codec.FLOAT), (c,d) -> c.defenseFixed = d, c -> c.defenseFixed)
+        .appendInherited(new KeyedCodec<>("DefenseFixed", Codec.FLOAT), (c,d) -> c.defenseFixed = d, c -> c.defenseFixed, (a,b) -> a.defenseFixed = b.defenseFixed)
         .add()
         .build();
 

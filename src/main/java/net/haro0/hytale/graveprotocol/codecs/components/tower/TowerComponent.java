@@ -1,34 +1,31 @@
 package net.haro0.hytale.graveprotocol.codecs.components.tower;
 
+import com.hypixel.hytale.assetstore.codec.ContainedAssetCodec;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.codec.codecs.map.MapCodec;
+import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentRegistryProxy;
 import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.Getter;
-import lombok.SneakyThrows;
 import net.haro0.hytale.graveprotocol.codecs.assets.Tower;
-import net.haro0.hytale.graveprotocol.codecs.components.player.GPInstanceComponent;
 import net.haro0.hytale.graveprotocol.codecs.data.Attacker;
-import net.haro0.hytale.graveprotocol.codecs.data.DamageType;
-import net.haro0.hytale.graveprotocol.codecs.data.tower.TowerUpgrade;
 import net.haro0.hytale.graveprotocol.systems.TowerAttackSystem;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class TowerComponent extends Tower implements Component<ChunkStore> {
 
     public static final BuilderCodec<TowerComponent> CODEC = BuilderCodec.builder(TowerComponent.class, TowerComponent::new, Tower.CODEC)
+
         .append(new KeyedCodec<>("UpgradeProgress", new MapCodec<>(Codec.INTEGER,HashMap::new)), (t,u) -> t.upgradeProgress = u, t -> t.upgradeProgress)
         .add()
         .append(new KeyedCodec<>("TicksWaited", Codec.INTEGER), (t, v) -> t.ticksWaited = v, t -> t.ticksWaited)
@@ -38,7 +35,6 @@ public class TowerComponent extends Tower implements Component<ChunkStore> {
     @Getter
     private static ComponentType<ChunkStore, TowerComponent> componentType;
     public static void register(ComponentRegistryProxy<ChunkStore> registry) {
-
         componentType = registry.registerComponent(TowerComponent.class, "GPTowerComponent", CODEC);
     }
 
@@ -51,6 +47,51 @@ public class TowerComponent extends Tower implements Component<ChunkStore> {
     private int ticksToWait;
     private float cachedAttackRange;
     private float cachedProjectileSpeed;
+
+    public boolean hasTower() {
+        return towerModel != null && !towerModel.isBlank();
+    }
+
+    public int getCurrentUpgradeLevel(String upgradePath) {
+        return upgradeProgress.getOrDefault(upgradePath, -1);
+    }
+
+    public boolean canBuyUpgrade(String upgradePath) {
+        if (!hasTower()) {
+            return false;
+        }
+
+        var branch = upgrades.get(upgradePath);
+        if (branch == null || branch.length == 0) {
+            return false;
+        }
+
+        var nextLevel = getCurrentUpgradeLevel(upgradePath) + 1;
+        return nextLevel < branch.length;
+    }
+
+    public boolean buyUpgrade(String upgradePath) {
+        if (!canBuyUpgrade(upgradePath)) {
+            return false;
+        }
+
+        upgradeProgress.put(upgradePath, getCurrentUpgradeLevel(upgradePath) + 1);
+        invalidateCache();
+        return true;
+    }
+
+    public void applyTower(Tower tower) {
+        this.towerModel = tower.getTowerModel();
+        this.attackType = tower.getAttackType();
+        this.attackData = tower.getAttackData().clone();
+        this.attackSpeed = tower.getAttackSpeed();
+        this.attackRange = tower.getAttackRange();
+        this.projectileSpeed = tower.getProjectileSpeed();
+        this.upgrades = new HashMap<>(tower.getUpgrades());
+        this.upgradeProgress.clear();
+        this.ticksWaited = 0;
+        invalidateCache();
+    }
 
     public void waitTick(){
         ticksWaited++;
@@ -80,7 +121,20 @@ public class TowerComponent extends Tower implements Component<ChunkStore> {
         return cachedProjectileSpeed;
     }
 
+    private void invalidateCache() {
+        cachedUpgrades = null;
+        cachedAttackData = null;
+        ticksToWait = 0;
+        cachedAttackRange = 0;
+        cachedProjectileSpeed = 0;
+    }
+
     private void reloadCache(){
+
+        if (!hasTower()) {
+            invalidateCache();
+            return;
+        }
 
         cachedUpgrades = new HashMap<>();
         var attackData = new Attacker();
@@ -110,8 +164,9 @@ public class TowerComponent extends Tower implements Component<ChunkStore> {
 
     private boolean isCacheValid(){
         if(cachedUpgrades == null) return false;
+        if(cachedUpgrades.size() != upgradeProgress.size()) return false;
         for(var key : upgradeProgress.keySet()) {
-            if(upgradeProgress.get(key) != cachedUpgrades.get(key)) return false;
+            if(!Objects.equals(upgradeProgress.get(key), cachedUpgrades.get(key))) return false;
         }
         return true;
     }
