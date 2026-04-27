@@ -1,7 +1,7 @@
 package net.haro0.hytale.graveprotocol.utils;
 
 import net.haro0.hytale.graveprotocol.codecs.assets.Prestige;
-import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 
 import java.util.Comparator;
 

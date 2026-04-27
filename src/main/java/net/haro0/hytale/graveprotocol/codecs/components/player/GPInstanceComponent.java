@@ -1,4 +1,4 @@
-package net.haro0.hytale.graveprotocol.codecs.components;
+package net.haro0.hytale.graveprotocol.codecs.components.player;
 
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -7,7 +7,6 @@ import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentRegistryProxy;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
-import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,32 +15,29 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 @Getter
 @Setter
-public class GPDeathComponent implements Component<EntityStore> {
+public class GPInstanceComponent implements Component<EntityStore> {
 
-    public static final BuilderCodec<GPDeathComponent> CODEC = BuilderCodec.builder(GPDeathComponent.class, GPDeathComponent::new)
-        .append(new KeyedCodec<>("Original", DeathComponent.CODEC), (c, v) -> c.original = v, c -> c.original).add()
+    public static final BuilderCodec<GPInstanceComponent> CODEC = BuilderCodec.builder(GPInstanceComponent.class, GPInstanceComponent::new)
         .append(new KeyedCodec<>("Inventory", new ArrayCodec<>(ItemStack.CODEC, ItemStack[]::new)), (c, v) -> c.items = v, c -> c.items).add()
         .build();
 
     @Getter
-    private static ComponentType<EntityStore, GPDeathComponent> componentType;
-
-    private DeathComponent original;
+    private static ComponentType<EntityStore, GPInstanceComponent> componentType;
 
     private ItemStack[] items;
 
-    public GPDeathComponent() { }
+    public GPInstanceComponent() { }
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {
 
-        componentType = registry.registerComponent(GPDeathComponent.class, "GPDeathComponent", CODEC);
+        componentType = registry.registerComponent(GPInstanceComponent.class, "GPInstanceComponent", CODEC);
     }
 
     @NullableDecl
     @Override
     @SneakyThrows
-    public GPDeathComponent clone() {
+    public GPInstanceComponent clone() {
 
-        return (GPDeathComponent) super.clone();
+        return (GPInstanceComponent) super.clone();
     }
 }

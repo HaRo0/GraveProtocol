@@ -3,8 +3,7 @@ package net.haro0.hytale.graveprotocol.events;
 import com.hypixel.hytale.event.EventPriority;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
-import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
-import net.haro0.hytale.graveprotocol.codecs.components.GPDeathComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.player.GPInstanceComponent;
 
 import java.util.Arrays;
 
@@ -25,7 +24,7 @@ public class PlayerEvents {
 
         world.execute(() -> {
 
-            var protocolComponent = store.getComponent(ref, GPDeathComponent.getComponentType());
+            var protocolComponent = store.getComponent(ref, GPInstanceComponent.getComponentType());
 
             if(protocolComponent == null) return;
 
@@ -37,11 +36,6 @@ public class PlayerEvents {
 
             player.getInventory().getCombinedHotbarUtilityConsumableStorage().addItemStacks(Arrays.stream(items).toList());
             protocolComponent.setItems(null);
-            if (protocolComponent.getOriginal() == null) return;
-
-            var original = protocolComponent.getOriginal();
-            original.setShowDeathMenu(true);
-            store.putComponent(ref, DeathComponent.getComponentType(), original);
         });
     }
 }

@@ -12,6 +12,7 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import java.util.Map;
 
 @Getter
+@Setter
 public class Defender {
 
     public static final BuilderCodec<Defender> CODEC = BuilderCodec.builder(Defender.class, Defender::new)

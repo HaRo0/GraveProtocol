@@ -1,0 +1,13 @@
+{
+  "AttackData": {
+    "AttackDamage": 10,
+    "AttackTypes": [
+      "Normal"
+    ]
+  },
+  "AttackSpeed": 0.8,
+  "AttackRange": 10,
+  "AttackType": {
+    "Type": "AOEAttack"
+  }
+}

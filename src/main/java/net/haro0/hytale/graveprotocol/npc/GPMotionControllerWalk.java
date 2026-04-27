@@ -1,11 +1,10 @@
 package net.haro0.hytale.graveprotocol.npc;
 
 import com.hypixel.hytale.server.core.modules.collision.CollisionConfig;
-import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.asset.builder.BuilderSupport;
 import com.hypixel.hytale.server.npc.movement.controllers.MotionControllerWalk;
 import com.hypixel.hytale.server.npc.movement.controllers.builders.BuilderMotionControllerWalk;
-import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 import net.haro0.hytale.graveprotocol.utils.LevelStartService;
 import net.haro0.hytale.graveprotocol.utils.PrestigeUtils;

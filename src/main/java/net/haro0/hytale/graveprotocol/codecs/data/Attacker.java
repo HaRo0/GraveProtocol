@@ -6,12 +6,14 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.codec.codecs.set.SetCodec;
 import lombok.Getter;
+import lombok.Setter;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
+@Setter
 public class Attacker extends Defender {
 
     public static final BuilderCodec<Attacker> CODEC = BuilderCodec.builder(Attacker.class, Attacker::new, Defender.CODEC)
@@ -21,7 +23,7 @@ public class Attacker extends Defender {
         .add()
         .build();
 
-    protected Set<DamageType> attackTypes;
+    protected Set<DamageType> attackTypes = new HashSet<>();
     protected float attackDamage = 0;
 
 

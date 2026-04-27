@@ -7,13 +7,9 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
-import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
-import net.haro0.hytale.graveprotocol.utils.LevelStartService;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 

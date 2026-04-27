@@ -16,25 +16,25 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
-import net.haro0.hytale.graveprotocol.codecs.components.GPDeathComponent;
-import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.player.GPInstanceComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public final class DeathUtils {
+public final class InstanceUtils {
     private static final String ROLE_NAME = "Fox";
     private static final String MENU_INTERACTION_ID = "Open_Lynn_Menu";
     private static final String MENU_INTERACTION_HINT = "server.interactionHints.generic";
 
-    private DeathUtils() { }
+    private InstanceUtils() { }
 
     public static void moveToPrestigeInstance(Ref<EntityStore> ref, Store<EntityStore> store) {
 
         var player = store.getComponent(ref, Player.getComponentType());
         if (player == null) return;
-        var deathComponent = store.ensureAndGetComponent(ref, GPDeathComponent.getComponentType());
+        var deathComponent = store.ensureAndGetComponent(ref, GPInstanceComponent.getComponentType());
 
         var transformComponent = store.getComponent(ref, TransformComponent.getComponentType());
         assert transformComponent != null;

@@ -18,8 +18,9 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import net.haro0.hytale.graveprotocol.codecs.assets.Wave;
-import net.haro0.hytale.graveprotocol.codecs.components.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 
@@ -156,12 +157,31 @@ public final class LevelStartService {
                     var additionalHealth = enemy.getAttackData().getHealth() * lynnComponent.getMultipliers().getEnemyHealthMultiplier() - ATTACKER_BASE_HEALTH;
                     stats.putModifier(DefaultEntityStatTypes.getHealth(), "GraveProtocol", new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE,additionalHealth));
                     stats.maximizeStatValue(DefaultEntityStatTypes.getHealth());
+                    assignPathTarget(npcRef,wStore,pathTarget);
                 }
             }
             lynnComponent.setAttackersLeft(i);
         });
 
 
+    }
+
+
+    private static void assignPathTarget(Ref<EntityStore> attacker, Store<EntityStore> store, Ref<EntityStore> pathTarget){
+
+        if (pathTarget == null || !pathTarget.isValid()) return;
+
+        var npc = store.getComponent(attacker, NPCEntity.getComponentType());
+        if (npc == null || npc.getRole() == null) return;
+
+        var role = npc.getRole();
+        var markedEntitySupport = role.getMarkedEntitySupport();
+
+        var currentTarget = markedEntitySupport.getMarkedEntityRef(PATH_TARGET_SLOT);
+        if (currentTarget != null && currentTarget.isValid()) return;
+
+        markedEntitySupport.setMarkedEntity(PATH_TARGET_SLOT, pathTarget);
+        role.getStateSupport().setState(attacker, PATH_TARGET_STATE, null, store);
     }
 
     public static Ref<EntityStore> findLynn(Store<EntityStore> store) {

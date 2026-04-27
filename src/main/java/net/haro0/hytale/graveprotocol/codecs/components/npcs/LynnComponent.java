@@ -68,7 +68,7 @@ public class LynnComponent implements Component<EntityStore> {
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {
 
-        componentType = registry.registerComponent(LynnComponent.class, "LynnComponent", CODEC);
+        componentType = registry.registerComponent(LynnComponent.class, "GPLynnComponent", CODEC);
     }
 
     @NullableDecl

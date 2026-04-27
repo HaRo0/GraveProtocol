@@ -21,6 +21,7 @@ public class GPAssets {
         registerEnemy();
         registerWave();
         registerPrestige();
+        registerTower();
     }
 
     private void registerLevel() {
@@ -78,5 +79,17 @@ public class GPAssets {
         registry.register(AssetEditorRequestDataSetEvent.class, "GraveProtocolInstances", e -> {
             e.setResults(InstancesPlugin.get().getInstanceAssets().toArray(new String[0]));
         });
+    }
+
+    private void registerTower() {
+
+        AssetRegistry.register(HytaleAssetStore.builder(
+                    Tower.class, new DefaultAssetMap<>()
+                )
+                .setPath("GraveProtocol/Towers")
+                .setCodec(Tower.CODEC)
+                .setKeyFunction(Tower::getId)
+                .build()
+        );
     }
 }

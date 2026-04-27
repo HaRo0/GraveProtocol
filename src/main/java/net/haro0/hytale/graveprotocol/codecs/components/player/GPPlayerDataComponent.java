@@ -1,4 +1,4 @@
-package net.haro0.hytale.graveprotocol.codecs.components;
+package net.haro0.hytale.graveprotocol.codecs.components.player;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
