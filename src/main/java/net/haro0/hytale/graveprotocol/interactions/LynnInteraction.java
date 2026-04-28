@@ -7,7 +7,7 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInstantInteraction;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import net.haro0.hytale.graveprotocol.ui.GraveMenuUi;
+import net.haro0.hytale.graveprotocol.ui.LynnMenuUi;
 
 import javax.annotation.Nonnull;
 
@@ -50,7 +50,7 @@ public class LynnInteraction extends SimpleInstantInteraction {
             return;
         }
 
-        world.execute(() -> player.getPageManager().openCustomPage(ref, store, new GraveMenuUi(playerRef)));
+        world.execute(() -> player.getPageManager().openCustomPage(ref, store, new LynnMenuUi(playerRef)));
     }
 }
 

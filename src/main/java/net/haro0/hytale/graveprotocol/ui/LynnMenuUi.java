@@ -18,9 +18,9 @@ import net.haro0.hytale.graveprotocol.utils.LevelStartService;
 
 import javax.annotation.Nonnull;
 
-public class GraveMenuUi extends InteractiveCustomUIPage<GraveMenuUi.BindingData> {
+public class LynnMenuUi extends InteractiveCustomUIPage<LynnMenuUi.BindingData> {
 
-    public GraveMenuUi(@Nonnull PlayerRef playerRef) {
+    public LynnMenuUi(@Nonnull PlayerRef playerRef) {
 
         super(playerRef, CustomPageLifetime.CanDismissOrCloseThroughInteraction, BindingData.CODEC);
     }
@@ -28,7 +28,7 @@ public class GraveMenuUi extends InteractiveCustomUIPage<GraveMenuUi.BindingData
     @Override
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCommandBuilder, @Nonnull UIEventBuilder uiEventBuilder, @Nonnull Store<EntityStore> store) {
 
-        uiCommandBuilder.append("Pages/GraveMenu.ui");
+        uiCommandBuilder.append("Pages/LynnMenu.ui");
 
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Shop", EventData.of("Action", "Shop"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Prestige", EventData.of("Action", "Prestige"));
