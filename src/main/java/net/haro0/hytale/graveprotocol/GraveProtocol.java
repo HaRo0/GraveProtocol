@@ -9,8 +9,7 @@ import net.haro0.hytale.graveprotocol.codecs.assets.GPAssets;
 import net.haro0.hytale.graveprotocol.codecs.components.tower.TowerComponent;
 import net.haro0.hytale.graveprotocol.codecs.data.tower.attacking.AOETowerAttack;
 import net.haro0.hytale.graveprotocol.codecs.data.tower.attacking.AbstractTowerAttack;
-import net.haro0.hytale.graveprotocol.codecs.data.tower.attacking.InstantTowerAttack;
-import net.haro0.hytale.graveprotocol.codecs.data.tower.attacking.ProjectileTowerAttack;
+import net.haro0.hytale.graveprotocol.codecs.data.tower.attacking.MagicTowerAttack;
 import net.haro0.hytale.graveprotocol.commands.GPCommand;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPInstanceComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
@@ -55,9 +54,8 @@ public class GraveProtocol extends JavaPlugin {
         Interaction.CODEC.register("OpenLynnMenu", LynnInteraction.class, LynnInteraction.CODEC);
         Interaction.CODEC.register("OpenTowerMenu", TowerInteraction.class, TowerInteraction.CODEC);
 
-        AbstractTowerAttack.CODEC.register("ProjectileAttack", ProjectileTowerAttack.class, ProjectileTowerAttack.CODEC);
         AbstractTowerAttack.CODEC.register("AOEAttack", AOETowerAttack.class, AOETowerAttack.CODEC);
-        AbstractTowerAttack.CODEC.register("InstantDamageAttack", InstantTowerAttack.class, InstantTowerAttack.CODEC);
+        AbstractTowerAttack.CODEC.register("InstantDamageAttack", MagicTowerAttack.class, MagicTowerAttack.CODEC);
 
 
         entityRegistry.registerSystem(new LynnAttackerDeathSystem());

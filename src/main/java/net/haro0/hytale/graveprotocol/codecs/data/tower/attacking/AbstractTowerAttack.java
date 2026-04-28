@@ -5,10 +5,13 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.lookup.ObjectCodecMapCodec;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageCause;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageSystems;
 import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.tower.TowerComponent;
@@ -26,17 +29,23 @@ public abstract class AbstractTowerAttack {
         return false;
     }
 
-    public abstract void handleAttacking(TowerComponent component, List<Ref<EntityStore>> targets, ComponentAccessor<EntityStore> accessor, World world);
+    public abstract void handleAttacking(Vector3i towerPos, TowerComponent component, List<Ref<EntityStore>> targets, Store<EntityStore> accessor, World world);
 
     protected void damage(TowerComponent tower, Ref<EntityStore> target, ComponentAccessor<EntityStore> accessor){
+        damage(tower,target,accessor,1.0f);
+    }
+    protected void damage(TowerComponent tower, Ref<EntityStore> target, ComponentAccessor<EntityStore> accessor, float damageMultiplier){
         var attackerComponent = accessor.getComponent(target, LynnAttackerComponent.getComponentType());
         var damage = tower.getAttackData().calcDamage(attackerComponent.getAttackerData());
         DamageSystems.executeDamage(target,accessor,new Damage(Damage.NULL_SOURCE, DamageCause.PHYSICAL,damage));
     }
 
     protected void damage(TowerComponent tower, List<Ref<EntityStore>> targets, ComponentAccessor<EntityStore> accessor){
+        damage(tower,targets,accessor,1.0f);
+    }
+    protected void damage(TowerComponent tower, List<Ref<EntityStore>> targets, ComponentAccessor<EntityStore> accessor,float damageMultiplier){
         for (var target:targets){
-            damage(tower,target,accessor);
+            damage(tower,target,accessor,damageMultiplier);
         }
     }
 

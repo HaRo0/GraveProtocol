@@ -86,7 +86,7 @@ public class TowerAttackSystem extends EntityTickingSystem<ChunkStore> {
             return;
         }
         tower.resetWaitedTicks();
-        tower.getAttackType().handleAttacking(tower,entityList, world.getEntityStore().getStore(), world);
+        tower.getAttackType().handleAttacking(towerPos,tower,entityList, world.getEntityStore().getStore(), world);
 
     }
 
