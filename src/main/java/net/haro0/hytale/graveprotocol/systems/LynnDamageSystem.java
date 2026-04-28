@@ -16,6 +16,7 @@ import com.hypixel.hytale.server.npc.systems.NPCDamageSystems;
 import lombok.NonNull;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
+import net.haro0.hytale.graveprotocol.ui.TowerDefenseHudUi;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
@@ -72,6 +73,10 @@ public class LynnDamageSystem extends DamageEventSystem {
 
         var statMap = store.getComponent(target, EntityStatMap.getComponentType());
         System.out.println("Damage: " + damage.getAmount() + " Target HP: " + statMap.get(DefaultEntityStatTypes.getHealth()).get() + "/" + statMap.get(DefaultEntityStatTypes.getHealth()).getMax());
+
+        var playerId = targetComponent.getPlayerId();
+        var world = store.getExternalData().getWorld();
+        world.execute(() -> TowerDefenseHudUi.refreshFor(playerId));
 
     }
 

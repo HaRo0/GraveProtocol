@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "Tower Indicator"
+    "Name": "Tower"
   },
   "PlayerAnimationsId": "Block",
   "BlockType": {
@@ -12,18 +12,18 @@
     "Interactions": {
       "Use": "Open_Tower_Menu"
     },
-    "CustomModel": "Blocks/Tower_Indicator.blockymodel",
-      "BlockEntity": {
-          "Components": {
-              "GPTowerComponent": {}
-          }
-      },
+    "CustomModel": "Blocks/GP_Tower.blockymodel",
+    "BlockEntity": {
+      "Components": {
+        "GPTowerComponent": {}
+      }
+    },
     "Opacity": "Transparent",
     "CustomModelTexture": [
       {
-        "Texture": "Blocks/Tower_Indicator.png"
+        "Texture": "Blocks/GP_Tower.png"
       }
     ]
   },
-  "Quality": "Technical"
+  "Quality": "Developer"
 }

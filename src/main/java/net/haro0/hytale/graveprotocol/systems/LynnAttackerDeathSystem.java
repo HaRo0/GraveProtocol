@@ -5,6 +5,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -12,6 +13,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
+import net.haro0.hytale.graveprotocol.ui.TowerDefenseHudUi;
 import net.haro0.hytale.graveprotocol.utils.LevelStartService;
 import net.haro0.hytale.graveprotocol.utils.LevelUtils;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
@@ -33,9 +35,14 @@ public class LynnAttackerDeathSystem extends DeathSystems.OnDeathSystem {
             lynnComponent.addMaterial(killReward);
         }
 
-        if(!lynnComponent.markAttackerKilled()) return;
-
         var pRef = store.getExternalData().getRefFromUUID(lynnComponent.getPlayerId());
+        var player = store.getComponent(pRef, Player.getComponentType());
+
+        if(!lynnComponent.markAttackerKilled()) {
+            store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
+            return;
+        }
+
 
         var level = LevelUtils.getPlayerLevel(pRef, commandBuffer);
         var dataComponent = store.getComponent(pRef, GPPlayerDataComponent.getComponentType());
@@ -67,6 +74,8 @@ public class LynnAttackerDeathSystem extends DeathSystems.OnDeathSystem {
         }
         dataComponent.setLevelIndex(dataComponent.getLevelIndex()+1);
         lynnComponent.setActive(false);
+
+        store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
     }
 
     @NullableDecl

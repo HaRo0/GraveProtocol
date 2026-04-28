@@ -1,0 +1,92 @@
+Group {
+  LayoutMode: Left;
+  Anchor: (Top: 30, Width: 780, Height: 44);
+  Background: #111111(0.78);
+  Padding: (Horizontal: 4);
+
+  Group {
+    LayoutMode: Center;
+    FlexWeight: 1;
+
+    Label #WaveLabel {
+      Text: "Wave: -/-";
+      Style: (TextColor: #a0d8ff, HorizontalAlignment: Center);
+    }
+  }
+
+  Group {
+    Anchor: (Width: 1, Height: 36);
+    Background: #555555;
+  }
+
+  Group {
+    LayoutMode: Center;
+    FlexWeight: 1;
+
+    Label #LevelLabel {
+      Text: "Level: -/-";
+      Style: (TextColor: #b8f0a0, HorizontalAlignment: Center);
+    }
+  }
+
+  Group {
+    Anchor: (Width: 1, Height: 36);
+    Background: #555555;
+  }
+
+  Group {
+    LayoutMode: Center;
+    FlexWeight: 1;
+
+    Label #PrestigeLabel {
+      Text: "Prestige: -";
+      Style: (TextColor: #e0c0ff, HorizontalAlignment: Center);
+    }
+  }
+
+  Group {
+    Anchor: (Width: 1, Height: 36);
+    Background: #555555;
+  }
+
+  Group {
+    LayoutMode: Center;
+    FlexWeight: 1;
+
+    Label #MaterialLabel {
+      Text: "Material: 0";
+      Style: (TextColor: #ffd080, HorizontalAlignment: Center);
+    }
+  }
+
+  Group {
+    Anchor: (Width: 1, Height: 36);
+    Background: #555555;
+  }
+
+  Group {
+    LayoutMode: Center;
+    FlexWeight: 1;
+
+    Label #CurrencyLabel {
+      Text: "Currency: 0";
+      Style: (TextColor: #80ffaa, HorizontalAlignment: Center);
+    }
+  }
+
+  Group {
+    Anchor: (Width: 1, Height: 36);
+    Background: #555555;
+  }
+
+  Group {
+    LayoutMode: Center;
+    FlexWeight: 2;
+
+    Label #LynnHpLabel {
+      Text: "Lynn: 0/0";
+      Style: (TextColor: #ff8080, HorizontalAlignment: Center);
+    }
+  }
+}
+

@@ -147,6 +147,7 @@ public class TowerPurchaseUi extends InteractiveCustomUIPage<TowerPurchaseUi.Bin
             towerComponent.applyTower(towerAsset);
             playerRef.sendMessage(Message.raw("Built tower " + data.towerId + " for " + price + " temporary currency."));
             close();
+            store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
         });
     }
 

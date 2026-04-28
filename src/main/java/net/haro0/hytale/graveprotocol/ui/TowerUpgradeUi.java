@@ -148,6 +148,7 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
 
         playerRef.sendMessage(Message.raw("Purchased upgrade: " + data.upgradePath + " for " + upgradePrice + " temporary currency."));
         close();
+        store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
     }
 
     private TowerComponent getTowerComponent() {

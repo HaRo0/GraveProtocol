@@ -23,6 +23,7 @@ import net.haro0.hytale.graveprotocol.codecs.assets.Wave;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
+import net.haro0.hytale.graveprotocol.ui.TowerDefenseHudUi;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -72,7 +73,6 @@ public final class LevelStartService {
 
         playerRef.sendMessage(Message.raw("Starting level " + level.getId() + "..."));
 
-
         lynnComponent.setWaveIndex(0);
 
         lynnComponent.setDefender(level.getShopStats());
@@ -107,6 +107,9 @@ public final class LevelStartService {
         lynnComponent.setWaveIndex(wIndex);
 
         spawnWave(playerRef,store,world,waves[wIndex],prestige.getPositions(),lynnRef,lynnComponent);
+
+        var player = store.getComponent(playerRef, Player.getComponentType());
+        store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
         return true;
     }
 

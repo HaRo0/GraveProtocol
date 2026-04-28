@@ -1,5 +1,5 @@
 {
-  "TowerModel": "Test",
+  "TowerModel": "GP_Tower",
   "AttackData": {
     "AttackDamage": 20,
     "AttackTypes": [

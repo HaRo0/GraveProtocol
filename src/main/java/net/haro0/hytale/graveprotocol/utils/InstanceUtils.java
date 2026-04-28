@@ -7,6 +7,7 @@ import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.protocol.InteractionType;
+import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.entity.Frozen;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
@@ -19,9 +20,11 @@ import com.hypixel.hytale.server.npc.NPCPlugin;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPInstanceComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
+import net.haro0.hytale.graveprotocol.ui.TowerDefenseHudUi;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public final class InstanceUtils {
     private static final String ROLE_NAME = "Fox";
@@ -55,7 +58,10 @@ public final class InstanceUtils {
                     var entityStore = w.getEntityStore().getStore();
 
                         ensureMenuNpc(entityStore,uuid, prestige.getShopPosition());
+                    //noinspection removal
+                    HytaleServer.SCHEDULED_EXECUTOR.schedule(() -> w.execute(()->TowerDefenseHudUi.openFor(player.getPlayerRef(), player)),2, TimeUnit.SECONDS);
                 });
+
                 return w;
             });
         });

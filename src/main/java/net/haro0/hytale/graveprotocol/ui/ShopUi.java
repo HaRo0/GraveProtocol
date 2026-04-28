@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
@@ -15,7 +16,9 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import net.haro0.hytale.graveprotocol.codecs.assets.Tower;
+import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
+import net.haro0.hytale.graveprotocol.utils.LevelStartService;
 
 import javax.annotation.Nonnull;
 import java.util.Comparator;
@@ -118,6 +121,9 @@ public class ShopUi extends InteractiveCustomUIPage<ShopUi.BindingData> {
 
         playerData.unlockTower(data.towerId);
         playerRef.sendMessage(Message.raw("Unlocked tower " + data.towerId + "! (" + cost + " permanent currency spent)"));
+
+        var player = store.getComponent(ref, Player.getComponentType());
+        store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
         close();
     }
 
