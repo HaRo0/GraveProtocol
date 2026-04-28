@@ -45,6 +45,7 @@ public final class InstanceUtils {
         var world = player.getWorld();
         assert world != null;
         var dataComponent = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
+        store.ensureAndGetComponent(ref,GPPlayerDataComponent.getComponentType());
         var prestige = PrestigeUtils.getPrestige(dataComponent);
         world.execute(() -> {
             deathComponent.setItems(player.getInventory().dropAllItemStacks().toArray(ItemStack[]::new));

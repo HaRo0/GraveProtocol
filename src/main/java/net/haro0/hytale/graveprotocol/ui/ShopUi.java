@@ -90,7 +90,7 @@ public class ShopUi extends InteractiveCustomUIPage<ShopUi.BindingData> {
             return;
         }
 
-        var playerData = store.getComponent(ref, GPPlayerDataComponent.getComponentType());
+        var playerData = store.ensureAndGetComponent(ref, GPPlayerDataComponent.getComponentType());
         if (playerData == null) {
             playerRef.sendMessage(Message.raw("Could not load your player data."));
             return;
