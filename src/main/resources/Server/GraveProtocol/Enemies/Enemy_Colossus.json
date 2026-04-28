@@ -1,0 +1,19 @@
+{
+  "Entity": "Bear_Grizzly",
+  "AttackData": {
+    "Health": 2600.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 0.6,
+      "Fire": 0.85,
+      "Water": 1.1,
+      "Lightning": 1.1,
+      "Holy": 1.0
+    },
+    "DefenseMultiplier": 0.7,
+    "DefenseFixed": 20.0,
+    "AttackTypes": ["Normal"],
+    "AttackDamage": 65.0
+  },
+  "MaterialReward": 10
+}
+

@@ -1,0 +1,9 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Knight", "Count": 5 },
+    { "Enemy": "Enemy_Werewolf", "Count": 3 }
+  ],
+  "MaterialReward": 13,
+  "CurrencyReward": 1
+}
+

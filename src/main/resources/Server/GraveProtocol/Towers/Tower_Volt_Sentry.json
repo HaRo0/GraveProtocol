@@ -1,0 +1,166 @@
+{
+  "TowerModel": "GP_Tower",
+  "AttackData": {
+    "AttackDamage": 15.0,
+    "AttackTypes": [
+      "Lightning"
+    ]
+  },
+  "AttackSpeed": 3.0,
+  "AttackRange": 9.0,
+  "ProjectileSpeed": 3.0,
+  "Price": 12,
+  "ShopUnlockCost": 10,
+  "AttackType": {
+    "Type": "InstantDamageAttack",
+    "Particle": "Magic_Hit",
+    "ParticleColor": "#ffee00",
+    "ParticleScale": 1,
+    "ParticleOffset": {
+      "X": -0.5,
+      "Z": -0.5
+    }
+  },
+  "Upgrades": {
+    "Damage": [
+      {
+        "Price": 4,
+        "Description": "Sharpen: +3.0 damage",
+        "AttackData": {
+          "AttackDamage": 3.0,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 8,
+        "Description": "Empower: +5.2 more damage",
+        "AttackData": {
+          "AttackDamage": 5.2,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Range": [
+      {
+        "Price": 3,
+        "Description": "Extend: +1.3 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 1.3,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 6,
+        "Description": "Far sight: +2.2 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 2.2,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Speed": [
+      {
+        "Price": 3,
+        "Description": "Swift: +0.54 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.54,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 6,
+        "Description": "Rapid: +0.9 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.9,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Velocity": [
+      {
+        "Price": 2,
+        "Description": "Quickshot: +0.6 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.6
+      },
+      {
+        "Price": 5,
+        "Description": "Blazing: +1.14 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 1.14
+      }
+    ],
+    "Focus": [
+      {
+        "Price": 5,
+        "Description": "Focused aim: +1.5 dmg, +0.7 range",
+        "AttackData": {
+          "AttackDamage": 1.5,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.7,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 10,
+        "Description": "Mastery: +2.6 dmg, +0.27 spd, +1.1 range",
+        "AttackData": {
+          "AttackDamage": 2.6,
+          "AttackTypes": [
+            "Lightning"
+          ]
+        },
+        "AttackSpeed": 0.27,
+        "AttackRange": 1.1,
+        "ProjectileSpeed": 0.0
+      }
+    ]
+  }
+}

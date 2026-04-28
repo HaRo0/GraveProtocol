@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Thunder_Phoenix", "Count": 1 },
+    { "Enemy": "Enemy_Void_Mage", "Count": 2 },
+    { "Enemy": "Enemy_Shade", "Count": 4 }
+  ],
+  "MaterialReward": 30,
+  "CurrencyReward": 3
+}
+

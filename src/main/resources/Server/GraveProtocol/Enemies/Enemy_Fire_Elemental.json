@@ -1,0 +1,19 @@
+{
+  "Entity": "Spawn_Void",
+  "AttackData": {
+    "Health": 685.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 1.0,
+      "Fire": 0.5,
+      "Water": 1.5,
+      "Ice": 1.6,
+      "Grass": 1.2
+    },
+    "DefenseMultiplier": 0.95,
+    "DefenseFixed": 8.0,
+    "AttackTypes": ["Fire"],
+    "AttackDamage": 50.0
+  },
+  "MaterialReward": 5
+}
+

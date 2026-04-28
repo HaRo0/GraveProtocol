@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Eternal_Tempest", "Count": 1 },
+    { "Enemy": "Enemy_Thunder_Phoenix", "Count": 2 },
+    { "Enemy": "Enemy_Tsunami_Sprite", "Count": 3 }
+  ],
+  "MaterialReward": 52,
+  "CurrencyReward": 5
+}
+

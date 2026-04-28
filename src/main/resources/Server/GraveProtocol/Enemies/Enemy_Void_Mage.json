@@ -1,0 +1,19 @@
+{
+  "Entity": "Spawn_Void",
+  "AttackData": {
+    "Health": 645.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 0.9,
+      "Holy": 1.5,
+      "Ghost": 0.6,
+      "Darkness": 0.45,
+      "Lightning": 1.0
+    },
+    "DefenseMultiplier": 0.9,
+    "DefenseFixed": 6.0,
+    "AttackTypes": ["Darkness", "Ghost"],
+    "AttackDamage": 48.0
+  },
+  "MaterialReward": 5
+}
+

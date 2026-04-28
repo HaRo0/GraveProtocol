@@ -1,0 +1,4 @@
+{
+  "Enemies": [{ "Enemy": "Enemy_Iron_Juggernaut", "Count": 2 }, { "Enemy": "Enemy_Lich", "Count": 1 }, { "Enemy": "Enemy_Shade", "Count": 4 }, { "Enemy": "Enemy_Knight", "Count": 4 }],
+  "MaterialReward": 21, "CurrencyReward": 2
+}

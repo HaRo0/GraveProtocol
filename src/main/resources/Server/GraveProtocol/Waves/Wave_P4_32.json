@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Eternal_Tempest",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Colossus",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Bone_Titan",
+      "Count": 3
+    }
+  ],
+  "MaterialReward": 56,
+  "CurrencyReward": 6
+}

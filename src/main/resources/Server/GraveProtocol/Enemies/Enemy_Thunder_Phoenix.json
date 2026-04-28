@@ -1,0 +1,19 @@
+{
+  "Entity": "Kweebec_Sapling_Razorleaf",
+  "AttackData": {
+    "Health": 705.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 0.9,
+      "Fire": 1.3,
+      "Water": 1.0,
+      "Lightning": 0.5,
+      "Grass": 1.1
+    },
+    "DefenseMultiplier": 0.9,
+    "DefenseFixed": 7.0,
+    "AttackTypes": ["Lightning"],
+    "AttackDamage": 52.0
+  },
+  "MaterialReward": 6
+}
+

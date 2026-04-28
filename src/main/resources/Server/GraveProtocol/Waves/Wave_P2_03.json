@@ -1,0 +1,9 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Plague_Rat", "Count": 6 },
+    { "Enemy": "Enemy_Shade", "Count": 3 }
+  ],
+  "MaterialReward": 24,
+  "CurrencyReward": 3
+}
+

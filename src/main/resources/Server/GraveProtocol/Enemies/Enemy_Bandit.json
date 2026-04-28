@@ -1,0 +1,17 @@
+{
+  "Entity": "Feran_Cub",
+  "AttackData": {
+    "Health": 85.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 1.0,
+      "Fire": 1.0,
+      "Holy": 1.0
+    },
+    "DefenseMultiplier": 1.0,
+    "DefenseFixed": 1.0,
+    "AttackTypes": ["Normal"],
+    "AttackDamage": 9.0
+  },
+  "MaterialReward": 2
+}
+

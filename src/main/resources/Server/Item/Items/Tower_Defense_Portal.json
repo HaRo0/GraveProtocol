@@ -1,0 +1,111 @@
+{
+  "TranslationProperties": {
+    "Name": "TD Gateway"
+  },
+  "Icon": "Icons/ItemsGenerated/Portal_Device.png",
+  "Categories": [
+    "Blocks.Portals"
+  ],
+  "BlockType": {
+    "DrawType": "Model",
+    "Material": "Solid",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Miscellaneous/Platform_MagicInactive.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Miscellaneous/Platform_Magic_Blue2.png",
+        "Weight": 1
+      }
+    ],
+    "CustomModelAnimation": "Blocks/Miscellaneous/Platform_Magic_Idle.blockyanim",
+    "HitboxType": "Pad_Portal",
+    "BlockParticleSetId": "Stone",
+    "BlockSoundSetId": "Stone",
+    "VariantRotation": "NESW",
+    "Flags": {
+      "IsUsable": false
+    },
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "AmbientSoundEventId": "SFX_Portal_Neutral",
+    "Particles": [
+      {
+        "SystemId": "MagicPortal",
+        "PositionOffset": {
+          "Y": 2.0
+        },
+        "Scale": 0.8
+      },
+      {
+        "SystemId": "MagicPortal_Stones",
+        "TargetEntityPart": "Self",
+        "TargetNodeName": "Debris"
+      },
+      {
+        "SystemId": "MagicPortal_Stones",
+        "TargetEntityPart": "Self",
+        "TargetNodeName": "Debris6"
+      }
+    ],
+    "Interactions": {
+      "CollisionEnter": {
+        "Interactions": [
+          {
+            "Type": "EnterTowerDefenseInstance"
+          }
+        ]
+      }
+    },
+    "Light": {
+      "Color": "#7cc",
+      "Radius": 4
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "Tags": {
+    "Type": [
+      "Portal"
+    ]
+  },
+  "Quality": "Epic",
+  "IconProperties": {
+    "Scale": 0.35,
+    "Rotation": [
+      22.5,
+      45.0,
+      22.5
+    ],
+    "Translation": [
+      0.0,
+      -13.5
+    ]
+  },
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Recipe": {
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Workbench",
+        "Categories": [
+          "Workbench_Tinkering"
+        ]
+      }
+    ],
+    "TimeSeconds": 300,
+    "OutputQuantity": 1,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Bronze",
+        "Quantity": 20
+      },
+      {
+        "Quantity": 1,
+        "ResourceTypeId": "Wood_Trunk"
+      }
+    ]
+  },
+  "MaxStack": 1
+}

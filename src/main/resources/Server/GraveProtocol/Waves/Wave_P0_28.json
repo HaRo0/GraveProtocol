@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Imp",
+      "Count": 8
+    },
+    {
+      "Enemy": "Enemy_Slime",
+      "Count": 5
+    },
+    {
+      "Enemy": "Enemy_Bandit",
+      "Count": 4
+    }
+  ],
+  "MaterialReward": 9,
+  "CurrencyReward": 1
+}

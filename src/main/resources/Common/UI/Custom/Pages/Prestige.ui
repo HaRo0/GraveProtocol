@@ -1,0 +1,41 @@
+$C = "../Common.ui";
+Group {
+  LayoutMode: Top;
+  Background: #2a2a2a;
+  Anchor: (Width: 800, Height: 440);
+  Padding: (Full: 0);
+
+  Label #Title {
+    Padding: (Full: 0);
+    Text: "Prestige";
+    Style: (TextColor: #ffffff, HorizontalAlignment: Center);
+  }
+
+  Label #CurrentPrestige {
+    Padding: (Full: 0);
+    Text: "Current Prestige: 1 / 5";
+    Style: (TextColor: #c0a0ff, HorizontalAlignment: Center);
+  }
+
+  Label #LevelProgress {
+    Padding: (Full: 0);
+    Text: "Levels Completed: 0 / 12";
+    Style: (TextColor: #80e0ff, HorizontalAlignment: Center);
+  }
+
+  Label #StatusLabel {
+    Padding: (Full: 0);
+    Text: "Complete all levels to prestige.";
+    Style: (TextColor: #ff9944, HorizontalAlignment: Center);
+  }
+
+  $C.@TextButton #ConfirmPrestige {
+    Padding: (Full: 0);
+    Text: "Prestige Now";
+  }
+
+  $C.@TextButton #Cancel {
+    Padding: (Full: 0);
+    Text: "Back";
+  }
+}

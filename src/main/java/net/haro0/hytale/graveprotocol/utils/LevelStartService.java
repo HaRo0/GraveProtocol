@@ -3,19 +3,24 @@ package net.haro0.hytale.graveprotocol.utils;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.model.config.Model;
 import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.block.BlockModule;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
@@ -23,6 +28,7 @@ import net.haro0.hytale.graveprotocol.codecs.assets.Wave;
 import net.haro0.hytale.graveprotocol.codecs.components.player.GPPlayerDataComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
+import net.haro0.hytale.graveprotocol.codecs.components.tower.TowerComponent;
 import net.haro0.hytale.graveprotocol.ui.TowerDefenseHudUi;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,6 +38,7 @@ public final class LevelStartService {
     private static final String PATH_TARGET_SLOT = "LockedTarget";
     private static final String PATH_TARGET_STATE = "Alerted";
     private static final String DEFAULT_ATTACKER_ROLE_NAME = "Lynn_Attacker";
+    private static final String INDICATOR_NAME="Tower_Indicator";
     private static float ATTACKER_BASE_HEALTH = -1;
 
     private LevelStartService() {
@@ -79,6 +86,7 @@ public final class LevelStartService {
         lynnComponent.setMultipliers(prestige.getMultipliers(),level.getMultipliers());
         lynnComponent.setActive(true);
         lynnComponent.setMaterial(level.getMaterialStartAmount());
+        clearTowers(world);
 
 
         var statMap = store.getComponent(pathTarget, EntityStatMap.getComponentType());
@@ -90,6 +98,48 @@ public final class LevelStartService {
         System.out.println("Set defender health to " + statMap.get(DefaultEntityStatTypes.getHealth()).get() + "/" + statMap.get(DefaultEntityStatTypes.getHealth()).getMax());
         if(waves.length < 1) return;
         spawnWave(ref, store, world, waves[0], spawnPositions, pathTarget,lynnComponent);
+    }
+
+    private static void clearTowers(World world){
+        world.execute(() -> {
+            var cStore = world.getChunkStore().getStore();
+            cStore.forEachChunk(TowerComponent.getComponentType(), (archeType,commandBuffer) -> {
+
+                for(var index = 0; index < archeType.size(); index++){
+                    var blockStateInfo = archeType.getComponent(index, BlockModule.BlockStateInfo.getComponentType());
+                    if (blockStateInfo == null) {
+                        return;
+                    }
+
+                    var chunkRef = blockStateInfo.getChunkRef();
+                    if (!chunkRef.isValid()) {
+                        return;
+                    }
+
+                    var chunk = commandBuffer.getComponent(chunkRef, BlockChunk.getComponentType());
+                    if (chunk == null) {
+                        return;
+                    }
+
+                    int blockIndex = blockStateInfo.getIndex();
+                    int localX = ChunkUtil.xFromBlockInColumn(blockIndex);
+                    int localZ = ChunkUtil.zFromBlockInColumn(blockIndex);
+
+
+                    var x =ChunkUtil.worldCoordFromLocalCoord(chunk.getX(), localX);
+                    var y =ChunkUtil.yFromBlockInColumn(blockIndex);
+                    var z = ChunkUtil.worldCoordFromLocalCoord(chunk.getZ(), localZ);
+
+                    var rotation = world.getBlockRotationIndex(x, y, z);
+                    int typeIndex = BlockType.getAssetMap().getIndex(INDICATOR_NAME);
+                    var type = BlockType.getAssetMap().getAsset(typeIndex);
+                    world.getChunk(ChunkUtil.indexChunkFromBlock(x, z))
+                        .setBlock(x, y, z,index,type ,rotation,0,0);
+                }
+
+
+            });
+        });
     }
 
     public static boolean startNextWave(

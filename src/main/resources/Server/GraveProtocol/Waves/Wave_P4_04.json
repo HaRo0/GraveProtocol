@@ -1,0 +1,9 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Abyssal_Horror", "Count": 2 },
+    { "Enemy": "Enemy_Void_Mage", "Count": 3 }
+  ],
+  "MaterialReward": 50,
+  "CurrencyReward": 5
+}
+

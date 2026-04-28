@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Abyssal_Horror",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Void_Mage",
+      "Count": 3
+    },
+    {
+      "Enemy": "Enemy_Tsunami_Sprite",
+      "Count": 2
+    }
+  ],
+  "MaterialReward": 45,
+  "CurrencyReward": 5
+}

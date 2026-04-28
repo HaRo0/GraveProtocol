@@ -4,7 +4,9 @@
       "Enemy": "Enemy_Scout",
       "Count": 8
     }
-  ]
+  ],
+  "MaterialReward": 8,
+  "CurrencyReward": 1
 }
 
 

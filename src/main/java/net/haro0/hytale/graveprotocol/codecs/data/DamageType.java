@@ -8,6 +8,7 @@ public enum DamageType {
     DARKNESS,
     HOLY,
     LIGHTNING,
-    GHOST
+    GHOST,
+    ICE
     ;
 }

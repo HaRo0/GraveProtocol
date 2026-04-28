@@ -1,0 +1,11 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Warden", "Count": 2 },
+    { "Enemy": "Enemy_Drake", "Count": 1 },
+    { "Enemy": "Enemy_Knight", "Count": 4 },
+    { "Enemy": "Enemy_Assassin", "Count": 3 }
+  ],
+  "MaterialReward": 16,
+  "CurrencyReward": 2
+}
+

@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Plague_Rat",
+      "Count": 6
+    },
+    {
+      "Enemy": "Enemy_Zombie",
+      "Count": 8
+    },
+    {
+      "Enemy": "Enemy_Berserker",
+      "Count": 2
+    }
+  ],
+  "MaterialReward": 18,
+  "CurrencyReward": 2
+}

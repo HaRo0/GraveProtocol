@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Necromancer",
+      "Count": 4
+    },
+    {
+      "Enemy": "Enemy_Specter",
+      "Count": 4
+    },
+    {
+      "Enemy": "Enemy_Goblin",
+      "Count": 5
+    }
+  ],
+  "MaterialReward": 10,
+  "CurrencyReward": 1
+}

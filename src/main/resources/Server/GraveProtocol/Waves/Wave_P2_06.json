@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Void_Mage", "Count": 1 },
+    { "Enemy": "Enemy_Drake", "Count": 4 },
+    { "Enemy": "Enemy_Necromancer", "Count": 3 }
+  ],
+  "MaterialReward": 26,
+  "CurrencyReward": 3
+}
+

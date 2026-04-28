@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Brute",
+      "Count": 3
+    },
+    {
+      "Enemy": "Enemy_Golem",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Werewolf",
+      "Count": 3
+    }
+  ],
+  "MaterialReward": 12,
+  "CurrencyReward": 1
+}

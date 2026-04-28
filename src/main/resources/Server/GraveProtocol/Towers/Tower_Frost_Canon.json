@@ -1,0 +1,166 @@
+{
+  "TowerModel": "GP_Tower",
+  "AttackData": {
+    "AttackDamage": 32.0,
+    "AttackTypes": [
+      "Ice"
+    ]
+  },
+  "AttackSpeed": 2.0,
+  "AttackRange": 11.0,
+  "ProjectileSpeed": 2.0,
+  "Price": 48,
+  "ShopUnlockCost": 75,
+  "AttackType": {
+    "Type": "InstantDamageAttack",
+    "Particle": "Magic_Hit",
+    "ParticleColor": "#aaddff",
+    "ParticleScale": 2,
+    "ParticleOffset": {
+      "X": -0.5,
+      "Z": -0.5
+    }
+  },
+  "Upgrades": {
+    "Damage": [
+      {
+        "Price": 10,
+        "Description": "Sharpen: +6.4 damage",
+        "AttackData": {
+          "AttackDamage": 6.4,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 22,
+        "Description": "Empower: +11.2 more damage",
+        "AttackData": {
+          "AttackDamage": 11.2,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Range": [
+      {
+        "Price": 9,
+        "Description": "Extend: +1.6 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 1.6,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 20,
+        "Description": "Far sight: +2.8 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 2.8,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Speed": [
+      {
+        "Price": 9,
+        "Description": "Swift: +0.36 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.36,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 20,
+        "Description": "Rapid: +0.6 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.6,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Velocity": [
+      {
+        "Price": 8,
+        "Description": "Quickshot: +0.4 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.4
+      },
+      {
+        "Price": 16,
+        "Description": "Blazing: +0.76 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.76
+      }
+    ],
+    "Focus": [
+      {
+        "Price": 15,
+        "Description": "Focused aim: +3.2 dmg, +0.8 range",
+        "AttackData": {
+          "AttackDamage": 3.2,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.8,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 32,
+        "Description": "Mastery: +5.6 dmg, +0.18 spd, +1.4 range",
+        "AttackData": {
+          "AttackDamage": 5.6,
+          "AttackTypes": [
+            "Ice"
+          ]
+        },
+        "AttackSpeed": 0.18,
+        "AttackRange": 1.4,
+        "ProjectileSpeed": 0.0
+      }
+    ]
+  }
+}

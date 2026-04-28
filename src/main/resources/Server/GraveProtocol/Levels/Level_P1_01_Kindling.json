@@ -1,0 +1,61 @@
+{
+  "Waves": [
+    "Wave_01_Intro",
+    "Wave_02_Mixed",
+    "Wave_03_Pressure",
+    "Wave_04_Elite",
+    "Wave_05_Boss",
+    "Wave_P1_01",
+    "Wave_P1_02",
+    "Wave_P1_03",
+    "Wave_P1_04",
+    "Wave_P1_05",
+    "Wave_P1_06",
+    "Wave_P1_07",
+    "Wave_P1_08",
+    "Wave_P1_09",
+    "Wave_P1_10",
+    "Wave_P1_11",
+    "Wave_P1_16",
+    "Wave_P1_17",
+    "Wave_P1_18",
+    "Wave_P1_16",
+    "Wave_P1_17",
+    "Wave_P1_18",
+    "Wave_P1_16",
+    "Wave_P1_17",
+    "Wave_P1_18",
+    "Wave_P1_16",
+    "Wave_P1_17",
+    "Wave_P1_18",
+    "Wave_P1_16",
+    "Wave_P1_17"
+  ],
+  "Order": 0,
+  "MinPrestige": 1,
+  "MaxPrestige": 1,
+  "ShopStats": {
+    "Health": 400.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 1.0,
+      "Fire": 0.92,
+      "Water": 1.08,
+      "Grass": 0.98,
+      "Darkness": 0.88,
+      "Holy": 1.15,
+      "Lightning": 1.0,
+      "Ghost": 1.05
+    },
+    "DefenseMultiplier": 0.95,
+    "DefenseFixed": 3.0
+  },
+  "Multipliers": {
+    "ShopHealthMultiplier": 1.0,
+    "TowerHealthMultiplier": 1.0,
+    "TowerAttackMultiplier": 1.0,
+    "EnemyHealthMultiplier": 1.0,
+    "EnemyAttackMultiplier": 1.0
+  },
+  "MaterialStartAmount": 30,
+  "CurrencyReward": 5
+}

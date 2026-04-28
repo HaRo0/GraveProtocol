@@ -1,0 +1,19 @@
+{
+  "Entity": "Feran_Cub",
+  "AttackData": {
+    "Health": 315.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 1.0,
+      "Fire": 1.2,
+      "Water": 0.8,
+      "Grass": 0.5,
+      "Holy": 1.1
+    },
+    "DefenseMultiplier": 1.0,
+    "DefenseFixed": 2.0,
+    "AttackTypes": ["Grass"],
+    "AttackDamage": 22.0
+  },
+  "MaterialReward": 4
+}
+

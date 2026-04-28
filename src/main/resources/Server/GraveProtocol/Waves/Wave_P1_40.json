@@ -1,0 +1,26 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Warden",
+      "Count": 3
+    },
+    {
+      "Enemy": "Enemy_Iron_Juggernaut",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Drake",
+      "Count": 4
+    },
+    {
+      "Enemy": "Enemy_Lich",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Shade",
+      "Count": 3
+    }
+  ],
+  "MaterialReward": 21,
+  "CurrencyReward": 2
+}

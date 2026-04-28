@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Thunder_Phoenix",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Bone_Titan",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Drake",
+      "Count": 4
+    }
+  ],
+  "MaterialReward": 36,
+  "CurrencyReward": 4
+}

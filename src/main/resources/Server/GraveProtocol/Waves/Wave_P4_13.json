@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Eternal_Tempest", "Count": 1 },
+    { "Enemy": "Enemy_Archlich", "Count": 2 },
+    { "Enemy": "Enemy_Abyssal_Horror", "Count": 2 }
+  ],
+  "MaterialReward": 59,
+  "CurrencyReward": 5
+}
+

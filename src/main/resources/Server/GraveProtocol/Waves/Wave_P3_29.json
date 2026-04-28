@@ -1,0 +1,22 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Soul_Reaper",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Archlich",
+      "Count": 1
+    },
+    {
+      "Enemy": "Enemy_Steel_Behemoth",
+      "Count": 1
+    },
+    {
+      "Enemy": "Enemy_Bone_Titan",
+      "Count": 1
+    }
+  ],
+  "MaterialReward": 42,
+  "CurrencyReward": 4
+}

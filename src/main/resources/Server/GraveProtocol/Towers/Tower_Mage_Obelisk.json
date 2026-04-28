@@ -1,0 +1,167 @@
+{
+  "TowerModel": "GP_Tower",
+  "AttackData": {
+    "AttackDamage": 10.0,
+    "AttackTypes": [
+      "Normal"
+    ]
+  },
+  "AttackSpeed": 2.0,
+  "AttackRange": 7.0,
+  "ProjectileSpeed": 1.0,
+  "Price": 22,
+  "ShopUnlockCost": 30,
+  "AttackType": {
+    "Type": "AOEAttack",
+    "Particle": "Example_Growing_Disk",
+    "ParticleColor": "#808080",
+    "ParticleScale": 1,
+    "ParticleOffset": {
+      "X": 0.5,
+      "Z": 0.5,
+      "Y": 0
+    }
+  },
+  "Upgrades": {
+    "Damage": [
+      {
+        "Price": 6,
+        "Description": "Sharpen: +2.0 damage",
+        "AttackData": {
+          "AttackDamage": 2.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 14,
+        "Description": "Empower: +3.5 more damage",
+        "AttackData": {
+          "AttackDamage": 3.5,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Range": [
+      {
+        "Price": 5,
+        "Description": "Extend: +1.1 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 1.1,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 12,
+        "Description": "Far sight: +1.8 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 1.8,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Speed": [
+      {
+        "Price": 5,
+        "Description": "Swift: +0.36 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.36,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 12,
+        "Description": "Rapid: +0.6 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.6,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Velocity": [
+      {
+        "Price": 4,
+        "Description": "Quickshot: +0.2 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.2
+      },
+      {
+        "Price": 9,
+        "Description": "Blazing: +0.38 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.38
+      }
+    ],
+    "Focus": [
+      {
+        "Price": 8,
+        "Description": "Focused aim: +1.0 dmg, +0.6 range",
+        "AttackData": {
+          "AttackDamage": 1.0,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.6,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 18,
+        "Description": "Mastery: +1.8 dmg, +0.18 spd, +0.9 range",
+        "AttackData": {
+          "AttackDamage": 1.8,
+          "AttackTypes": [
+            "Normal"
+          ]
+        },
+        "AttackSpeed": 0.18,
+        "AttackRange": 0.9,
+        "ProjectileSpeed": 0.0
+      }
+    ]
+  }
+}

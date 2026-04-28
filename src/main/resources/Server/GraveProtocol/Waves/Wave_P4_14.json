@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Ancient_Dragon", "Count": 2 },
+    { "Enemy": "Enemy_Colossus", "Count": 1 },
+    { "Enemy": "Enemy_Soul_Reaper", "Count": 2 }
+  ],
+  "MaterialReward": 60,
+  "CurrencyReward": 5
+}
+

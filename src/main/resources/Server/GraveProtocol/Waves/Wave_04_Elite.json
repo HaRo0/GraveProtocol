@@ -12,7 +12,9 @@
       "Enemy": "Enemy_Brute",
       "Count": 3
     }
-  ]
+  ],
+  "MaterialReward": 12,
+  "CurrencyReward": 1
 }
 
 

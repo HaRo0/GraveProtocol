@@ -1,6 +1,7 @@
 package net.haro0.hytale.graveprotocol.utils;
 
 import com.hypixel.hytale.builtin.instances.InstancesPlugin;
+import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Transform;
@@ -33,7 +34,7 @@ public final class InstanceUtils {
 
     private InstanceUtils() { }
 
-    public static void moveToPrestigeInstance(Ref<EntityStore> ref, Store<EntityStore> store) {
+    public static void moveToPrestigeInstance(Ref<EntityStore> ref, ComponentAccessor<EntityStore> store) {
 
         var player = store.getComponent(ref, Player.getComponentType());
         if (player == null) return;

@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Soul_Reaper", "Count": 2 },
+    { "Enemy": "Enemy_Archlich", "Count": 2 },
+    { "Enemy": "Enemy_Lich", "Count": 2 }
+  ],
+  "MaterialReward": 55,
+  "CurrencyReward": 5
+}
+

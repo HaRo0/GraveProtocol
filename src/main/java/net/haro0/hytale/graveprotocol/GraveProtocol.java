@@ -17,6 +17,7 @@ import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnAttackerCompone
 import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 import net.haro0.hytale.graveprotocol.events.PlayerEvents;
 import net.haro0.hytale.graveprotocol.interactions.LynnInteraction;
+import net.haro0.hytale.graveprotocol.interactions.TowerDefenseEnterInteraction;
 import net.haro0.hytale.graveprotocol.interactions.TowerInteraction;
 import net.haro0.hytale.graveprotocol.npc.GPWalkMotionControllerBuilder;
 import net.haro0.hytale.graveprotocol.systems.LynnAttackerDeathSystem;
@@ -53,6 +54,7 @@ public class GraveProtocol extends JavaPlugin {
 
         Interaction.CODEC.register("OpenLynnMenu", LynnInteraction.class, LynnInteraction.CODEC);
         Interaction.CODEC.register("OpenTowerMenu", TowerInteraction.class, TowerInteraction.CODEC);
+        Interaction.CODEC.register("EnterTowerDefenseInstance", TowerDefenseEnterInteraction.class, TowerDefenseEnterInteraction.CODEC);
 
         AbstractTowerAttack.CODEC.register("AOEAttack", AOETowerAttack.class, AOETowerAttack.CODEC);
         AbstractTowerAttack.CODEC.register("InstantDamageAttack", MagicTowerAttack.class, MagicTowerAttack.CODEC);

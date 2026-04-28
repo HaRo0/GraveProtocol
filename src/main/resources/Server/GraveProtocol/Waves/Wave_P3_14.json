@@ -1,0 +1,10 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Colossus", "Count": 1 },
+    { "Enemy": "Enemy_Abyssal_Horror", "Count": 1 },
+    { "Enemy": "Enemy_Bone_Titan", "Count": 2 }
+  ],
+  "MaterialReward": 45,
+  "CurrencyReward": 4
+}
+

@@ -1,0 +1,167 @@
+{
+  "TowerModel": "GP_Tower",
+  "AttackData": {
+    "AttackDamage": 38.0,
+    "AttackTypes": [
+      "Darkness"
+    ]
+  },
+  "AttackSpeed": 1.2,
+  "AttackRange": 10.0,
+  "ProjectileSpeed": 1.0,
+  "Price": 75,
+  "ShopUnlockCost": 130,
+  "AttackType": {
+    "Type": "AOEAttack",
+    "Particle": "Example_Growing_Disk",
+    "ParticleColor": "#330066",
+    "ParticleScale": 2,
+    "ParticleOffset": {
+      "X": 0.5,
+      "Z": 0.5,
+      "Y": 0
+    }
+  },
+  "Upgrades": {
+    "Damage": [
+      {
+        "Price": 18,
+        "Description": "Sharpen: +7.6 damage",
+        "AttackData": {
+          "AttackDamage": 7.6,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 38,
+        "Description": "Empower: +13.3 more damage",
+        "AttackData": {
+          "AttackDamage": 13.3,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Range": [
+      {
+        "Price": 16,
+        "Description": "Extend: +1.5 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 1.5,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 34,
+        "Description": "Far sight: +2.5 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 2.5,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Speed": [
+      {
+        "Price": 16,
+        "Description": "Swift: +0.216 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.216,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 34,
+        "Description": "Rapid: +0.36 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.36,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Velocity": [
+      {
+        "Price": 14,
+        "Description": "Quickshot: +0.2 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.2
+      },
+      {
+        "Price": 28,
+        "Description": "Blazing: +0.38 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.38
+      }
+    ],
+    "Focus": [
+      {
+        "Price": 26,
+        "Description": "Focused aim: +3.8 dmg, +0.8 range",
+        "AttackData": {
+          "AttackDamage": 3.8,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.8,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 55,
+        "Description": "Mastery: +6.7 dmg, +0.108 spd, +1.2 range",
+        "AttackData": {
+          "AttackDamage": 6.7,
+          "AttackTypes": [
+            "Darkness"
+          ]
+        },
+        "AttackSpeed": 0.108,
+        "AttackRange": 1.2,
+        "ProjectileSpeed": 0.0
+      }
+    ]
+  }
+}

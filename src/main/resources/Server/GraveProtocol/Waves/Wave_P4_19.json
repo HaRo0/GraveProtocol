@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Ancient_Dragon",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Fire_Elemental",
+      "Count": 4
+    },
+    {
+      "Enemy": "Enemy_Steel_Behemoth",
+      "Count": 1
+    }
+  ],
+  "MaterialReward": 50,
+  "CurrencyReward": 5
+}

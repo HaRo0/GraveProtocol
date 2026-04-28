@@ -12,7 +12,9 @@
       "Enemy": "Enemy_Scout",
       "Count": 12
     }
-  ]
+  ],
+  "MaterialReward": 13,
+  "CurrencyReward": 1
 }
 
 

@@ -7,7 +7,6 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
@@ -53,7 +52,9 @@ public class GraveMenuUi extends InteractiveCustomUIPage<GraveMenuUi.BindingData
             case "Shop" -> {
                 player.getPageManager().openCustomPage(ref, store, new ShopUi(playerRef));
             }
-            case "Prestige" -> playerRef.sendMessage(Message.raw("Prestige menu is not implemented yet."));
+            case "Prestige" -> {
+                player.getPageManager().openCustomPage(ref, store, new PrestigeUi(playerRef));
+            }
             case "StartLevel" -> {
                 LevelStartService.startLevel(ref, store);
                 close();

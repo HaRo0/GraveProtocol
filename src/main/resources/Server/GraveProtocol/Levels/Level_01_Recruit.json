@@ -1,6 +1,35 @@
 {
   "Waves": [
-    "Wave_01_Intro"
+    "Wave_01_Intro",
+    "Wave_02_Mixed",
+    "Wave_03_Pressure",
+    "Wave_04_Elite",
+    "Wave_05_Boss",
+    "Wave_P0_01",
+    "Wave_P0_02",
+    "Wave_P0_03",
+    "Wave_P0_04",
+    "Wave_P0_05",
+    "Wave_P0_06",
+    "Wave_P0_07",
+    "Wave_P0_08",
+    "Wave_P0_09",
+    "Wave_P0_10",
+    "Wave_P0_11",
+    "Wave_P0_14",
+    "Wave_P0_15",
+    "Wave_P0_16",
+    "Wave_P0_14",
+    "Wave_P0_15",
+    "Wave_P0_16",
+    "Wave_P0_14",
+    "Wave_P0_15",
+    "Wave_P0_16",
+    "Wave_P0_14",
+    "Wave_P0_15",
+    "Wave_P0_16",
+    "Wave_P0_14",
+    "Wave_P0_15"
   ],
   "Order": 0,
   "MinPrestige": 0,
@@ -26,7 +55,7 @@
     "TowerAttackMultiplier": 1.0,
     "EnemyHealthMultiplier": 1.0,
     "EnemyAttackMultiplier": 1.0
-  }
+  },
+  "MaterialStartAmount": 20,
+  "CurrencyReward": 3
 }
-
-

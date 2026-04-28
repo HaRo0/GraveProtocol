@@ -1,0 +1,9 @@
+{
+  "Enemies": [
+    { "Enemy": "Enemy_Archlich", "Count": 1 },
+    { "Enemy": "Enemy_Void_Mage", "Count": 5 }
+  ],
+  "MaterialReward": 47,
+  "CurrencyReward": 4
+}
+

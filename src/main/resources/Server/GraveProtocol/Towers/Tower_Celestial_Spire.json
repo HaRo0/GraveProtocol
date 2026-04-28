@@ -1,0 +1,166 @@
+{
+  "TowerModel": "GP_Tower",
+  "AttackData": {
+    "AttackDamage": 38.0,
+    "AttackTypes": [
+      "Holy"
+    ]
+  },
+  "AttackSpeed": 2.0,
+  "AttackRange": 12.0,
+  "ProjectileSpeed": 1.5,
+  "Price": 50,
+  "ShopUnlockCost": 80,
+  "AttackType": {
+    "Type": "InstantDamageAttack",
+    "Particle": "Magic_Hit",
+    "ParticleColor": "#ffe060",
+    "ParticleScale": 2,
+    "ParticleOffset": {
+      "X": -0.5,
+      "Z": -0.5
+    }
+  },
+  "Upgrades": {
+    "Damage": [
+      {
+        "Price": 10,
+        "Description": "Sharpen: +7.6 damage",
+        "AttackData": {
+          "AttackDamage": 7.6,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 22,
+        "Description": "Empower: +13.3 more damage",
+        "AttackData": {
+          "AttackDamage": 13.3,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Range": [
+      {
+        "Price": 9,
+        "Description": "Extend: +1.8 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 1.8,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 20,
+        "Description": "Far sight: +3.0 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 3.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Speed": [
+      {
+        "Price": 9,
+        "Description": "Swift: +0.36 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.36,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 20,
+        "Description": "Rapid: +0.6 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.6,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Velocity": [
+      {
+        "Price": 8,
+        "Description": "Quickshot: +0.3 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.3
+      },
+      {
+        "Price": 16,
+        "Description": "Blazing: +0.57 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.57
+      }
+    ],
+    "Focus": [
+      {
+        "Price": 15,
+        "Description": "Focused aim: +3.8 dmg, +0.9 range",
+        "AttackData": {
+          "AttackDamage": 3.8,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.9,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 32,
+        "Description": "Mastery: +6.7 dmg, +0.18 spd, +1.5 range",
+        "AttackData": {
+          "AttackDamage": 6.7,
+          "AttackTypes": [
+            "Holy"
+          ]
+        },
+        "AttackSpeed": 0.18,
+        "AttackRange": 1.5,
+        "ProjectileSpeed": 0.0
+      }
+    ]
+  }
+}

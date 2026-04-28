@@ -8,7 +8,9 @@
       "Enemy": "Enemy_Pyro",
       "Count": 4
     }
-  ]
+  ],
+  "MaterialReward": 9,
+  "CurrencyReward": 1
 }
 
 

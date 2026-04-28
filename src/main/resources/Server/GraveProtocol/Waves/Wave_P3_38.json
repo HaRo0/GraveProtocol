@@ -1,0 +1,22 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Abyssal_Horror",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Colossus",
+      "Count": 1
+    },
+    {
+      "Enemy": "Enemy_Thunder_Phoenix",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Fire_Elemental",
+      "Count": 2
+    }
+  ],
+  "MaterialReward": 47,
+  "CurrencyReward": 5
+}

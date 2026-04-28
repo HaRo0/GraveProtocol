@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Archlich",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Ancient_Dragon",
+      "Count": 1
+    },
+    {
+      "Enemy": "Enemy_Void_Mage",
+      "Count": 5
+    }
+  ],
+  "MaterialReward": 48,
+  "CurrencyReward": 5
+}

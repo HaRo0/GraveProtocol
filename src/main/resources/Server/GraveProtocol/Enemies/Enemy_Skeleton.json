@@ -1,0 +1,18 @@
+{
+  "Entity": "Shadow_Knight",
+  "AttackData": {
+    "Health": 65.0,
+    "DefenseTypeMultipliers": {
+      "Normal": 1.0,
+      "Holy": 1.5,
+      "Ghost": 0.5,
+      "Fire": 1.2
+    },
+    "DefenseMultiplier": 1.0,
+    "DefenseFixed": 0.0,
+    "AttackTypes": ["Ghost"],
+    "AttackDamage": 7.0
+  },
+  "MaterialReward": 1
+}
+

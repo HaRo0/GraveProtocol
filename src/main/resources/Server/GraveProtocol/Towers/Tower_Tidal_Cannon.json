@@ -1,0 +1,166 @@
+{
+  "TowerModel": "GP_Tower",
+  "AttackData": {
+    "AttackDamage": 20.0,
+    "AttackTypes": [
+      "Water"
+    ]
+  },
+  "AttackSpeed": 2.5,
+  "AttackRange": 10.0,
+  "ProjectileSpeed": 2.0,
+  "Price": 24,
+  "ShopUnlockCost": 35,
+  "AttackType": {
+    "Type": "InstantDamageAttack",
+    "Particle": "Magic_Hit",
+    "ParticleColor": "#0088ff",
+    "ParticleScale": 1,
+    "ParticleOffset": {
+      "X": -0.5,
+      "Z": -0.5
+    }
+  },
+  "Upgrades": {
+    "Damage": [
+      {
+        "Price": 6,
+        "Description": "Sharpen: +4.0 damage",
+        "AttackData": {
+          "AttackDamage": 4.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 14,
+        "Description": "Empower: +7.0 more damage",
+        "AttackData": {
+          "AttackDamage": 7.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Range": [
+      {
+        "Price": 5,
+        "Description": "Extend: +1.5 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 1.5,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 12,
+        "Description": "Far sight: +2.5 range",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 2.5,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Speed": [
+      {
+        "Price": 5,
+        "Description": "Swift: +0.45 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.45,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 12,
+        "Description": "Rapid: +0.75 attack speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.75,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.0
+      }
+    ],
+    "Velocity": [
+      {
+        "Price": 4,
+        "Description": "Quickshot: +0.4 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.4
+      },
+      {
+        "Price": 9,
+        "Description": "Blazing: +0.76 proj. speed",
+        "AttackData": {
+          "AttackDamage": 0.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.0,
+        "ProjectileSpeed": 0.76
+      }
+    ],
+    "Focus": [
+      {
+        "Price": 8,
+        "Description": "Focused aim: +2.0 dmg, +0.8 range",
+        "AttackData": {
+          "AttackDamage": 2.0,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.0,
+        "AttackRange": 0.8,
+        "ProjectileSpeed": 0.0
+      },
+      {
+        "Price": 18,
+        "Description": "Mastery: +3.5 dmg, +0.225 spd, +1.2 range",
+        "AttackData": {
+          "AttackDamage": 3.5,
+          "AttackTypes": [
+            "Water"
+          ]
+        },
+        "AttackSpeed": 0.225,
+        "AttackRange": 1.2,
+        "ProjectileSpeed": 0.0
+      }
+    ]
+  }
+}

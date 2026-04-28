@@ -1,0 +1,22 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Warden",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Bone_Titan",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Fire_Elemental",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Drake",
+      "Count": 3
+    }
+  ],
+  "MaterialReward": 28,
+  "CurrencyReward": 3
+}

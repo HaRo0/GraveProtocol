@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Enemy": "Enemy_Ancient_Dragon",
+      "Count": 1
+    },
+    {
+      "Enemy": "Enemy_Bone_Titan",
+      "Count": 2
+    },
+    {
+      "Enemy": "Enemy_Berserker",
+      "Count": 4
+    }
+  ],
+  "MaterialReward": 39,
+  "CurrencyReward": 4
+}

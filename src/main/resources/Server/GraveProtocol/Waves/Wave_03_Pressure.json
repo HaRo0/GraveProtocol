@@ -8,7 +8,9 @@
       "Enemy": "Enemy_Storm",
       "Count": 5
     }
-  ]
+  ],
+  "MaterialReward": 11,
+  "CurrencyReward": 1
 }
 
 
