@@ -2,21 +2,21 @@ $C = "../Common.ui";
 Group {
   LayoutMode: Top;
   Background: #2a2a2a;
-  Anchor: (Width: 800, Height: 500);
+  Anchor: (Width: 800, Height: 560);
   Padding: (Full: 0);
 
   Label #Title {
     Padding: (Full: 0);
-    Text: "Build Tower";
+    Text: "Tower Shop";
     Style: (TextColor: #ffffff, HorizontalAlignment: Center);
   }
-  
+
   Label #Balance {
     Padding: (Full: 0);
     Text: "Permanent Currency: 0";
     Style: (TextColor: #f0e080, HorizontalAlignment: Center);
   }
-  
+
   $C.@TextButton #Tower1 {
     Padding: (Full: 0);
     Text: "Tower 1";
@@ -49,7 +49,6 @@ Group {
 
   $C.@TextButton #Cancel {
     Padding: (Full: 0);
-    Text: "Cancel";
+    Text: "Close";
   }
 }
-

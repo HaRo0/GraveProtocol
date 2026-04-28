@@ -24,7 +24,7 @@
   "Upgrades": {
     "Damage": [
       {
-        "Price": 100,
+        "Price": 5,
         "Description": "Increase damage",
         "AttackData": {
           "AttackDamage": 5,
@@ -37,7 +37,7 @@
         "ProjectileSpeed": 0
       },
       {
-        "Price": 200,
+        "Price": 10,
         "Description": "Increase damage again",
         "AttackData": {
           "AttackDamage": 800,
@@ -52,7 +52,7 @@
     ],
     "Range": [
       {
-        "Price": 100,
+        "Price": 15,
         "Description": "Increase range",
         "AttackData": {
           "AttackDamage": 0,

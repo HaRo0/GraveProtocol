@@ -5,7 +5,6 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
@@ -17,7 +16,9 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import net.haro0.hytale.graveprotocol.codecs.components.npcs.LynnComponent;
 import net.haro0.hytale.graveprotocol.codecs.components.tower.TowerComponent;
+import net.haro0.hytale.graveprotocol.utils.LevelStartService;
 
 import javax.annotation.Nonnull;
 import java.util.Comparator;
@@ -36,6 +37,11 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
     @Override
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCommandBuilder, @Nonnull UIEventBuilder uiEventBuilder, @Nonnull Store<EntityStore> store) {
         uiCommandBuilder.append("Pages/TowerUpgrade.ui");
+
+        var lynnRef = LevelStartService.findLynn(store);
+        var lynnComponent = lynnRef != null ? store.getComponent(lynnRef, LynnComponent.getComponentType()) : null;
+        var balance = lynnComponent != null ? lynnComponent.getMaterial() : 0;
+        uiCommandBuilder.set("#Balance.Text", "Temporary Currency: " + balance);
 
         var tower = getTowerComponent();
         if (tower == null || !tower.hasTower()) {
@@ -62,9 +68,13 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
             var branch = tower.getUpgrades().get(upgradePath);
             var nextLevel = tower.getCurrentUpgradeLevel(upgradePath) + 1;
             var canBuy = nextLevel < branch.length;
-            var text = canBuy
-                ? upgradePath + " (" + (nextLevel + 1) + "/" + branch.length + ")"
-                : upgradePath + " (MAX)";
+            String text;
+            if (!canBuy) {
+                text = upgradePath + " (MAX)";
+            } else {
+                var upgradePrice = branch[nextLevel].getPrice();
+                text = upgradePath + " (" + (nextLevel + 1) + "/" + branch.length + ") - " + upgradePrice + " coins";
+            }
 
             uiCommandBuilder.set(buttonId + ".Text", text);
             uiCommandBuilder.set(buttonId + ".Visible", true);
@@ -109,18 +119,40 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
             return;
         }
 
+        if (!tower.canBuyUpgrade(data.upgradePath)) {
+            playerRef.sendMessage(Message.raw("Upgrade path is already maxed or invalid."));
+            return;
+        }
+        var branch = tower.getUpgrades().get(data.upgradePath);
+        var nextLevel = tower.getCurrentUpgradeLevel(data.upgradePath) + 1;
+        var upgradePrice = branch[nextLevel].getPrice();
+
+        var lynnRef = LevelStartService.findLynn(store);
+        var lynnComponent = lynnRef != null ? store.getComponent(lynnRef, LynnComponent.getComponentType()) : null;
+        if (lynnComponent == null) {
+            playerRef.sendMessage(Message.raw("No active level – you cannot upgrade towers right now."));
+            return;
+        }
+
+        if (!lynnComponent.spendMaterial(upgradePrice)) {
+            playerRef.sendMessage(Message.raw("Not enough temporary currency! Need " + upgradePrice + ", have " + lynnComponent.getMaterial() + "."));
+            this.close();
+            return;
+        }
+
         if (!tower.buyUpgrade(data.upgradePath)) {
+            lynnComponent.addMaterial(upgradePrice);
             playerRef.sendMessage(Message.raw("Upgrade path is already maxed or invalid."));
             return;
         }
 
-        playerRef.sendMessage(Message.raw("Purchased upgrade: " + data.upgradePath));
+        playerRef.sendMessage(Message.raw("Purchased upgrade: " + data.upgradePath + " for " + upgradePrice + " temporary currency."));
         close();
     }
 
     private TowerComponent getTowerComponent() {
 
-        return tRef.getStore().getComponent(tRef,TowerComponent.getComponentType());
+        return tRef.getStore().getComponent(tRef, TowerComponent.getComponentType());
     }
 
     public static class BindingData {

@@ -37,7 +37,7 @@ public abstract class AbstractTowerAttack {
     protected void damage(TowerComponent tower, Ref<EntityStore> target, ComponentAccessor<EntityStore> accessor, float damageMultiplier){
         var attackerComponent = accessor.getComponent(target, LynnAttackerComponent.getComponentType());
         var damage = tower.getAttackData().calcDamage(attackerComponent.getAttackerData());
-        DamageSystems.executeDamage(target,accessor,new Damage(Damage.NULL_SOURCE, DamageCause.PHYSICAL,damage));
+        target.getStore().getExternalData().getWorld().execute(() -> DamageSystems.executeDamage(target,accessor,new Damage(Damage.NULL_SOURCE, DamageCause.PHYSICAL,damage * damageMultiplier)));
     }
 
     protected void damage(TowerComponent tower, List<Ref<EntityStore>> targets, ComponentAccessor<EntityStore> accessor){

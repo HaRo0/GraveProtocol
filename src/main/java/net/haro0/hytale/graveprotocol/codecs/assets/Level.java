@@ -6,13 +6,11 @@ import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
 import com.hypixel.hytale.assetstore.codec.ContainedAssetCodec;
-import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.codec.validation.Validators;
-import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import net.haro0.hytale.graveprotocol.codecs.data.Defender;
@@ -39,6 +37,10 @@ public class Level implements JsonAssetWithMap<String, AssetMap<String, Level>> 
         .add()
         .append(new KeyedCodec<>("Multipliers", MultiplierCollection.CODEC), (w, v) -> w.multipliers = v, w -> w.multipliers)
         .add()
+        .append(new KeyedCodec<>("MaterialStartAmount", Codec.INTEGER), (w, v) -> w.materialStartAmount = v, w -> w.materialStartAmount)
+        .add()
+        .append(new KeyedCodec<>("CurrencyReward", Codec.INTEGER), (w, v) -> w.currencyReward = v, w -> w.currencyReward)
+        .add()
         .build();
 
     private static AssetStore<String, Level, AssetMap<String, Level>> ASSET_STORE;
@@ -59,6 +61,9 @@ public class Level implements JsonAssetWithMap<String, AssetMap<String, Level>> 
     private Defender shopStats;
 
     private MultiplierCollection multipliers;
+    private int materialStartAmount = 20;
+
+    private int currencyReward = 3;
 
     public Wave[] getWaves(){
         return Arrays.stream(waves).map(Wave.getAssetMap()::getAsset).toArray(Wave[]::new);

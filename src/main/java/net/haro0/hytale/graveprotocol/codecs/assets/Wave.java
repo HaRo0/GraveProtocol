@@ -6,27 +6,23 @@ import com.hypixel.hytale.assetstore.AssetRegistry;
 import com.hypixel.hytale.assetstore.AssetStore;
 import com.hypixel.hytale.assetstore.codec.AssetBuilderCodec;
 import com.hypixel.hytale.assetstore.codec.ContainedAssetCodec;
-import com.hypixel.hytale.assetstore.map.DefaultAssetMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
-import com.hypixel.hytale.codec.codecs.map.MapCodec;
-import com.hypixel.hytale.codec.lookup.MapKeyMapCodec;
-import com.hypixel.hytale.codec.schema.metadata.ui.UIEditor;
 import com.hypixel.hytale.codec.validation.Validators;
 import lombok.Getter;
-import net.haro0.hytale.graveprotocol.codecs.data.Attacker;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Getter
 public class Wave implements JsonAssetWithMap<String, AssetMap<String, Wave>> {
 
     public static final AssetBuilderCodec<String,Wave> CODEC = AssetBuilderCodec.builder(Wave.class, Wave::new, Codec.STRING, (w, i) -> w.id = i, w -> w.id, (w, d) -> w.data = d, w -> w.data)
         .append(new KeyedCodec<>("Enemies", new ArrayCodec<>(WaveEnemy.CODEC, WaveEnemy[]::new)), (w, e) -> w.enemies = e, w -> w.enemies)
+        .add()
+        .append(new KeyedCodec<>("MaterialReward", Codec.INTEGER), (w, v) -> w.materialReward = v, w -> w.materialReward)
+        .add()
+        .append(new KeyedCodec<>("CurrencyReward", Codec.INTEGER), (w, v) -> w.currencyReward = v, w -> w.currencyReward)
         .add()
         .build();
 
@@ -37,6 +33,9 @@ public class Wave implements JsonAssetWithMap<String, AssetMap<String, Wave>> {
     private AssetExtraInfo.Data data;
 
     private WaveEnemy[] enemies;
+
+    private int materialReward = 10;
+    private int currencyReward = 1;
 
     public static AssetStore<String, Wave, AssetMap<String, Wave>> getAssetStore() {
 

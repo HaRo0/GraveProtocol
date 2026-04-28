@@ -23,6 +23,8 @@ public class Enemy implements JsonAssetWithMap<String, AssetMap<String, Enemy>> 
         .add()
         .append(new KeyedCodec<>("AttackData", Attacker.CODEC), (w, a) -> w.attackData = a, w-> w.attackData)
         .add()
+        .append(new KeyedCodec<>("MaterialReward", Codec.INTEGER), (c,v) -> c.materialReward = v, c -> c.materialReward)
+        .add()
         .build();
 
     private static AssetStore<String, Enemy, AssetMap<String, Enemy>> ASSET_STORE;
@@ -32,6 +34,8 @@ public class Enemy implements JsonAssetWithMap<String, AssetMap<String, Enemy>> 
 
     private String entity;
     private Attacker attackData;
+    protected int materialReward = 1;
+
 
     public static AssetStore<String, Enemy, AssetMap<String, Enemy>> getAssetStore() {
 

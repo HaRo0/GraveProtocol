@@ -50,7 +50,9 @@ public class GraveMenuUi extends InteractiveCustomUIPage<GraveMenuUi.BindingData
         }
 
         switch (data.action) {
-            case "Shop" -> playerRef.sendMessage(Message.raw("Shop is not implemented yet."));
+            case "Shop" -> {
+                player.getPageManager().openCustomPage(ref, store, new ShopUi(playerRef));
+            }
             case "Prestige" -> playerRef.sendMessage(Message.raw("Prestige menu is not implemented yet."));
             case "StartLevel" -> {
                 LevelStartService.startLevel(ref, store);

@@ -24,6 +24,7 @@ public class LynnAttackerComponent implements Component<EntityStore> {
     public static final BuilderCodec<LynnAttackerComponent> CODEC = BuilderCodec.builder(LynnAttackerComponent.class, LynnAttackerComponent::new)
         .append(new KeyedCodec<>("AttackerData",Attacker.CODEC), (c,a) -> c.attackerData = a, c -> c.attackerData).add()
         .append(new KeyedCodec<>("LynnId", Codec.UUID_STRING), (c, v) -> c.lynnId = v, c -> c.lynnId).add()
+        .append(new KeyedCodec<>("MaterialReward", Codec.INTEGER), (c, v) -> c.materialReward = v, c -> c.materialReward).add()
         .build();
 
     @Getter
@@ -32,6 +33,8 @@ public class LynnAttackerComponent implements Component<EntityStore> {
     private Attacker attackerData;
 
     private UUID lynnId;
+    protected int materialReward = 1;
+
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {
 

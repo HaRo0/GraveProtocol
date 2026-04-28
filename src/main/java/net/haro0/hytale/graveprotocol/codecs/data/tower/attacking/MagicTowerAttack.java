@@ -71,14 +71,15 @@ public class MagicTowerAttack extends AbstractTowerAttack {
         ParticleUtil.spawnParticleEffect(particle,mainPos.add(offset),0,0,0,scale,color,playerRefs,accessor);
         if(!explode) return;
         world.execute(() ->{
-            accessor.forEachEntityParallel(LynnAttackerComponent.getComponentType(),(index,archetype, commandBuffer) -> {
+            world.getEntityStore().getStore().forEachChunk(LynnAttackerComponent.getComponentType(),(archetype, commandBuffer) -> {
+                for(var index = 0; index < archetype.size(); index++){
                 var pos = archetype.getComponent(index, TransformComponent.getComponentType()).getPosition();
                 var distance = pos.distanceTo(mainPos);
                 if(distance > explosionRange) return;
                 float multiplier =(float) (1f - distance/explosionRange * 0.5f);
                 damage(component,target,accessor,multiplier);
 
-            });
+            }});
         });
     }
 }

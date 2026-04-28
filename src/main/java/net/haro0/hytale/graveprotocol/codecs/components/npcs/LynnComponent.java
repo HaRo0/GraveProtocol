@@ -28,6 +28,7 @@ public class LynnComponent implements Component<EntityStore> {
         .append(new KeyedCodec<>("Multipliers", MultiplierCollection.CODEC), (w,v) -> w.multipliers = v, w -> w.multipliers).add()
         .append(new KeyedCodec<>("AttackersLeft", Codec.INTEGER), (c, v) -> c.attackersLeft = new AtomicInteger(v), c -> c.attackersLeft.get()).add()
         .append(new KeyedCodec<>("IsActive", Codec.BOOLEAN), (c, v) -> c.isActive = v, c -> c.isActive).add()
+        .append(new KeyedCodec<>("Material", Codec.INTEGER), (c, v) -> c.material = v, c -> c.material).add()
         .build();
 
     @Getter
@@ -48,6 +49,8 @@ public class LynnComponent implements Component<EntityStore> {
     @Setter(AccessLevel.NONE)
     private MultiplierCollection multipliers;
 
+    private int material = 0;
+
     public void setAttackersLeft(int amount){
         attackersLeft = new AtomicInteger(amount);
     }
@@ -64,6 +67,16 @@ public class LynnComponent implements Component<EntityStore> {
 
     public boolean markAttackerKilled(){
         return attackersLeft.decrementAndGet() <=0;
+    }
+
+    public void addMaterial(int amount) {
+        material += amount;
+    }
+
+    public boolean spendMaterial(int amount) {
+        if (material < amount) return false;
+        material -= amount;
+        return true;
     }
 
     public static void register(ComponentRegistryProxy<EntityStore> registry) {

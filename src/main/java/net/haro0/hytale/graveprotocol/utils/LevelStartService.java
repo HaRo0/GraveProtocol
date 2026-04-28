@@ -78,6 +78,7 @@ public final class LevelStartService {
         lynnComponent.setDefender(level.getShopStats());
         lynnComponent.setMultipliers(prestige.getMultipliers(),level.getMultipliers());
         lynnComponent.setActive(true);
+        lynnComponent.setMaterial(0);
 
 
         var statMap = store.getComponent(pathTarget, EntityStatMap.getComponentType());
@@ -148,7 +149,7 @@ public final class LevelStartService {
                     
                     var spawnedNpc = npcPlugin.spawnEntity(wStore, entityId, spawnPos, Vector3f.ZERO, Model.createScaledModel(model,1),null);
                     var npcRef = spawnedNpc.first();
-                    wStore.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(enemy.getAttackData(),uuid));
+                    wStore.addComponent(npcRef, LynnAttackerComponent.getComponentType(), new LynnAttackerComponent(enemy.getAttackData(),uuid,enemy.getMaterialReward()));
                     var stats = wStore.getComponent(npcRef, EntityStatMap.getComponentType());
                     if(ATTACKER_BASE_HEALTH < 0){
                         ATTACKER_BASE_HEALTH = stats.get(DefaultEntityStatTypes.getHealth()).getMax();

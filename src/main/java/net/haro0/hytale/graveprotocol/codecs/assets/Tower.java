@@ -30,6 +30,8 @@ public class Tower extends TowerUpgrade implements JsonAssetWithMap<String, Asse
         .add()
         .appendInherited(new KeyedCodec<>("Upgrades", new MapCodec<>(new ArrayCodec<>(TowerUpgrade.CODEC, TowerUpgrade[]::new), HashMap::new)), (t, u) -> t.upgrades = u, t -> t.upgrades, (a, b) -> a.upgrades = new HashMap<>(b.upgrades))
         .add()
+        .appendInherited(new KeyedCodec<>("ShopUnlockCost", Codec.INTEGER), (t, v) -> t.shopUnlockCost = v, t -> t.shopUnlockCost, (a, b) -> a.shopUnlockCost = b.shopUnlockCost)
+        .add()
         .build();
 
     private static AssetStore<String, Tower, AssetMap<String, Tower>> ASSET_STORE;
@@ -38,6 +40,7 @@ public class Tower extends TowerUpgrade implements JsonAssetWithMap<String, Asse
     protected AssetExtraInfo.Data data;
     protected AbstractTowerAttack attackType;
     protected Map<String, TowerUpgrade[]> upgrades = new HashMap<>();
+    protected int shopUnlockCost = 0;
 
     public static AssetStore<String, Tower, AssetMap<String, Tower>> getAssetStore() {
 

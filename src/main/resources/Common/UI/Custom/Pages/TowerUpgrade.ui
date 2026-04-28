@@ -10,6 +10,12 @@ Group {
     Text: "Upgrade Tower";
     Style: (TextColor: #ffffff, HorizontalAlignment: Center);
   }
+  
+    Label #Balance {
+      Padding: (Full: 0);
+      Text: "Permanent Currency: 0";
+      Style: (TextColor: #f0e080, HorizontalAlignment: Center);
+    }
 
   $C.@TextButton #Upgrade1 {
     Padding: (Full: 0);
@@ -46,3 +52,4 @@ Group {
     Text: "Close";
   }
 }
+
