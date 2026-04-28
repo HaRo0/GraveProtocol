@@ -17,7 +17,7 @@
     "CombatStrafeWeight": 0,
     "CombatDirectWeight": 0,
     "CombatAlwaysMovingWeight": 1000,
-    "ApplySeparation": true,
+    "ApplySeparation": false,
     "BreathesInWater": true,
     "NameTranslationKey": "server.npcRoles.Lynn_Attacker.name",
     "AbsoluteDetectionRange": 5000,

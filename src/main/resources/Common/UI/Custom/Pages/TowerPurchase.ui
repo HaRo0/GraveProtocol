@@ -1,55 +1,30 @@
 $C = "../Common.ui";
+
 Group {
-  LayoutMode: Top;
-  Background: #2a2a2a;
-  Anchor: (Width: 800, Height: 500);
-  Padding: (Full: 0);
+    LayoutMode: Top;
+    Background: #2a2a2a;
+    Anchor: (Width: 800, Height: 600);
+    Padding: (Full: 0);
 
-  Label #Title {
-    Padding: (Full: 0);
-    Text: "Build Tower";
-    Style: (TextColor: #ffffff, HorizontalAlignment: Center);
-  }
-  
-  Label #Balance {
-    Padding: (Full: 0);
-    Text: "Permanent Currency: 0";
-    Style: (TextColor: #f0e080, HorizontalAlignment: Center);
-  }
-  
-  $C.@TextButton #Tower1 {
-    Padding: (Full: 0);
-    Text: "Tower 1";
-  }
+    Label #Title {
+        Padding: (Full: 0);
+        Text: "Build Tower";
+        Style: (TextColor: #ffffff, HorizontalAlignment: Center);
+    }
 
-  $C.@TextButton #Tower2 {
-    Padding: (Full: 0);
-    Text: "Tower 2";
-  }
+    Label #Balance {
+        Padding: (Full: 0);
+        Text: "Temporary Currency: 0";
+        Style: (TextColor: #f0e080, HorizontalAlignment: Center);
+    }
 
-  $C.@TextButton #Tower3 {
-    Padding: (Full: 0);
-    Text: "Tower 3";
-  }
+    Group #ItemList {
+        Anchor: (Height: 475);
+        LayoutMode: TopScrolling;
+    }
 
-  $C.@TextButton #Tower4 {
-    Padding: (Full: 0);
-    Text: "Tower 4";
-  }
-
-  $C.@TextButton #Tower5 {
-    Padding: (Full: 0);
-    Text: "Tower 5";
-  }
-
-  $C.@TextButton #Tower6 {
-    Padding: (Full: 0);
-    Text: "Tower 6";
-  }
-
-  $C.@TextButton #Cancel {
-    Padding: (Full: 0);
-    Text: "Cancel";
-  }
+    $C.@TextButton #Cancel {
+        Padding: (Full: 0);
+        Text: "Cancel";
+    }
 }
-

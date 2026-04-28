@@ -25,8 +25,6 @@ import java.util.Comparator;
 
 public class ShopUi extends InteractiveCustomUIPage<ShopUi.BindingData> {
 
-    private static final int MAX_TOWER_OPTIONS = 6;
-
     private final String[] towerIds;
 
     public ShopUi(@Nonnull PlayerRef playerRef) {
@@ -43,33 +41,23 @@ public class ShopUi extends InteractiveCustomUIPage<ShopUi.BindingData> {
 
         var playerData = store.getComponent(ref, GPPlayerDataComponent.getComponentType());
         var balance = playerData != null ? playerData.getCurrency() : 0;
-        uiCommandBuilder.set("#Balance.Text", "Permanent Currency: " + balance);
+        uiCommandBuilder.set("#Balance.Text", "Currency: " + balance);
 
-        for (int i = 0; i < MAX_TOWER_OPTIONS; i++) {
-            var buttonId = "#Tower" + (i + 1);
-            if (i < towerIds.length) {
-                var towerId = towerIds[i];
-                var tower = Tower.getAssetMap().getAsset(towerId);
-                if (tower == null) {
-                    uiCommandBuilder.set(buttonId + ".Visible", false);
-                    uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, buttonId,
-                        EventData.of("Action", "Unavailable").append("TowerId", ""));
-                    continue;
-                }
-                var alreadyUnlocked = playerData != null && playerData.isTowerUnlocked(towerId);
-                var cost = tower.getShopUnlockCost();
-                var label = alreadyUnlocked
-                    ? towerId + " [Unlocked]"
-                    : towerId + " - " + cost + " coins";
-                uiCommandBuilder.set(buttonId + ".Text", label);
-                uiCommandBuilder.set(buttonId + ".Visible", true);
-                uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, buttonId,
-                    EventData.of("Action", alreadyUnlocked ? "AlreadyUnlocked" : "BuyTower").append("TowerId", towerId));
-                continue;
-            }
-            uiCommandBuilder.set(buttonId + ".Visible", false);
-            uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, buttonId,
-                EventData.of("Action", "Unavailable").append("TowerId", ""));
+        uiCommandBuilder.clear("#ItemList");
+        for (int i = 0; i < towerIds.length; i++) {
+            var towerId = towerIds[i];
+            var tower = Tower.getAssetMap().getAsset(towerId);
+            if (tower == null) continue;
+
+            uiCommandBuilder.append("#ItemList", "Pages/ListButton.ui");
+            var alreadyUnlocked = playerData != null && playerData.isTowerUnlocked(towerId);
+            var cost = tower.getShopUnlockCost();
+            var label = alreadyUnlocked
+                ? towerId + " [Unlocked]"
+                : towerId + " - " + cost + " Currency";
+            uiCommandBuilder.set("#ItemList[" + i + "].Text", label);
+            uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ItemList[" + i + "]",
+                EventData.of("Action", alreadyUnlocked ? "AlreadyUnlocked" : "BuyTower").append("TowerId", towerId));
         }
 
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Cancel",
@@ -115,12 +103,12 @@ public class ShopUi extends InteractiveCustomUIPage<ShopUi.BindingData> {
 
         var cost = tower.getShopUnlockCost();
         if (!playerData.spendCurrency(cost)) {
-            playerRef.sendMessage(Message.raw("Not enough permanent currency! Need " + cost + ", have " + playerData.getCurrency() + "."));
+            playerRef.sendMessage(Message.raw("Not enough Currency! Need " + cost + ", have " + playerData.getCurrency() + "."));
             return;
         }
 
         playerData.unlockTower(data.towerId);
-        playerRef.sendMessage(Message.raw("Unlocked tower " + data.towerId + "! (" + cost + " permanent currency spent)"));
+        playerRef.sendMessage(Message.raw("Unlocked tower " + data.towerId + "! (" + cost + " Currency spent)"));
 
         var player = store.getComponent(ref, Player.getComponentType());
         store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));

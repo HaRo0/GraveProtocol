@@ -2,7 +2,7 @@ $C = "../Common.ui";
 Group {
   LayoutMode: Top;
   Background: #2a2a2a;
-  Anchor: (Width: 800, Height: 500);
+  Anchor: (Width: 800, Height: 600);
   Padding: (Full: 0);
 
   Label #Title {
@@ -10,41 +10,16 @@ Group {
     Text: "Upgrade Tower";
     Style: (TextColor: #ffffff, HorizontalAlignment: Center);
   }
-  
-    Label #Balance {
-      Padding: (Full: 0);
-      Text: "Permanent Currency: 0";
-      Style: (TextColor: #f0e080, HorizontalAlignment: Center);
-    }
 
-  $C.@TextButton #Upgrade1 {
+  Label #Balance {
     Padding: (Full: 0);
-    Text: "Upgrade 1";
+    Text: "Permanent Currency: 0";
+    Style: (TextColor: #f0e080, HorizontalAlignment: Center);
   }
 
-  $C.@TextButton #Upgrade2 {
-    Padding: (Full: 0);
-    Text: "Upgrade 2";
-  }
-
-  $C.@TextButton #Upgrade3 {
-    Padding: (Full: 0);
-    Text: "Upgrade 3";
-  }
-
-  $C.@TextButton #Upgrade4 {
-    Padding: (Full: 0);
-    Text: "Upgrade 4";
-  }
-
-  $C.@TextButton #Upgrade5 {
-    Padding: (Full: 0);
-    Text: "Upgrade 5";
-  }
-
-  $C.@TextButton #Upgrade6 {
-    Padding: (Full: 0);
-    Text: "Upgrade 6";
+  Group #ItemList {
+    LayoutMode: TopScrolling;
+    Anchor: (Height: 496);
   }
 
   $C.@TextButton #Cancel {
@@ -52,4 +27,3 @@ Group {
     Text: "Close";
   }
 }
-

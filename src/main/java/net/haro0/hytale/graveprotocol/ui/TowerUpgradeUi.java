@@ -25,8 +25,6 @@ import java.util.Comparator;
 
 public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.BindingData> {
 
-    private static final int MAX_UPGRADE_OPTIONS = 6;
-
     private final Ref<ChunkStore> tRef;
 
     public TowerUpgradeUi(@Nonnull PlayerRef playerRef, @Nonnull Ref<ChunkStore> tRef) {
@@ -41,7 +39,7 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
         var lynnRef = LevelStartService.findLynn(store);
         var lynnComponent = lynnRef != null ? store.getComponent(lynnRef, LynnComponent.getComponentType()) : null;
         var balance = lynnComponent != null ? lynnComponent.getMaterial() : 0;
-        uiCommandBuilder.set("#Balance.Text", "Temporary Currency: " + balance);
+        uiCommandBuilder.set("#Balance.Text", "material: " + balance);
 
         var tower = getTowerComponent();
         if (tower == null || !tower.hasTower()) {
@@ -52,18 +50,9 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
         uiCommandBuilder.set("#Title.Text", "Upgrade " + tower.getTowerModel());
 
         var upgradePaths = tower.getUpgrades().keySet().stream().sorted(Comparator.naturalOrder()).toList();
-        for (int i = 0; i < MAX_UPGRADE_OPTIONS; i++) {
-            var buttonId = "#Upgrade" + (i + 1);
-            if (i >= upgradePaths.size()) {
-                uiCommandBuilder.set(buttonId + ".Visible", false);
-                uiEventBuilder.addEventBinding(
-                    CustomUIEventBindingType.Activating,
-                    buttonId,
-                    EventData.of("Action", "Unavailable").append("TowerId", "").append("UpgradePath", "")
-                );
-                continue;
-            }
 
+        uiCommandBuilder.clear("#ItemList");
+        for (int i = 0; i < upgradePaths.size(); i++) {
             var upgradePath = upgradePaths.get(i);
             var branch = tower.getUpgrades().get(upgradePath);
             var nextLevel = tower.getCurrentUpgradeLevel(upgradePath) + 1;
@@ -73,14 +62,14 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
                 text = upgradePath + " (MAX)";
             } else {
                 var upgradePrice = branch[nextLevel].getPrice();
-                text = upgradePath + " (" + (nextLevel + 1) + "/" + branch.length + ") - " + upgradePrice + " coins";
+                text = upgradePath + " (" + (nextLevel + 1) + "/" + branch.length + ") - " + upgradePrice + " material";
             }
 
-            uiCommandBuilder.set(buttonId + ".Text", text);
-            uiCommandBuilder.set(buttonId + ".Visible", true);
+            uiCommandBuilder.append("#ItemList", "Pages/ListButton.ui");
+            uiCommandBuilder.set("#ItemList[" + i + "].Text", text);
             uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating,
-                buttonId,
+                "#ItemList[" + i + "]",
                 EventData.of("Action", canBuy ? "BuyUpgrade" : "Maxed")
                     .append("TowerId", tower.getTowerModel())
                     .append("UpgradePath", upgradePath)
@@ -135,7 +124,7 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
         }
 
         if (!lynnComponent.spendMaterial(upgradePrice)) {
-            playerRef.sendMessage(Message.raw("Not enough temporary currency! Need " + upgradePrice + ", have " + lynnComponent.getMaterial() + "."));
+            playerRef.sendMessage(Message.raw("Not enough material! Need " + upgradePrice + ", have " + lynnComponent.getMaterial() + "."));
             this.close();
             return;
         }
@@ -146,7 +135,7 @@ public class TowerUpgradeUi extends InteractiveCustomUIPage<TowerUpgradeUi.Bindi
             return;
         }
 
-        playerRef.sendMessage(Message.raw("Purchased upgrade: " + data.upgradePath + " for " + upgradePrice + " temporary currency."));
+        playerRef.sendMessage(Message.raw("Purchased upgrade: " + data.upgradePath + " for " + upgradePrice + " material."));
         close();
         store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
     }

@@ -3,30 +3,20 @@
   "OrderPosition": 2,
     "SpawnPositions": [
         {
-            "X": 5,
-            "Y": 81,
-            "Z": 0
+            "X": 153.5,
+            "Y": 119,
+            "Z": 66.5
         },
         {
-            "X": -5,
-            "Y": 81,
-            "Z": 0
-        },
-        {
-            "X": 0,
-            "Y": 81,
-            "Z": 5
-        },
-        {
-            "X": 0,
-            "Y": 81,
-            "Z": -5
+            "X": 39.5,
+            "Y": 119,
+            "Z": 66.5
         }
     ],
     "ShopPosition": {
-        "X": 0,
-        "Y": 80,
-        "Z": 0
+        "X": 96.5,
+        "Y": 119,
+        "Z": 131.5
     },
   "Multipliers": {
     "ShopHealthMultiplier": 1.24,
@@ -36,7 +26,7 @@
     "EnemyAttackMultiplier": 1.16
   },
     "PathBlocks": [
-        "Rock_Chalk"
+        "Rock_Ledge_Brick_Smooth"
     ]
 }
 

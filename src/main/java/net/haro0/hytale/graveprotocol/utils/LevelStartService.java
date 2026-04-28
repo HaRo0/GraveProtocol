@@ -133,8 +133,8 @@ public final class LevelStartService {
                     var rotation = world.getBlockRotationIndex(x, y, z);
                     int typeIndex = BlockType.getAssetMap().getIndex(INDICATOR_NAME);
                     var type = BlockType.getAssetMap().getAsset(typeIndex);
-                    world.getChunk(ChunkUtil.indexChunkFromBlock(x, z))
-                        .setBlock(x, y, z,index,type ,rotation,0,0);
+                    world.execute(() ->world.getChunk(ChunkUtil.indexChunkFromBlock(x, z))
+                        .setBlock(x, y, z,typeIndex,type ,rotation,0,0));
                 }
 
 

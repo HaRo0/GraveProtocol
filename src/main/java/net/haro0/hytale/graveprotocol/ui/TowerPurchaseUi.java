@@ -30,8 +30,6 @@ import java.util.Comparator;
 
 public class TowerPurchaseUi extends InteractiveCustomUIPage<TowerPurchaseUi.BindingData> {
 
-    private static final int MAX_TOWER_OPTIONS = 6;
-
     private final Vector3i blockPos;
     private final String[] towerIds;
 
@@ -53,34 +51,23 @@ public class TowerPurchaseUi extends InteractiveCustomUIPage<TowerPurchaseUi.Bin
         var lynnComponent = lynnRef != null ? store.getComponent(lynnRef, LynnComponent.getComponentType()) : null;
 
         var balance = lynnComponent != null ? lynnComponent.getMaterial() : 0;
-        uiCommandBuilder.set("#Balance.Text", "Temporary Currency: " + balance);
+        uiCommandBuilder.set("#Balance.Text", "material: " + balance);
 
-        // Only show unlocked towers
         var unlockedIds = java.util.Arrays.stream(towerIds)
             .filter(id -> playerData != null && playerData.isTowerUnlocked(id))
             .toArray(String[]::new);
 
-        for (int i = 0; i < MAX_TOWER_OPTIONS; i++) {
-            var buttonId = "#Tower" + (i + 1);
-            if (i < unlockedIds.length) {
-                var towerId = unlockedIds[i];
-                var tower = Tower.getAssetMap().getAsset(towerId);
-                var price = tower != null ? tower.getPrice() : 0;
-                uiCommandBuilder.set(buttonId + ".Text", towerId + " - " + price + " coins");
-                uiCommandBuilder.set(buttonId + ".Visible", true);
-                uiEventBuilder.addEventBinding(
-                    CustomUIEventBindingType.Activating,
-                    buttonId,
-                    EventData.of("Action", "BuildTower").append("TowerId", towerId).append("UpgradePath", "")
-                );
-                continue;
-            }
-
-            uiCommandBuilder.set(buttonId + ".Visible", false);
+        uiCommandBuilder.clear("#ItemList");
+        for (int i = 0; i < unlockedIds.length; i++) {
+            var towerId = unlockedIds[i];
+            var tower = Tower.getAssetMap().getAsset(towerId);
+            var price = tower != null ? tower.getPrice() : 0;
+            uiCommandBuilder.append("#ItemList", "Pages/ListButton.ui");
+            uiCommandBuilder.set("#ItemList[" + i + "].Text", towerId + " - " + price + " material");
             uiEventBuilder.addEventBinding(
                 CustomUIEventBindingType.Activating,
-                buttonId,
-                EventData.of("Action", "Unavailable").append("TowerId", "").append("UpgradePath", "")
+                "#ItemList[" + i + "]",
+                EventData.of("Action", "BuildTower").append("TowerId", towerId).append("UpgradePath", "")
             );
         }
 
@@ -130,7 +117,7 @@ public class TowerPurchaseUi extends InteractiveCustomUIPage<TowerPurchaseUi.Bin
 
         var price = towerAsset.getPrice();
         if (!lynnComponent.spendMaterial(price)) {
-            playerRef.sendMessage(Message.raw("Not enough temporary currency! Need " + price + ", have " + lynnComponent.getMaterial() + "."));
+            playerRef.sendMessage(Message.raw("Not enough material! Need " + price + ", have " + lynnComponent.getMaterial() + "."));
             return;
         }
 
@@ -151,7 +138,7 @@ public class TowerPurchaseUi extends InteractiveCustomUIPage<TowerPurchaseUi.Bin
             var cStore = tRef.getStore();
             var towerComponent = cStore.ensureAndGetComponent(tRef, TowerComponent.getComponentType());
             towerComponent.applyTower(towerAsset);
-            playerRef.sendMessage(Message.raw("Built tower " + data.towerId + " for " + price + " temporary currency."));
+            playerRef.sendMessage(Message.raw("Built tower " + data.towerId + " for " + price + " material."));
             close();
             store.getExternalData().getWorld().execute(() -> TowerDefenseHudUi.refreshFor(player));
         });
