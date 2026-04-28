@@ -13,17 +13,18 @@
       "Use": "Open_Tower_Menu"
     },
     "CustomModel": "Blocks/Tower_Indicator.blockymodel",
-      "BlockEntity": {
-          "Components": {
-              "GPTowerComponent": {}
-          }
-      },
+    "BlockEntity": {
+      "Components": {
+        "GPTowerComponent": {}
+      }
+    },
     "Opacity": "Transparent",
     "CustomModelTexture": [
       {
         "Texture": "Blocks/Tower_Indicator.png"
       }
-    ]
+    ],
+    "VariantRotation": "NESW"
   },
   "Quality": "Technical"
 }

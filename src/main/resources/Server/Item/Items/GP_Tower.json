@@ -23,7 +23,8 @@
       {
         "Texture": "Blocks/GP_Tower.png"
       }
-    ]
+    ],
+    "VariantRotation": "NESW"
   },
   "Quality": "Developer"
 }

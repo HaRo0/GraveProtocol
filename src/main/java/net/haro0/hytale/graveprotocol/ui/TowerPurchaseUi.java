@@ -5,10 +5,12 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
@@ -140,7 +142,11 @@ public class TowerPurchaseUi extends InteractiveCustomUIPage<TowerPurchaseUi.Bin
         }
 
         world.execute(() -> {
-            world.setBlock(blockPos.x, blockPos.y, blockPos.z, towerAsset.getTowerModel());
+            var rotation = world.getBlockRotationIndex(blockPos.x, blockPos.y, blockPos.z);
+            int index = BlockType.getAssetMap().getIndex(towerAsset.getTowerModel());
+            var type = BlockType.getAssetMap().getAsset(index);
+            world.getChunk(ChunkUtil.indexChunkFromBlock(blockPos.x, blockPos.z))
+                .setBlock(blockPos.x, blockPos.y, blockPos.z,index,type ,rotation,0,0);
             var tRef = BlockUtils.getBlockEntity(world, blockPos);
             var cStore = tRef.getStore();
             var towerComponent = cStore.ensureAndGetComponent(tRef, TowerComponent.getComponentType());

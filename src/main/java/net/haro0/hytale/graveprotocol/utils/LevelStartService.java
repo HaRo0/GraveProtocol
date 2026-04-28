@@ -78,7 +78,7 @@ public final class LevelStartService {
         lynnComponent.setDefender(level.getShopStats());
         lynnComponent.setMultipliers(prestige.getMultipliers(),level.getMultipliers());
         lynnComponent.setActive(true);
-        lynnComponent.setMaterial(0);
+        lynnComponent.setMaterial(level.getMaterialStartAmount());
 
 
         var statMap = store.getComponent(pathTarget, EntityStatMap.getComponentType());

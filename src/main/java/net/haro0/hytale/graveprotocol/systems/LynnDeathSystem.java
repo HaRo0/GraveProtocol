@@ -1,10 +1,12 @@
 package net.haro0.hytale.graveprotocol.systems;
 
+import com.hypixel.hytale.builtin.instances.InstancesPlugin;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.universe.Universe;
@@ -23,14 +25,16 @@ public class LynnDeathSystem extends DeathSystems.OnDeathSystem {
 
         if(lynnComponent == null) return;
 
-        var world = store.getExternalData().getWorld();
         var playerId = lynnComponent.getPlayerId();
+        var world = store.getExternalData().getWorld();
+        var pRef = store.getExternalData().getRefFromUUID(playerId);
+        var player = store.getComponent(pRef, Player.getComponentType());
         world.execute(()-> {
-            TowerDefenseHudUi.closeFor(playerId);
+            TowerDefenseHudUi.closeFor(player);
             world.getPlayerRefs().forEach(p -> {
                 p.sendMessage(Message.raw("You failed to Protect Lynn"));
+                InstancesPlugin.exitInstance(p.getReference(), store);
             });
-            Universe.get().removeWorld(world.getName());
         });
     }
 

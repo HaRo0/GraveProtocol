@@ -7,6 +7,7 @@ import com.hypixel.hytale.component.dependency.Dependency;
 import com.hypixel.hytale.component.dependency.Order;
 import com.hypixel.hytale.component.dependency.SystemDependency;
 import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -76,7 +77,9 @@ public class LynnDamageSystem extends DamageEventSystem {
 
         var playerId = targetComponent.getPlayerId();
         var world = store.getExternalData().getWorld();
-        world.execute(() -> TowerDefenseHudUi.refreshFor(playerId));
+        var pRef = store.getExternalData().getRefFromUUID(playerId);
+        var player = store.getComponent(pRef, Player.getComponentType());
+        world.execute(() -> TowerDefenseHudUi.refreshFor(player));
 
     }
 
